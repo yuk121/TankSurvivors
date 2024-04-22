@@ -18,9 +18,12 @@ public class UI_Joystick : UI_Base
     private Vector2 _moveDir;
     private float _joystickRadius;
 
-    // Start is called before the first frame update
-    void Start()
+    public override bool init()
     {
+        if(base.init() == false)
+        {
+            return false;
+        }
 
         BindOjbect(typeof(eGameOjbect));
         _handler = GetObject((int)eGameOjbect.Handler);
@@ -34,27 +37,6 @@ public class UI_Joystick : UI_Base
         _joystickBG.SetActive(false);
 
         _joystickRadius = _joystickBG.GetComponent<RectTransform>().localScale.y / 2;
-    }
-
-    public override bool init()
-    {
-        if(base.init() == false)
-        {
-            return false;
-        }
-
-        //BindOjbect(typeof(eGameOjbect));
-        //_handler = GetObject((int)eGameOjbect.Handler);
-        //_joystickBG = GetObject((int)eGameOjbect.JoystickBG);
-
-        //BindEvent(gameObject, OnPointerDown, null, Define.eUIEvent.PointerDown);
-        //BindEvent(gameObject, OnPointerUp, null, Define.eUIEvent.PointerUp);
-        //BindEvent(gameObject, null, OnDrag, Define.eUIEvent.Drag);
-
-        //_handler.SetActive(false);
-        //_joystickBG.SetActive(false);
-
-        //_joystickRadius = _joystickBG.GetComponent<RectTransform>().localScale.y / 2;
         return true;
     }
 
@@ -81,15 +63,15 @@ public class UI_Joystick : UI_Base
         _handler.transform.position = _touchPos;
         _moveDir = Vector2.zero;
 
-        //_handler.SetActive(false);
-        //_joystickBG.SetActive(false);
+        _handler.SetActive(false);
+        _joystickBG.SetActive(false);
     }
 
     public void OnDrag(BaseEventData eventData)
     {
         PointerEventData pointerEventData = eventData as PointerEventData;
 
-        Vector2 touchDir = pointerEventData.position - _touchPos;
+        Vector2 touchDir = (pointerEventData.position - _touchPos);
         float moveDist = Mathf.Min(touchDir.magnitude, _joystickRadius);
         _moveDir = touchDir.normalized;
 

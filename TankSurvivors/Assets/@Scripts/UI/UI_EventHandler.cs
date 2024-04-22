@@ -54,7 +54,7 @@ public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IPointerDown
     {
         if(_pressed) 
         {
-            OnPressedHandler();
+            OnPressedHandler?.Invoke();
         }
     }
 }

@@ -15,7 +15,7 @@ C:/Users/0dudd/Documents/GitHub/TankSurvivors/TankSurvivors
 -logFile
 Logs/AssetImportWorker2.log
 -srvPort
-53733
+54624
 Successfully changed project path to: C:/Users/0dudd/Documents/GitHub/TankSurvivors/TankSurvivors
 C:/Users/0dudd/Documents/GitHub/TankSurvivors/TankSurvivors
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,11 +47,11 @@ C:/Users/0dudd/Documents/GitHub/TankSurvivors/TankSurvivors
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [21624] Host "[IP] 192.168.0.10 [Port] 0 [Flags] 2 [Guid] 1241362240 [EditorId] 1241362240 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-S2KU88H) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [24904] Host "[IP] 192.168.0.10 [Port] 0 [Flags] 2 [Guid] 1772105685 [EditorId] 1772105685 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-S2KU88H) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [21624] Host "[IP] 192.168.0.10 [Port] 0 [Flags] 2 [Guid] 1241362240 [EditorId] 1241362240 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-S2KU88H) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [24904] Host "[IP] 192.168.0.10 [Port] 0 [Flags] 2 [Guid] 1772105685 [EditorId] 1772105685 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-S2KU88H) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 71.51 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 73.20 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.16f1 (4016570cf34f)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Data/Resources/UnitySubsystems
@@ -68,98 +68,98 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56604
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56492
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.16f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.008411 seconds.
+Registered in 0.005916 seconds.
 Native extension for WindowsStandalone target not found
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 Native extension for iOS target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 69.29 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 63.88 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.513 seconds
+- Completed reload, in  0.457 seconds
 Domain Reload Profiling:
-	ReloadAssembly (514ms)
-		BeginReloadAssembly (61ms)
+	ReloadAssembly (457ms)
+		BeginReloadAssembly (53ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (0ms)
-		EndReloadAssembly (371ms)
-			LoadAssemblies (60ms)
+		EndReloadAssembly (324ms)
+			LoadAssemblies (52ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (87ms)
+			SetupTypeCache (72ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (15ms)
-			SetupLoadedEditorAssemblies (230ms)
+			SetupLoadedEditorAssemblies (202ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (48ms)
+				InitializePlatformSupportModulesInManaged (45ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (69ms)
+				RefreshPlugins (64ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (68ms)
-				ProcessInitializeOnLoadMethodAttributes (44ms)
+				ProcessInitializeOnLoadAttributes (60ms)
+				ProcessInitializeOnLoadMethodAttributes (32ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004970 seconds.
+Registered in 0.005231 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\0dudd\Documents\GitHub\TankSurvivors\TankSurvivors\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\0dudd\Documents\GitHub\TankSurvivors\TankSurvivors\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
 Native extension for iOS target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.59 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.932 seconds
+- Completed reload, in  0.954 seconds
 Domain Reload Profiling:
-	ReloadAssembly (932ms)
-		BeginReloadAssembly (206ms)
+	ReloadAssembly (955ms)
+		BeginReloadAssembly (195ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (124ms)
-		EndReloadAssembly (640ms)
-			LoadAssemblies (90ms)
+			CreateAndSetChildDomain (127ms)
+		EndReloadAssembly (670ms)
+			LoadAssemblies (82ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (164ms)
+			SetupTypeCache (193ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (44ms)
+			RebuildScriptCaches (46ms)
 			SetupLoadedEditorAssemblies (324ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (16ms)
+				InitializePlatformSupportModulesInManaged (19ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (60ms)
-				ProcessInitializeOnLoadAttributes (214ms)
-				ProcessInitializeOnLoadMethodAttributes (25ms)
+				BeforeProcessingInitializeOnLoad (63ms)
+				ProcessInitializeOnLoadAttributes (213ms)
+				ProcessInitializeOnLoadMethodAttributes (21ms)
 				AfterProcessingInitializeOnLoad (7ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (9ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 0.58 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 4628 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 24 unused Assets / (58.8 KB). Loaded Objects now: 5099.
-Memory consumption went from 318.6 MB to 318.6 MB.
-Total: 2.464700 ms (FindLiveObjects: 0.221000 ms CreateObjectMapping: 0.124100 ms MarkObjects: 2.054700 ms  DeleteObjects: 0.064300 ms)
+Unloading 24 unused Assets / (58.3 KB). Loaded Objects now: 5101.
+Memory consumption went from 318.7 MB to 318.7 MB.
+Total: 2.587000 ms (FindLiveObjects: 0.197100 ms CreateObjectMapping: 0.108100 ms MarkObjects: 2.216000 ms  DeleteObjects: 0.065200 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -173,97 +173,7 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 47821.514920 seconds.
-  path: Assets/@Resources/Models/Zombie/Textures
-  artifactKey: Guid(5ccd003863ea1cb48bb2f7bceda0a26d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Textures using Guid(5ccd003863ea1cb48bb2f7bceda0a26d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e59ae3e4389035a0bc58b5e6ea6daeec') in 0.016006 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000018 seconds.
-  path: Assets/@Resources/Models/Zombie/Textures/Zombie_metallic.tga
-  artifactKey: Guid(33de7c829c3a0224c8975ad93b61b05e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Textures/Zombie_metallic.tga using Guid(33de7c829c3a0224c8975ad93b61b05e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80f0f8abf412ecdbc34345c3557c0e58') in 0.072270 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000019 seconds.
-  path: Assets/@Resources/Models/Zombie/Textures/Zombie_ao.png
-  artifactKey: Guid(4ef3438267568cd40b87841c3e2c22c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Textures/Zombie_ao.png using Guid(4ef3438267568cd40b87841c3e2c22c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73590dd94234395609fb3069637d648c') in 0.026562 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 32.583289 seconds.
-  path: Assets/@Resources/Textures/Zombie
-  artifactKey: Guid(b3994de261a6f7646b21cad5d140e75c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Textures/Zombie using Guid(b3994de261a6f7646b21cad5d140e75c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce7109bf361030155613c5e57b3c1604') in 0.002438 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 11.426749 seconds.
-  path: Assets/@Resources/Models/Zombie/Prefabs/Zombie1.prefab
-  artifactKey: Guid(6dc4cf4496348884d8ee27743ae38562) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Prefabs/Zombie1.prefab using Guid(6dc4cf4496348884d8ee27743ae38562) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61d00d57e71cbe6d251677102cbebfe2') in 0.192700 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3.719075 seconds.
-  path: Assets/@Resources/Models/Zombie/Materials/Plane.mat
-  artifactKey: Guid(e7ed6772552b9e4488b1398f8282ed3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Materials/Plane.mat using Guid(e7ed6772552b9e4488b1398f8282ed3b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '82811ed3880c4113f978e12d25921d9b') in 0.036335 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.298647 seconds.
-  path: Assets/@Resources/Models/Zombie/FBXs/Zombie1.FBX
-  artifactKey: Guid(8f7380da49034cd488ddff94b1ac35d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/FBXs/Zombie1.FBX using Guid(8f7380da49034cd488ddff94b1ac35d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4762a4392f395473a1d1b4af1848e41f') in 0.119041 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 13.820512 seconds.
-  path: Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Attack.FBX
-  artifactKey: Guid(631762b9a30b33a42836730a6b37d13f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Attack.FBX using Guid(631762b9a30b33a42836730a6b37d13f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31c5ae44de22ddaa21df34de8f14a430') in 0.085603 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.632448 seconds.
-  path: Assets/@Resources/Models/Zombie/Animations/Zombie@Z_FallingForward.FBX
-  artifactKey: Guid(d870b4f0cba458640b29cda304d40186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Animations/Zombie@Z_FallingForward.FBX using Guid(d870b4f0cba458640b29cda304d40186) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cbddba768f0e3e0e130a67a1694661ea') in 0.020590 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.020683 seconds.
-  path: Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Run.FBX
-  artifactKey: Guid(55edd2c9d257d3f4481dfd16015bf8c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Run.FBX using Guid(55edd2c9d257d3f4481dfd16015bf8c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4605a5e8688fc04d3deeb0aa177ad9ea') in 0.073930 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.216994 seconds.
-  path: Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Walk.FBX
-  artifactKey: Guid(59dbfb66512f63c4eb6e1e30e0603198) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Walk.FBX using Guid(59dbfb66512f63c4eb6e1e30e0603198) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea12cae6cf808cf08ec8bf69f3190ec4') in 0.072805 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Walk_InPlace.FBX
-  artifactKey: Guid(165698eac7ca81041ad603fc5a3afa55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Animations/Zombie@Z_Walk_InPlace.FBX using Guid(165698eac7ca81041ad603fc5a3afa55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9998a149cb1e0e127413cda5330e9372') in 0.078870 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 14.830697 seconds.
-  path: Assets/@Resources/Animations/Enemy/Zombie
-  artifactKey: Guid(79560599862a4bb4cabd545816c109ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Animations/Enemy/Zombie using Guid(79560599862a4bb4cabd545816c109ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e84043c568de4bc5f5c670f3a32e7c29') in 0.002565 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3.016578 seconds.
-  path: Assets/@Resources/Models/Zombie/Animations/Z_Attack.anim
-  artifactKey: Guid(de559bbb071ebfd40ab5af80881e75e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/Animations/Z_Attack.anim using Guid(de559bbb071ebfd40ab5af80881e75e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efd73b1c01e034e152a1b8111d029f8f') in 0.015034 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 44.027890 seconds.
-  path: Assets/@Resources/Prefabs/Characters/Enemy/EnemyBoss_01.prefab
-  artifactKey: Guid(9555be10bc2c2514d9d8c92f4bb8e90f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Prefabs/Characters/Enemy/EnemyBoss_01.prefab using Guid(9555be10bc2c2514d9d8c92f4bb8e90f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98f81d5d6a10affb6d1f8de2a7e60ca4') in 0.066576 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 14.361890 seconds.
-  path: Assets/@Resources/Models/Zombie/ScenePrefabs.unity
-  artifactKey: Guid(51c2b7bc917069942a0ac4a10bcabf01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/@Resources/Models/Zombie/ScenePrefabs.unity using Guid(51c2b7bc917069942a0ac4a10bcabf01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3aab85957acb78cc26bcebdb4e680a83') in 0.008564 seconds 
+  Time since last request: 48030.643638 seconds.
+  path: Assets/@Resources/Models/Ch10_nonPBR.fbx
+  artifactKey: Guid(a5f43d9b0c084934d9a1ef1acc1bd216) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/@Resources/Models/Ch10_nonPBR.fbx using Guid(a5f43d9b0c084934d9a1ef1acc1bd216) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '03564a689904408d63700efe6bb985a9') in 0.167932 seconds 

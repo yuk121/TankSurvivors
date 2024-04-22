@@ -87,7 +87,7 @@ public class UI_Base : MonoBehaviour
                 break;
             case Define.eUIEvent.PointerUp:
                 eventHandler.OnPointerUpHandler -= action;
-                eventHandler.OnPressedHandler += action;
+                eventHandler.OnPointerUpHandler += action;
                 break;
             case Define.eUIEvent.Drag:
                 eventHandler.OnDragHandler -= dragAction;
