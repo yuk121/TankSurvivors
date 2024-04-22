@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Prefab_Characters
+  m_EditorClassIdentifier: 
+  m_GroupName: Prefab_Characters
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 5a5fe5713d4e069498581a2c8483e4d0
+  m_SerializeEntries:
+  - m_GUID: 3f787b99a12506246bb24dfa19f6894f
+    m_Address: Assets/@Resources/Prefabs/Characters/Enemy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: c0d22bb02d63fca458213b3139cf9ef9
+    m_Address: Assets/@Resources/Prefabs/Characters/Player
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 58c99366287f4044ca84315801a0ff42, type: 2}
+    - {fileID: 11400000, guid: 1edd0998a077a6142b20487ed22f1fbb, type: 2}

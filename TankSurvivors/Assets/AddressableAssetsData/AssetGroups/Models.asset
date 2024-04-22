@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Models
+  m_EditorClassIdentifier: 
+  m_GroupName: Models
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 9dea8df96a694b940b710607791fd72e
+  m_SerializeEntries:
+  - m_GUID: 8b6b186fd4506a1429d0de8cccc72a6f
+    m_Address: Assets/@Resources/Models/Ch10_nonPBR.fbm
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: c27a3aa7db0afaf4f811bf1b1f6d68f2
+    m_Address: Assets/@Resources/Models/Pumpkinhulk L Shaw.fbm
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 7f7b8186700dc904398e713dea7aa245
+    m_Address: Assets/@Resources/Models/Warzombie F Pedroso.fbm
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1f254be679dbe624cb0045897e652c4f, type: 2}
+    - {fileID: 11400000, guid: 64becd6ff2dec534f8ccedf643664d67, type: 2}

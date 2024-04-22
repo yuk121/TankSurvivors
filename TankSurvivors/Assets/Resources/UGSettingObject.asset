@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65742e7a9b971e242888935dd58a15a7, type: 3}
+  m_Name: UGSettingObject
+  m_EditorClassIdentifier: 
+  ScriptURL: https://script.google.com/macros/s/AKfycbwimkwLvf9TGp-UlFRe3H27NS_riyb8SpnJaVWinCzEMXPnyZMZ41bBNkf4r3y4K6qI/exec
+  ScriptPassword: yuk121
+  GoogleFolderID: 1Vf_gWU8bdZ8DUnS3c1h_veVbIvwdrC1M
+  GenerateCodePath: Assets/UGS.Generated/Scripts/
+  DataPath: Assets/UGS.Generated/Resources/
+  RuntimeDataPath: UGS/UGS.Data/
+  CDN_URL: 
+  base64: 0

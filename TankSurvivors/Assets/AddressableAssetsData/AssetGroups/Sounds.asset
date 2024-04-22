@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Sounds
+  m_EditorClassIdentifier: 
+  m_GroupName: Sounds
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d408d9b736ba06f4f866517ec86534b3
+  m_SerializeEntries:
+  - m_GUID: 7ce4b67f7049a894a95fa6582a66e1ea
+    m_Address: Assets/@Resources/Sounds/Tank
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: eab495ad3f003b04b903a05a2e259f0c, type: 2}
+    - {fileID: 11400000, guid: fbe91424af39822408d514e08e0e0a95, type: 2}
