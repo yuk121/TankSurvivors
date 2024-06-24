@@ -36,14 +36,8 @@ public class UI_Joystick : UI_Base
         _handler.SetActive(false);
         _joystickBG.SetActive(false);
 
-        _joystickRadius = _joystickBG.GetComponent<RectTransform>().localScale.y / 2;
+        _joystickRadius = _joystickBG.GetComponent<RectTransform>().sizeDelta.y / 2;
         return true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     #region Event
@@ -63,6 +57,8 @@ public class UI_Joystick : UI_Base
         _handler.transform.position = _touchPos;
         _moveDir = Vector2.zero;
 
+        Managers.Instance.ObjectManager.Player.MoveDir = _moveDir;
+
         _handler.SetActive(false);
         _joystickBG.SetActive(false);
     }
@@ -76,7 +72,9 @@ public class UI_Joystick : UI_Base
         _moveDir = touchDir.normalized;
 
         Vector2 newPos = _touchPos + (_moveDir * moveDist);
-        _handler.transform.position = newPos;
+        _handler.transform.position = newPos; // 조이스틱 위치 갱신
+
+        Managers.Instance.ObjectManager.Player.MoveDir = _moveDir;
     }
 
     #endregion

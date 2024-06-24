@@ -18,12 +18,12 @@ MonoBehaviour:
   m_GUID: 5a5fe5713d4e069498581a2c8483e4d0
   m_SerializeEntries:
   - m_GUID: 3f787b99a12506246bb24dfa19f6894f
-    m_Address: Assets/@Resources/Prefabs/Characters/Enemy
+    m_Address: EnemyPrefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
   - m_GUID: c0d22bb02d63fca458213b3139cf9ef9
-    m_Address: Assets/@Resources/Prefabs/Characters/Player
+    m_Address: PlayerPrefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload

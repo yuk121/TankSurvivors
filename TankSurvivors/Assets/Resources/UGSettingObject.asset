@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65742e7a9b971e242888935dd58a15a7, type: 3}
   m_Name: UGSettingObject
   m_EditorClassIdentifier: 
-  ScriptURL: https://script.google.com/macros/s/AKfycbwimkwLvf9TGp-UlFRe3H27NS_riyb8SpnJaVWinCzEMXPnyZMZ41bBNkf4r3y4K6qI/exec
+  ScriptURL: https://script.google.com/macros/s/AKfycbyA8VSq2PEor9wN2RMTkcqZtlbct_ZfLFP5f0FnEWJs2cIeyeHrZ3lzsMpZ2985B62f/exec
   ScriptPassword: yuk121
   GoogleFolderID: 1Vf_gWU8bdZ8DUnS3c1h_veVbIvwdrC1M
   GenerateCodePath: Assets/UGS.Generated/Scripts/

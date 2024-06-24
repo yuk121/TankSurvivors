@@ -56,17 +56,17 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\GoogleDriveExplorerGUI.cs" />
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\DefineSymbolManager.cs" />
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\EditorPrefsManager.cs" />
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\IOExtention.cs" />
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\UGSSetting.cs" />
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\EnumGeneratorGUI.cs" />
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\CachedResource.cs" />
-    <Compile Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\Modules\Core\SecurityBuildPipeline.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\GoogleDriveExplorerGUI.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\DefineSymbolManager.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\EditorPrefsManager.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\IOExtention.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\UGSSetting.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\EnumGeneratorGUI.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\SingleModules\CachedResource.cs" />
+    <Compile Include="Assets\uni-google-sheets-main\src\Editor\Modules\Core\SecurityBuildPipeline.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\ThirdParty\uni-google-sheets-main\src\Editor\CAH.UnityGoogleSheets.Editor.asmdef" />
+    <None Include="Assets\uni-google-sheets-main\src\Editor\CAH.UnityGoogleSheets.Editor.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -53,21 +53,34 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\@Scripts\Controller\MapTileController.cs" />
     <Compile Include="Assets\@Scripts\Utils\Define.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
+    <Compile Include="Assets\UGS.Generated\Scripts\StageDataTable.StageInfo.cs" />
+    <Compile Include="Assets\@Scripts\Managers\ResourceManager.cs" />
+    <Compile Include="Assets\@Scripts\Managers\ObjectManager.cs" />
+    <Compile Include="Assets\@Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\@Scripts\Managers\Managers.cs" />
+    <Compile Include="Assets\@Scripts\Controller\CameraController.cs" />
+    <Compile Include="Assets\@Scripts\Controller\CreatureController.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
+    <Compile Include="Assets\@Scripts\Data\TestLoad.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Base.cs" />
+    <Compile Include="Assets\@Scripts\Managers\PoolManager.cs" />
+    <Compile Include="Assets\@Scripts\Controller\BaseController.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
+    <Compile Include="Assets\@Scripts\Scenes\InGame\GameScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\ThirdParty\MoreMountains\MMInterface\Common\Shaders\GreyScale.shader" />
+    <None Include="Assets\uni-google-sheets-main\src\link.xml" />
     <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\ThirdParty\MoreMountains\MMInterface\Common\Shaders\VerticalGradient.shader" />
     <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
@@ -858,9 +871,17 @@
       <Project>{08C4612E-10CC-8632-75C0-9090C886C406}</Project>
       <Name>MoreMountains.InventoryEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="CAH.UnityGoogleSheets.csproj">
+      <Project>{03DF9569-1E66-0A6D-7025-DA688CFD6F93}</Project>
+      <Name>CAH.UnityGoogleSheets</Name>
+    </ProjectReference>
     <ProjectReference Include="MoreMountains.Tools.csproj">
       <Project>{2C8834C8-92BF-D974-FE25-871989A75B6A}</Project>
       <Name>MoreMountains.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="CAH.UnityGoogleSheets.Editor.csproj">
+      <Project>{2EE1900C-91F5-CDE4-FBB9-76E50D7FC8C0}</Project>
+      <Name>CAH.UnityGoogleSheets.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="MoreMountains.Feedbacks.Cinemachine.csproj">
       <Project>{D512A4EC-253B-E83C-BBD8-E6BB43544263}</Project>

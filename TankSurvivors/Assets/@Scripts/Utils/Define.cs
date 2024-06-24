@@ -14,4 +14,10 @@ public static class Define
         BeginDrag,
         EndDrag
     }
+
+    public enum eObjectType
+    {
+        Player,
+        Enemy
+    }
 }
