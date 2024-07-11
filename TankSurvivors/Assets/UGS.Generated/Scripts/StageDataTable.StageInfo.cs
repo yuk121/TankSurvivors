@@ -60,9 +60,6 @@ namespace StageDataTable
 		public System.Int32 StageLevel;
 		public System.String StagePrefab;
 		public System.String StageLocalizeName;
-		public System.Int32 StageWaveMaxCount;
-		public System.Collections.Generic.List<Int32> StageEliteSpwanWave;
-		public System.Int32 WaveMonsterCount;
 		public System.Int32 FirstClearRewardGold;
 		public System.Int32 FirstClearRewardExp;
 		public System.Int32 ClearRewardGold;
@@ -70,7 +67,6 @@ namespace StageDataTable
 		public System.Collections.Generic.List<String> SpawnMonster;
 		public System.Collections.Generic.List<String> SpawnElite;
 		public System.String SpawnBoss;
-		public System.Single Time;
   
 
 #region fuctions

@@ -14,9 +14,12 @@ public class TestLoad : MonoBehaviour
 
     void Start()
     {
-        foreach (var value in StageDataTable.StageInfo.StageInfoList)
-        {
-            Debug.Log(value.Stageindex + "," + value.StageLevel + "," + value.StageLocalizeName);
-        }
+        //foreach (var value in WaveDataTable.Data.DataList)
+        //{
+        //    for (int i = 0; i < value.SpawnMonsterId.Count; i++)
+        //    {
+        //        Debug.Log(value.SpawnMonsterId[i]);
+        //    }
+        //}
     }
 }

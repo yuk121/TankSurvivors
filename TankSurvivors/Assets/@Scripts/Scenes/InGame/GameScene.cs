@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameScene : MonoBehaviour
 {
+    SpawningPools _spawnPools;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +19,12 @@ public class GameScene : MonoBehaviour
     }
     private void StartLoaded()
     {
-        var player = Managers.Instance.ObjectManager.Spawn<PlayerController>(Vector3.zero);
+        int userCharId = 10001;
+        var player = Managers.Instance.ObjectManager.Spawn<PlayerController>(Vector3.zero, userCharId);
         Camera.main.GetComponent<CameraController>().Init(player.transform);
+
+        _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
+        _spawnPools.StartSpawn();
     }
 
     // Update is called once per frame

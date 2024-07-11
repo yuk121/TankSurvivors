@@ -31,6 +31,7 @@ public class Managers : MonoBehaviour
                 DontDestroyOnLoad(go);
                 _instance = go.GetComponent<Managers>();
 
+                Init();
             }
      
             return _instance;
@@ -45,8 +46,23 @@ public class Managers : MonoBehaviour
     private ObjectManager _objectManager = new ObjectManager();
     public ObjectManager ObjectManager { get { return Instance?._objectManager; } }
 
-    public ResourceManager _resourceManager = new ResourceManager();
-    public ResourceManager ResourceManager { get { return Instance?._resourceManager; } }   
+    private ResourceManager _resourceManager = new ResourceManager();
+    public ResourceManager ResourceManager { get { return Instance?._resourceManager; } }
+
+    private DataTableManager _dataTableManager = new DataTableManager();
+
+    public DataTableManager DataTableManager { get { return Instance?._dataTableManager; } }
+
+    private GameManager _gameManager = new GameManager();    
+    public GameManager GameManager { get { return Instance?._gameManager; } }
+
+
     // Core
- 
+    private UserDataManager _userDataManager = new UserDataManager();
+    public UserDataManager UserDataManager { get {  return Instance?._userDataManager; } }
+
+    public static void Init()
+    {
+        _instance._dataTableManager.Init();
+    }
 }

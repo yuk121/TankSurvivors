@@ -99,4 +99,16 @@ public static class Utils
         return go != null && go.activeSelf;
     }
 
+    public static Vector3 GenerateMonsterSpwanPosition(Vector3 PlayerPos, float minDis, float maxDis)
+    {
+        float angle = Random.Range(-1,360) *Mathf.Deg2Rad;
+        float distance = Random.Range(minDis,maxDis);
+
+        float disX = Mathf.Cos(angle) * distance;
+        float disZ = Mathf.Sin(angle) * distance;
+
+        Vector3 spawnPos = PlayerPos + new Vector3(disX, 0f, disZ);
+
+        return spawnPos;
+    }
 }

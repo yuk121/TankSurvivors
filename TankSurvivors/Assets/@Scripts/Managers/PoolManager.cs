@@ -17,7 +17,7 @@ public class Pool
             if(_root == null)
             {
                 GameObject go = new GameObject();
-                go.name = "ObjectPool Root";
+                go.name = $"{_prefab.name} Pooling Root";
 
                 _root = go.transform;
             }
@@ -46,7 +46,7 @@ public class Pool
     {
         GameObject go = GameObject.Instantiate(_prefab);
 
-        go.transform.parent = _root;
+        go.transform.parent = Root;
         go.name = _prefab.name;
 
         return go;

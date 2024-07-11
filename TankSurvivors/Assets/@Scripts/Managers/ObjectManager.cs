@@ -12,7 +12,18 @@ public class ObjectManager
 
         if(type == typeof(PlayerController))
         {
-            GameObject go = Managers.Instance.ResourceManager.Instantiate("PlayerPrefab/PlayerTank.prefab");
+            string charPrefabPath = string.Empty;
+
+            foreach(var Data in CreatureDataTable.Data.DataList)
+            {
+                if(implementID == Data.CreatureId)
+                {
+                    charPrefabPath = $"PlayerPrefab/{Data.PrefabName}.prefab";
+                    break;
+                }
+            }
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(charPrefabPath);
             go.name = "Player";
             go.transform.position = position;
 
@@ -21,6 +32,30 @@ public class ObjectManager
             pc.Init();
 
             return pc as T;
+        }
+
+        if(type == typeof(MonsterController))
+        {
+            string monsterPrefabPath = string.Empty;
+            string monsterName = string.Empty;
+
+            foreach (var Data in CreatureDataTable.Data.DataList)
+            {
+                if (implementID == Data.CreatureId)
+                {
+                    monsterPrefabPath = $"EnemyPrefab/{Data.PrefabName}.prefab";
+                    monsterName = Data.PrefabName;
+                    break;
+                }
+            }
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling : true);
+            go.name = monsterName;
+            go.transform.position = position;
+
+            MonsterController mon = Utils.GetOrAddComponent<MonsterController>(go);
+            mon.Init();
+
+            return mon as T;
         }
 
         return null;

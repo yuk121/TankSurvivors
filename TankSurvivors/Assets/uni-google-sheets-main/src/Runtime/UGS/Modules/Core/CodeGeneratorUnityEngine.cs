@@ -201,7 +201,16 @@ namespace @namespace
                             Debug.LogError($"<color=#00ff00><b>error field =>:</b></color> {targetField} : {sheetInfo.sheetTypes[i]}");
                             throw new TypeParserNotFoundException("Type Parser Not Found, You made your own type parser? check custom type document on gitbook document.");
                         }
-                        builder.AppendLine($"\t\tpublic {outType.Namespace}.{GetCSharpRepresentation(TypeMap.StrMap[types[i]], true)} {fieldNames[i]};");
+
+                        if(outType.Namespace != null)
+                        {
+                            builder.AppendLine($"\t\tpublic {outType.Namespace}.{GetCSharpRepresentation(TypeMap.StrMap[types[i]], true)} {fieldNames[i]};");
+                        }
+                        else
+                        {
+                            // CutsomType
+                            builder.AppendLine($"\t\tpublic {GetCSharpRepresentation(TypeMap.StrMap[types[i]], true)} {fieldNames[i]};");
+                        }
                     }
                     else
                     {
