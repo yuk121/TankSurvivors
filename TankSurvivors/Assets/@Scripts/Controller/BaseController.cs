@@ -24,10 +24,16 @@ public class BaseController : MonoBehaviour
         Init();
     }
 
+    private void FixedUpdate()
+    {
+        FixedUpdateController();
+    }
+
     private void Update()
     {
         UpdateController();
     }
 
+    public virtual void FixedUpdateController() { }
     public virtual void UpdateController() { }
 }

@@ -14,7 +14,8 @@ public class PlayerController : CreatureController
 
     private Vector3 _prevBodyDir = Vector3.zero;
     private Vector3 _turretDir = Vector3.zero;
-    private CharacterController _characterController;
+    //  private CharacterController _characterController;
+    private Rigidbody _tankRigid = null;
 
     // Start is called before the first frame update
 
@@ -24,14 +25,20 @@ public class PlayerController : CreatureController
             return false;
 
         _speed = 5f;
-        _characterController = GetComponent<CharacterController>(); 
+        //_characterController = GetComponent<CharacterController>(); 
+        _tankRigid = GetComponent<Rigidbody>();
         return true;
+    }
+
+    public override void FixedUpdateController()
+    {
+        base.FixedUpdateController();
+        PlayerMove();
     }
 
     public override void UpdateController()
     {
-        base.UpdateController();
-        PlayerMove();
+        base.UpdateController();  
         CollectEnv();
     }
 
@@ -40,11 +47,13 @@ public class PlayerController : CreatureController
         Vector3 moveDir = Managers.Instance.ObjectManager.Player.MoveDir;
         Vector3 dir = moveDir * _speed * Time.deltaTime;
 
-        //Vector3 newPos = new Vector3(transform.position.x + dir.x, transform.position.y, transform.position.z + dir.y);
-        //transform.position = newPos;
+        Vector3 newPos = new Vector3(transform.position.x + dir.x, transform.position.y, transform.position.z + dir.y);
+       // transform.position = newPos;
 
-        Vector3 dir3D = new Vector3(dir.x, 0f, dir.y);
-        _characterController.Move(dir3D);
+        _tankRigid.MovePosition(newPos);
+
+        //Vector3 dir3D = new Vector3(dir.x, 0f, dir.y);
+       // _characterController.Move(dir3D);
         
         if(moveDir != Vector3.zero)
             _tankBody.rotation = Quaternion.Euler(0, Mathf.Atan2(moveDir.x, moveDir.y) * Mathf.Rad2Deg, 0);
