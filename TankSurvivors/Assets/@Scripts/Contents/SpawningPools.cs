@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SpawningPools : MonoBehaviour
 {
-    float spawnInterval = 0.2f;
     Coroutine spawnCor = null;
 
     public bool SpawnStop { get; set; } = false;

@@ -70,7 +70,7 @@ public class Pool
 
 
 
-public class PoolManager : MonoBehaviour
+public class PoolManager
 {
     Dictionary<string, Pool> _pools = new Dictionary<string, Pool>();
 
