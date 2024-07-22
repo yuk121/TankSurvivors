@@ -8,6 +8,9 @@ public class CreatureController : BaseController
     protected float _speed = 1.0f;
     protected int _hp = 100;
     protected int _maxHp = 100;
+    protected Define.eCreatureAnimState _creatureAnimState;
+    protected Animator _animator;
+
 
     public override bool Init()
     {

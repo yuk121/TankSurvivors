@@ -39,4 +39,15 @@ public static class Define
         BeginDrag,
         EndDrag
     }
+
+    public enum eCreatureAnimState
+    {
+        Idle = 0,
+        Walk,
+        Dead,
+        Attack,
+        Skill01,
+        Max
+    }
 }
+
