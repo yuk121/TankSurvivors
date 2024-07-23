@@ -42,11 +42,12 @@ public static class Define
 
     public enum eCreatureAnimState
     {
+        None = -1,
         Idle = 0,
         Walk,
         Dead,
         Attack,
-        Skill01,
+        Skill_01,
         Max
     }
 }

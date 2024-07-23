@@ -8,13 +8,14 @@ public class CreatureController : BaseController
     protected float _speed = 1.0f;
     protected int _hp = 100;
     protected int _maxHp = 100;
-    protected Define.eCreatureAnimState _creatureAnimState;
-    protected Animator _animator;
-
+    protected AnimationController _animController;
 
     public override bool Init()
     {
         base.Init();
+
+        Utils.GetOrAddComponent<AnimationController>(gameObject);
+
 
         return true;
     }
