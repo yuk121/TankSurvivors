@@ -23,7 +23,7 @@ public class BaseController : MonoBehaviour
     {
         Init();
     }
-
+    
     private void FixedUpdate()
     {
         FixedUpdateController();

@@ -5,17 +5,20 @@ using static Define;
 
 public class CreatureController : BaseController
 {
-    protected float _speed = 1.0f;
-    protected int _hp = 100;
-    protected int _maxHp = 100;
+    protected int _hp;
+    protected CreatureDataTable.Data _creatureData;
+    public CreatureDataTable.Data CreatureData 
+    { 
+        get => _creatureData;
+        set => _creatureData = value; 
+    }
     protected AnimationController _animController;
 
     public override bool Init()
     {
         base.Init();
 
-        Utils.GetOrAddComponent<AnimationController>(gameObject);
-
+        _animController = Utils.GetOrAddComponent<AnimationController>(gameObject);
 
         return true;
     }

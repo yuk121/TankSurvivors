@@ -53,7 +53,7 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\@Scripts\Controller\MapTileController.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
     <Compile Include="Assets\UGS.Generated\Scripts\InGameLevelDataTable.Data.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
+    <Compile Include="Assets\@Scripts\Controller\AnimationController.cs" />
     <Compile Include="Assets\UGS.Generated\Scripts\StageDataTable.StageInfo.cs" />
     <Compile Include="Assets\@Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\UGS.Generated\Scripts\SkillDataTable.Data.cs" />
@@ -87,7 +88,6 @@
     <Compile Include="Assets\UGS.Generated\Scripts\CreatureDataTable.Data.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Scenes\InGame\GameScene.cs" />
-    <Compile Include="Assets\@Scripts\Controller\AnimationController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

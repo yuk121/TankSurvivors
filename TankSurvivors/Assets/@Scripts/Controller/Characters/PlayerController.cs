@@ -24,7 +24,6 @@ public class PlayerController : CreatureController
         if(base.Init() == false)
             return false;
 
-        _speed = 5f;
         //_characterController = GetComponent<CharacterController>(); 
         _tankRigid = GetComponent<Rigidbody>();
         return true;
@@ -45,7 +44,7 @@ public class PlayerController : CreatureController
     private void PlayerMove()
     {
         Vector3 moveDir = Managers.Instance.ObjectManager.Player.MoveDir;
-        Vector3 dir = moveDir * _speed * Time.deltaTime;
+        Vector3 dir = moveDir * CreatureData.MoveSpeed * Time.deltaTime;
 
         Vector3 newPos = new Vector3(transform.position.x + dir.x, transform.position.y, transform.position.z + dir.y);
        // transform.position = newPos;

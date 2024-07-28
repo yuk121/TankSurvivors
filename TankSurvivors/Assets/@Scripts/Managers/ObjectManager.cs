@@ -13,12 +13,14 @@ public class ObjectManager
         if(type == typeof(PlayerController))
         {
             string charPrefabPath = string.Empty;
+            CreatureDataTable.Data data = null;
 
             foreach(var Data in CreatureDataTable.Data.DataList)
             {
                 if(implementID == Data.CreatureId)
                 {
                     charPrefabPath = $"PlayerPrefab/{Data.PrefabName}.prefab";
+                    data = Data;
                     break;
                 }
             }
@@ -31,6 +33,8 @@ public class ObjectManager
             Player = pc;
             pc.Init();
 
+            pc.CreatureData = data;
+
             return pc as T;
         }
 
@@ -38,6 +42,7 @@ public class ObjectManager
         {
             string monsterPrefabPath = string.Empty;
             string monsterName = string.Empty;
+            CreatureDataTable.Data data = null;
 
             foreach (var Data in CreatureDataTable.Data.DataList)
             {
@@ -45,6 +50,8 @@ public class ObjectManager
                 {
                     monsterPrefabPath = $"EnemyPrefab/{Data.PrefabName}.prefab";
                     monsterName = Data.PrefabName;
+                    data = Data;
+
                     break;
                 }
             }
@@ -54,6 +61,9 @@ public class ObjectManager
 
             MonsterController mon = Utils.GetOrAddComponent<MonsterController>(go);
             mon.Init();
+
+            // 크리쳐 정보
+            mon.CreatureData = data;
 
             return mon as T;
         }

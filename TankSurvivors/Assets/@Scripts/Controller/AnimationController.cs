@@ -7,6 +7,11 @@ public class AnimationController : MonoBehaviour
     private Animator _animator;
     private Define.eCreatureAnimState _prevAnimState = Define.eCreatureAnimState.None;
 
+    public void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     public void Pause()
     {
         _animator.enabled = false;
@@ -17,7 +22,7 @@ public class AnimationController : MonoBehaviour
         _animator.enabled = true;
     }
 
-    public void Play(Define.eCreatureAnimState parameter, bool isFade)
+    public void Play(Define.eCreatureAnimState parameter, bool isBlend = false)
     {
         if (_prevAnimState != Define.eCreatureAnimState.None)
         {
@@ -26,7 +31,7 @@ public class AnimationController : MonoBehaviour
         }
 
         // 블렌드 트리를 사용하는 경우
-        if (isFade == true)
+        if (isBlend == true)
         {
             _animator.SetTrigger(parameter.ToString());
         }
