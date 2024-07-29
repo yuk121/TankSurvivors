@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 1
-  controlID: 126
+  controlID: 134
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 127
+  controlID: 135
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -671,9 +671,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.09812164, y: -13.996071, z: 11.400276}
+    m_Target: {x: -8.837374, y: -1.0502377, z: 19.718256}
     speed: 2
-    m_Value: {x: 0.09812164, y: -13.996071, z: 11.400276}
+    m_Value: {x: -8.837374, y: -1.0502377, z: 19.718256}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -720,13 +720,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.12994164, y: -0.8618594, z: 0.27686137, w: 0.40462416}
+    m_Target: {x: 0.19321185, y: -0.25224707, z: 0.05150446, w: 0.94681144}
     speed: 2
-    m_Value: {x: 0.12993778, y: -0.8618338, z: 0.27685314, w: 0.40461215}
+    m_Value: {x: 0.19320568, y: -0.25223902, z: 0.051502813, w: 0.9467812}
   m_Size:
-    m_Target: 29.902838
+    m_Target: 42.79056
     speed: 2
-    m_Value: 31.311872
+    m_Value: 39.257397
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -905,23 +905,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 6a74feff
-      m_LastClickedID: -101270
-      m_ExpandedIDs: 1076feff4a6cffff9c71ffffbef9ffff32fbffff74680000
+      m_SelectedIDs: 90680000
+      m_LastClickedID: 26768
+      m_ExpandedIDs: 6226fdff6a26fdffde28fdff3829fdff3c29fdff4029fdff5429fdffb849fdfff24afdffa24cfdffb8e8fdffb039feffae33ffff7ef3ffff30fbffff32fbffff7468000090680000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: UI_Joystick
+        m_OriginalName: UI_Joystick
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 26732
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 11}
       m_SearchString: 
@@ -973,22 +973,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/@Scripts/Managers
+    - Assets/@Resources/Prefabs/Characters/Player
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/@Scripts/Managers
+  - Assets/@Resources/Prefabs/Characters/Player
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\0dudd\Documents\GitHub\TankSurvivors\TankSurvivors
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: f26f0000
-    m_LastClickedID: 28658
-    m_ExpandedIDs: 00000000366f0000b86f0000ee6f000000ca9a3b
+    m_SelectedIDs: 8ea10000
+    m_LastClickedID: 41358
+    m_ExpandedIDs: 00000000366f0000b46f0000b86f000078a1000082a1000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1047,15 +1047,15 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000aef20000866900000000000032940000a29800005c9500005e950000609500006295000064950000f6810000669500005a95000076810000e4db0000e8b10000b44502000c7300001a710000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: PlayerController
-      m_OriginalName: PlayerController
+      m_Name: SubTank
+      m_OriginalName: SubTank
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 10604
+      m_UserData: 34066
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0

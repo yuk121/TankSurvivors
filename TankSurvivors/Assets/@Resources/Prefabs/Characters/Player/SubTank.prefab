@@ -42319,7 +42319,6 @@ GameObject:
   m_Component:
   - component: {fileID: 141769261663588872}
   - component: {fileID: 141769261663588879}
-  - component: {fileID: 141769261663588877}
   - component: {fileID: 141769261663588876}
   m_Layer: 13
   m_Name: SubTank
@@ -42362,26 +42361,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &141769261663588877
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141769261663588977}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1
-  m_Radius: 1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 1.5, z: 2}
+  m_Center: {x: 0, y: -0.33, z: 0}
 --- !u!54 &141769261663588876
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -42396,7 +42377,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &141769261665784432
 GameObject:
