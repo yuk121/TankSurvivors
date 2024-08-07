@@ -15,7 +15,8 @@ public class MonsterController : CreatureController
     PlayerController _target = null;
     Transform _targetTrans = null;
 
-    //test
+    // Attack
+    float _detectDistance = 1f;
     float _attackCoolTime = 5f;
     float _curTime = 0f;
 
@@ -71,9 +72,16 @@ public class MonsterController : CreatureController
     protected virtual void UpdateIdle() { }
     protected virtual void UpdateWalk() { }
     protected virtual void UpdateDead() { }
-    protected virtual void UpdateAttack() 
+    protected virtual void UpdateAttack()
     {
-        CheckPlayerNear();
+        _curTime += Time.deltaTime;
+
+        // 일정 시간마다 공격
+        if (_curTime >= _attackCoolTime)
+        {
+            CheckPlayerNear();
+            _curTime = 0;
+        }
     }
     protected virtual void UpdateSkill_01() { }
 
@@ -103,22 +111,17 @@ public class MonsterController : CreatureController
     private void CheckPlayerNear()
     {
         RaycastHit rayHit = new RaycastHit();
-        bool isNear = Physics.Raycast(_rayPos.position, _trans.forward, out rayHit, 1f, 1 << LayerMask.NameToLayer("Player"));
+        bool isNear = Physics.Raycast(_rayPos.position, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
 
         Debug.DrawRay(_rayPos.position, _trans.forward, Color.red);
 
+        // 현재 문제 : 감지 후 공격 모션 시작 -> 밀려서 감지가 풀림 -> 걷기 모션 시작 -> 빠르게 감지가 됨 -> 공격모션 시작 (반복 시 애니메이션 이상하게 보임)
+
         if (isNear)
         {
-            _curTime += Time.deltaTime;
-
-            if (_firstDetect == true || _curTime >= _attackCoolTime)
-            {
-                // 가까이 있는 경우 Walk -> Attack으로 변경
-                _creaturState = Define.eCreatureAnimState.Attack;
-                _animController.Play(Define.eCreatureAnimState.Attack);
-                _firstDetect = false;
-                _curTime = 0;
-            }
+            // 가까이 있는 경우 Walk -> Attack으로 변경
+            _creaturState = Define.eCreatureAnimState.Attack;
+            _animController.Play(Define.eCreatureAnimState.Attack);
         }
         else
         {
@@ -127,9 +130,26 @@ public class MonsterController : CreatureController
             {
                 _creaturState = Define.eCreatureAnimState.Walk;
                 _animController.Play(Define.eCreatureAnimState.Walk);
-                _firstDetect = true;
+
                 _curTime = 0;
             }
+        }
+    }
+
+    // 공격 애니메이션 플레이 시 등록된 이벤트
+    public void AnimEvent_Attack()
+    {
+        // 공격 모션이 적절한 타이밍에 다시 한번 거리 체크
+        RaycastHit rayHit = new RaycastHit();
+        bool isNear = Physics.Raycast(_rayPos.position, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
+
+        if(isNear) // 공격 판정 성공
+        {
+
+        }
+        else // 공격 판정 실패
+        {
+
         }
     }
 }
