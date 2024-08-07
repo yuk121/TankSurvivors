@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectManager
 {
     public PlayerController Player { get; private set; }
+    public HashSet<MonsterController> Monsters { get; } = new HashSet<MonsterController>();
 
     public T Spawn<T>(Vector3 position, int implementID = 0) where T :BaseController
     {
@@ -64,6 +65,9 @@ public class ObjectManager
 
             // 크리쳐 정보
             mon.CreatureData = data;
+
+            // 몬스터 HashSet에 추가하여 관리
+            Monsters.Add(mon);
 
             return mon as T;
         }

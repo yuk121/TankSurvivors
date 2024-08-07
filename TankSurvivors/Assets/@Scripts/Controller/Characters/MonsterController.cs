@@ -5,6 +5,8 @@ using UnityEngine;
 public class MonsterController : CreatureController
 {
     // Monster Info
+    [SerializeField]
+    Transform _rayPos = null;
     Define.eCreatureAnimState _creaturState = Define.eCreatureAnimState.None;
     Transform _trans = null;
     Rigidbody _rb = null;
@@ -12,6 +14,13 @@ public class MonsterController : CreatureController
     // Player Info
     PlayerController _target = null;
     Transform _targetTrans = null;
+
+    //test
+    float _attackCoolTime = 5f;
+    float _curTime = 0f;
+
+    bool _firstDetect = true;
+
 
     public Define.eCreatureAnimState CreatureState
     {
@@ -62,7 +71,10 @@ public class MonsterController : CreatureController
     protected virtual void UpdateIdle() { }
     protected virtual void UpdateWalk() { }
     protected virtual void UpdateDead() { }
-    protected virtual void UpdateAttack() { }
+    protected virtual void UpdateAttack() 
+    {
+        CheckPlayerNear();
+    }
     protected virtual void UpdateSkill_01() { }
 
 
@@ -83,5 +95,41 @@ public class MonsterController : CreatureController
 
         _rb.MovePosition(monPos);
         _trans.LookAt(_targetTrans);
+      
+        CheckPlayerNear();
+    }
+
+    // 플레이어가 주위에 있는지 탐색하는 메소드
+    private void CheckPlayerNear()
+    {
+        RaycastHit rayHit = new RaycastHit();
+        bool isNear = Physics.Raycast(_rayPos.position, _trans.forward, out rayHit, 1f, 1 << LayerMask.NameToLayer("Player"));
+
+        Debug.DrawRay(_rayPos.position, _trans.forward, Color.red);
+
+        if (isNear)
+        {
+            _curTime += Time.deltaTime;
+
+            if (_firstDetect == true || _curTime >= _attackCoolTime)
+            {
+                // 가까이 있는 경우 Walk -> Attack으로 변경
+                _creaturState = Define.eCreatureAnimState.Attack;
+                _animController.Play(Define.eCreatureAnimState.Attack);
+                _firstDetect = false;
+                _curTime = 0;
+            }
+        }
+        else
+        {
+            // 가까이 있다가 멀어지는 경우 Attack -> Walk로 변경
+            if (_creaturState == Define.eCreatureAnimState.Attack)
+            {
+                _creaturState = Define.eCreatureAnimState.Walk;
+                _animController.Play(Define.eCreatureAnimState.Walk);
+                _firstDetect = true;
+                _curTime = 0;
+            }
+        }
     }
 }

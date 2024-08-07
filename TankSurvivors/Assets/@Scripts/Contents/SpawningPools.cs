@@ -39,10 +39,18 @@ public class SpawningPools : MonoBehaviour
         while(true)
         {
             int spawnMonsterId = -1;
+            int onceSpawnCount = waveInfo.OnceSpawnCount;
 
+            // 테스트용 (한마리만 소환)
+            //onceSpawnCount = 1;
+
+            //if (Managers.Instance.ObjectManager.Monsters.Count > 0)
+            //    break;
+
+            // 몬스터를 주기적으로 소환
             if (waveInfo.MonsterSpawnRate.Count == 1)
             {
-                for (int i = 0; i < waveInfo.OnceSpawnCount; i++)
+                for (int i = 0; i < onceSpawnCount; i++)
                 {
                     Vector3 playerPos = Managers.Instance.ObjectManager.Player.transform.position;
                     Vector3 spawnPos = Utils.GenerateMonsterSpwanPosition(playerPos, 20f, 25f);
