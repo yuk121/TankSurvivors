@@ -23,9 +23,9 @@ public class Managers : MonoBehaviour
                 if (go == null)
                 {
                     go = new GameObject();
-                    go.name = "Managers";
+                    go.name = "Managers";             
 
-                    Utils.GetOrAddComponent<Managers>(go);
+                    go.AddComponent<Managers>();
                 }
 
                 DontDestroyOnLoad(go);
@@ -63,6 +63,6 @@ public class Managers : MonoBehaviour
 
     public static void Init()
     {
-        _instance._dataTableManager.Init();
+       
     }
 }

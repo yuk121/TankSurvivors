@@ -53,67 +53,39 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\@Scripts\Controller\MapTileController.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\EquipDataTable.Data.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\UserDataTable.Data.cs" />
+    <Compile Include="Assets\@Scripts\Utils\FSM.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableWave.cs" />
     <Compile Include="Assets\@Scripts\Utils\Define.cs" />
     <Compile Include="Assets\@Scripts\Contents\SpawningPools.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\SkillBase.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\InGameLevelDataTable.Data.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableStage.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
     <Compile Include="Assets\@Scripts\Controller\AnimationController.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\StageDataTable.StageInfo.cs" />
+    <Compile Include="Assets\@Scripts\Utils\DontDestory.cs" />
     <Compile Include="Assets\@Scripts\Managers\ResourceManager.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\SkillDataTable.Data.cs" />
+    <Compile Include="Assets\@Scripts\Utils\Singleton.cs" />
     <Compile Include="Assets\@Scripts\Managers\ObjectManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\Managers.cs" />
     <Compile Include="Assets\@Scripts\Controller\CameraController.cs" />
-    <Compile Include="Assets\@Scripts\Controller\CreatureController.cs" />
+    <Compile Include="Assets\@Scripts\Controller\Characters\CreatureController.cs" />
     <Compile Include="Assets\@Scripts\Managers\DataTableManager.cs" />
-    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
-    <Compile Include="Assets\@Scripts\Data\TestLoad.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\StoreDataTable.Data.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\MonsterController.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Base.cs" />
     <Compile Include="Assets\@Scripts\Managers\PoolManager.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\WaveDataTable.Data.cs" />
     <Compile Include="Assets\@Scripts\Controller\BaseController.cs" />
     <Compile Include="Assets\@Scripts\Managers\UserDataManager.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\DropItemDataTable.Data.cs" />
-    <Compile Include="Assets\UGS.Generated\Scripts\CreatureDataTable.Data.cs" />
+    <Compile Include="Assets\@Scripts\Utils\TableLoader.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Scenes\InGame\GameScene.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\ThirdParty\MoreMountains\MMInterface\Common\Shaders\GreyScale.shader" />
-    <None Include="Assets\uni-google-sheets-main\src\link.xml" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\ThirdParty\MoreMountains\MMInterface\Common\Shaders\VerticalGradient.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\ThirdParty\MoreMountains\InventoryEngine\readme.txt" />
-    <None Include="Assets\ThirdParty\MoreMountains\MMInterface\Styles\Mini\Fonts\Lato\OFL.txt" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\ThirdParty\MoreMountains\InventoryEngine\license.txt" />
-    <None Include="Assets\ThirdParty\MoreMountains\MMInterface\Common\Shaders\HorizontalGradient.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\ThirdParty\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+    <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -829,86 +801,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="MoreMountains.Feedbacks.HDRP.csproj">
-      <Project>{0BB54EB2-2504-D9BB-F7FF-C8B435165748}</Project>
-      <Name>MoreMountains.Feedbacks.HDRP</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.InventoryEngine.Editor.csproj">
-      <Project>{B14B6040-2136-D385-038F-E620F8BB76CE}</Project>
-      <Name>MoreMountains.InventoryEngine.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Tools.Editor.csproj">
-      <Project>{BFD5E65A-8E1D-DDB2-BF32-0527174A3527}</Project>
-      <Name>MoreMountains.Tools.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.Authorizations.csproj">
-      <Project>{7F2E974E-6B8D-0C86-AF89-4F760D5782AD}</Project>
-      <Name>MoreMountains.Feedbacks.Authorizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Interface.Editor.csproj">
-      <Project>{AAFBA4F1-AB6B-57DC-0FE9-FACE6F8928B7}</Project>
-      <Name>MoreMountains.Interface.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.URP.csproj">
-      <Project>{72DCF0D8-3713-5F89-116E-C1B74E81AD6B}</Project>
-      <Name>MoreMountains.Feedbacks.URP</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.MMTools.csproj">
-      <Project>{759F0270-439D-9175-6DD3-C778A8EB16E9}</Project>
-      <Name>MoreMountains.Feedbacks.MMTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.PostProcessing.csproj">
-      <Project>{1D9EC7B2-37F0-AF98-1D75-706C3EF2D048}</Project>
-      <Name>MoreMountains.Feedbacks.PostProcessing</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.NiceVibrations.csproj">
-      <Project>{663DB647-879E-1BE0-82AE-363649FC3267}</Project>
-      <Name>MoreMountains.Feedbacks.NiceVibrations</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.Editor.csproj">
-      <Project>{B811CE8F-5E2D-CC9D-053F-7658F21FE3DC}</Project>
-      <Name>MoreMountains.Feedbacks.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Interface.csproj">
-      <Project>{521564FE-42C8-52EA-BB53-E5F3F0177B18}</Project>
-      <Name>MoreMountains.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.csproj">
-      <Project>{7BA91849-EE56-4206-CB7A-E8EBC51690C0}</Project>
-      <Name>MoreMountains.Feedbacks</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponents.csproj">
-      <Project>{4AAD6C75-80AF-47BF-9600-BFB96BF8F440}</Project>
-      <Name>NavMeshComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.TextMeshPro.csproj">
-      <Project>{D5EBC371-BA34-E0B8-0652-165BAA4BD1BB}</Project>
-      <Name>MoreMountains.Feedbacks.TextMeshPro</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponentsEditor.csproj">
-      <Project>{1D0217F6-DA82-08D7-AADE-811E169D6836}</Project>
-      <Name>NavMeshComponentsEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.InventoryEngine.csproj">
-      <Project>{08C4612E-10CC-8632-75C0-9090C886C406}</Project>
-      <Name>MoreMountains.InventoryEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="CAH.UnityGoogleSheets.csproj">
-      <Project>{03DF9569-1E66-0A6D-7025-DA688CFD6F93}</Project>
-      <Name>CAH.UnityGoogleSheets</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Tools.csproj">
-      <Project>{2C8834C8-92BF-D974-FE25-871989A75B6A}</Project>
-      <Name>MoreMountains.Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="CAH.UnityGoogleSheets.Editor.csproj">
-      <Project>{2EE1900C-91F5-CDE4-FBB9-76E50D7FC8C0}</Project>
-      <Name>CAH.UnityGoogleSheets.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.Cinemachine.csproj">
-      <Project>{D512A4EC-253B-E83C-BBD8-E6BB43544263}</Project>
-      <Name>MoreMountains.Feedbacks.Cinemachine</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

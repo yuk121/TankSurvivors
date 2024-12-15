@@ -99,7 +99,14 @@ public static class Utils
         return go != null && go.activeSelf;
     }
 
-    public static Vector3 GenerateMonsterSpwanPosition(Vector3 PlayerPos, float minDis, float maxDis)
+    /// <summary>
+    /// 플레이어 주변의 좌표를 무작위적으로 가져오는 메소드
+    /// </summary>
+    /// <param name="PlayerPos"></param>
+    /// <param name="minDis"></param>
+    /// <param name="maxDis"></param>
+    /// <returns></returns>
+    public static Vector3 GenerateMonsterSpwanPosition(Vector3 playerPos, float minDis, float maxDis)
     {
         float angle = Random.Range(-1,360) *Mathf.Deg2Rad;
         float distance = Random.Range(minDis,maxDis);
@@ -107,8 +114,75 @@ public static class Utils
         float disX = Mathf.Cos(angle) * distance;
         float disZ = Mathf.Sin(angle) * distance;
 
-        Vector3 spawnPos = PlayerPos + new Vector3(disX, 0f, disZ);
+        Vector3 spawnPos = playerPos + new Vector3(disX, 0f, disZ);
 
         return spawnPos;
     }
+
+ 
+    /// <summary>
+    /// 3D 환경에서의 카메라 바깥 좌표 구해주는 메소드
+    /// </summary>
+    /// <param name="camera"></param>
+    /// <param name="minDis"></param>
+    /// <param name="maxDis"></param>
+    /// <returns></returns>
+    public static Vector3 GetCamOutPos3D(Camera camera ,float minDis, float maxDis)
+    {
+        Vector3 camPos = camera.transform.position;
+        float camSize = camera.orthographicSize;
+        float camSizeAspect = camSize * camera.aspect;
+        Vector3 outPos = Vector3.zero;
+
+        float width = 0f;
+        float height = 0f;
+
+        // 가로와 세로 중 카메라 범위 밖 좌표
+        int randMax = Random.Range(0, 2);
+
+        if (randMax == 0)  // 가로가 카메라 최소~최대 범위
+        {
+            // 카메라 밖 랜덤 좌표
+            float widthMin = camSizeAspect + minDis;
+            float widthMax = camSizeAspect + maxDis;
+            width = Random.Range(widthMin, widthMax);
+
+            // 카메라 안쪽 ~ 카메라 최대 오차 범위
+            height = Random.Range(0f, camSize + maxDis);
+        }
+        else if (randMax == 1)  // 세로가 카메라 최소~최대 범위
+        {
+            width = Random.Range(0f, camSizeAspect + maxDis);
+
+            float heightMin = camSize + minDis;
+            float heightMax = camSize + maxDis;
+            height = Random.Range(heightMin, heightMax);
+        }
+
+        // 양수 음수 랜덤
+        width = Random.Range(0, 2) > 0 ? width : -width;
+        height = Random.Range(0, 2) > 0 ? height : -height;
+
+        // 카메라의 기준으로 변경
+        width += camPos.x;
+        height += camPos.z;
+
+        // 가로와 세로 중 하나는 
+        outPos = new Vector3(width, 0, height);
+
+        return outPos;
+    }
+
+    public static T ToEnum<T>(string str)
+    {
+        // 받은 Enum을 배열로 반환
+        System.Array A = System.Enum.GetValues(typeof(T));
+        foreach (T t in A)
+        {
+            if (t.ToString().Equals(str))
+                return t;
+        }
+        return default(T);
+    }
+
 }

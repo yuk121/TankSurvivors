@@ -53,7 +53,7 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
@@ -829,86 +829,6 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{C407CBC1-0250-5B30-41C2-44FE1233F9C0}</Project>
       <Name>Assembly-CSharp</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.HDRP.csproj">
-      <Project>{0BB54EB2-2504-D9BB-F7FF-C8B435165748}</Project>
-      <Name>MoreMountains.Feedbacks.HDRP</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.InventoryEngine.Editor.csproj">
-      <Project>{B14B6040-2136-D385-038F-E620F8BB76CE}</Project>
-      <Name>MoreMountains.InventoryEngine.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Tools.Editor.csproj">
-      <Project>{BFD5E65A-8E1D-DDB2-BF32-0527174A3527}</Project>
-      <Name>MoreMountains.Tools.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.Authorizations.csproj">
-      <Project>{7F2E974E-6B8D-0C86-AF89-4F760D5782AD}</Project>
-      <Name>MoreMountains.Feedbacks.Authorizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Interface.Editor.csproj">
-      <Project>{AAFBA4F1-AB6B-57DC-0FE9-FACE6F8928B7}</Project>
-      <Name>MoreMountains.Interface.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.URP.csproj">
-      <Project>{72DCF0D8-3713-5F89-116E-C1B74E81AD6B}</Project>
-      <Name>MoreMountains.Feedbacks.URP</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.MMTools.csproj">
-      <Project>{759F0270-439D-9175-6DD3-C778A8EB16E9}</Project>
-      <Name>MoreMountains.Feedbacks.MMTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.PostProcessing.csproj">
-      <Project>{1D9EC7B2-37F0-AF98-1D75-706C3EF2D048}</Project>
-      <Name>MoreMountains.Feedbacks.PostProcessing</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.NiceVibrations.csproj">
-      <Project>{663DB647-879E-1BE0-82AE-363649FC3267}</Project>
-      <Name>MoreMountains.Feedbacks.NiceVibrations</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.Editor.csproj">
-      <Project>{B811CE8F-5E2D-CC9D-053F-7658F21FE3DC}</Project>
-      <Name>MoreMountains.Feedbacks.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Interface.csproj">
-      <Project>{521564FE-42C8-52EA-BB53-E5F3F0177B18}</Project>
-      <Name>MoreMountains.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.csproj">
-      <Project>{7BA91849-EE56-4206-CB7A-E8EBC51690C0}</Project>
-      <Name>MoreMountains.Feedbacks</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponents.csproj">
-      <Project>{4AAD6C75-80AF-47BF-9600-BFB96BF8F440}</Project>
-      <Name>NavMeshComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.TextMeshPro.csproj">
-      <Project>{D5EBC371-BA34-E0B8-0652-165BAA4BD1BB}</Project>
-      <Name>MoreMountains.Feedbacks.TextMeshPro</Name>
-    </ProjectReference>
-    <ProjectReference Include="NavMeshComponentsEditor.csproj">
-      <Project>{1D0217F6-DA82-08D7-AADE-811E169D6836}</Project>
-      <Name>NavMeshComponentsEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.InventoryEngine.csproj">
-      <Project>{08C4612E-10CC-8632-75C0-9090C886C406}</Project>
-      <Name>MoreMountains.InventoryEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="CAH.UnityGoogleSheets.csproj">
-      <Project>{03DF9569-1E66-0A6D-7025-DA688CFD6F93}</Project>
-      <Name>CAH.UnityGoogleSheets</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Tools.csproj">
-      <Project>{2C8834C8-92BF-D974-FE25-871989A75B6A}</Project>
-      <Name>MoreMountains.Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="CAH.UnityGoogleSheets.Editor.csproj">
-      <Project>{2EE1900C-91F5-CDE4-FBB9-76E50D7FC8C0}</Project>
-      <Name>CAH.UnityGoogleSheets.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="MoreMountains.Feedbacks.Cinemachine.csproj">
-      <Project>{D512A4EC-253B-E83C-BBD8-E6BB43544263}</Project>
-      <Name>MoreMountains.Feedbacks.Cinemachine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
