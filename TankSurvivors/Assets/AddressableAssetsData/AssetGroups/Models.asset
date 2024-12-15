@@ -16,22 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 9dea8df96a694b940b710607791fd72e
-  m_SerializeEntries:
-  - m_GUID: 8b6b186fd4506a1429d0de8cccc72a6f
-    m_Address: Assets/@Resources/Models/Ch10_nonPBR.fbm
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - preload
-  - m_GUID: c27a3aa7db0afaf4f811bf1b1f6d68f2
-    m_Address: Assets/@Resources/Models/Pumpkinhulk L Shaw.fbm
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - preload
-  - m_GUID: 7f7b8186700dc904398e713dea7aa245
-    m_Address: Assets/@Resources/Models/Warzombie F Pedroso.fbm
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - preload
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
   m_SchemaSet:

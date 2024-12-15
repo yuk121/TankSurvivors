@@ -11,16 +11,19 @@ public class GameScene : MonoBehaviour
     {
         Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<Object>("preload", (key, count, totlaCount) =>
         {
-            if(count == totlaCount) 
+            if (count == totlaCount)
             {
-                StartLoaded();       
+                Managers.Instance.DataTableManager.LoadData(() =>
+                {
+                    StartLoaded();
+                });
             }
         });
     }
     private void StartLoaded()
     {
         int userCharId = 10001;
-        var player = Managers.Instance.ObjectManager.Spawn<PlayerController>(Vector3.zero, userCharId);
+        var player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f,0.8f,0f), userCharId);
         Camera.main.GetComponent<CameraController>().Init(player.transform);
 
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);

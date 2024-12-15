@@ -7,21 +7,21 @@ public class ObjectManager
     public PlayerController Player { get; private set; }
     public HashSet<MonsterController> Monsters { get; } = new HashSet<MonsterController>();
 
-    public T Spawn<T>(Vector3 position, int implementID = 0) where T :BaseController
+    public T Spawn<T>(Vector3 position, int implementID = 0) where T : BaseController
     {
         System.Type type = typeof(T);
 
-        if(type == typeof(PlayerController))
+        if (type == typeof(PlayerController))
         {
             string charPrefabPath = string.Empty;
-            CreatureDataTable.Data data = null;
+            CreatureData creatrueData = null;
 
-            foreach(var Data in CreatureDataTable.Data.DataList)
+            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.Datas)
             {
-                if(implementID == Data.CreatureId)
+                if (implementID == Data.creatureId)
                 {
-                    charPrefabPath = $"PlayerPrefab/{Data.PrefabName}.prefab";
-                    data = Data;
+                    charPrefabPath = $"PlayerPrefab/{Data.prefabName}.prefab";
+                    creatrueData = Data;
                     break;
                 }
             }
@@ -34,37 +34,36 @@ public class ObjectManager
             Player = pc;
             pc.Init();
 
-            pc.CreatureData = data;
+            pc.CreatureData = creatrueData;
 
             return pc as T;
         }
 
-        if(type == typeof(MonsterController))
+        if (type == typeof(MonsterController))
         {
             string monsterPrefabPath = string.Empty;
-            string monsterName = string.Empty;
-            CreatureDataTable.Data data = null;
+            CreatureData creatrueData = null;
 
-            foreach (var Data in CreatureDataTable.Data.DataList)
+            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.Datas)
             {
-                if (implementID == Data.CreatureId)
+                if (implementID == Data.creatureId)
                 {
-                    monsterPrefabPath = $"EnemyPrefab/{Data.PrefabName}.prefab";
-                    monsterName = Data.PrefabName;
-                    data = Data;
+                    monsterPrefabPath = $"EnemyPrefab/{Data.prefabName}.prefab";
+                    creatrueData = Data;
 
                     break;
                 }
             }
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling : true);
-            go.name = monsterName;
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling: true);
+            go.name = creatrueData.creatureLocalName;
             go.transform.position = position;
 
             MonsterController mon = Utils.GetOrAddComponent<MonsterController>(go);
             mon.Init();
 
             // 크리쳐 정보
-            mon.CreatureData = data;
+            mon.CreatureData = creatrueData;
 
             // 몬스터 HashSet에 추가하여 관리
             Monsters.Add(mon);

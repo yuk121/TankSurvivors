@@ -16,12 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 52e4ca88d5b05a54a9910525b67e4688
-  m_SerializeEntries:
-  - m_GUID: 91e3a28e3338b184b93c398cd59ed7c9
-    m_Address: Assets/@Resources/Textures/Tank
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - preload
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
   m_SchemaSet:

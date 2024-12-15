@@ -5,43 +5,64 @@ using UnityEngine;
 public class MonsterController : CreatureController
 {
     // Monster Info
-    [SerializeField]
-    Transform _rayPos = null;
     Define.eCreatureAnimState _creaturState = Define.eCreatureAnimState.None;
-    Transform _trans = null;
-    Rigidbody _rb = null;
-
-    // Player Info
-    PlayerController _target = null;
-    Transform _targetTrans = null;
-
-    // Attack
-    float _detectDistance = 1f;
-    float _attackCoolTime = 5f;
-    float _curTime = 0f;
-
-    bool _firstDetect = true;
-
-
     public Define.eCreatureAnimState CreatureState
     {
         get { return _creaturState; }
         set { _creaturState = value; }
     }
+    Transform _trans = null;
+    Rigidbody _rb = null;
+
+
+    // Monster Info
+    readonly float CHECK_DELAY = 0.5f;
+    float _checkTime = 0f;
+    float _viewAngle = 60;
+
+    // Player Info
+    PlayerController _target = null;
+    Transform _targetTrans = null;
+
+    float _detectDistance = 1f;
+
+    // Attack Idle
+    float _lastAttackTime;
+    float _idleCoolTime = 1f;
+
+    bool _isTargetNear;
+    bool _attackWait = false;
+    bool _skillWait = false;
+
+
 
     public override bool Init()
     {
-        if(base.Init() == false) 
+        if (base.Init() == false)
             return false;
-       
-        // 초기화
-        _animController.Play(Define.eCreatureAnimState.Walk);
-        _creaturState = Define.eCreatureAnimState.Walk;
-        _objectType = eObjectType.Enemy;
+
+        _objectType = Define.eObjectType.Enemy;
         _trans = transform;
         _rb = GetComponent<Rigidbody>();
 
+        // 스킬
+        //_skillBook.SetSkillList(Define.CreatureData.SkillList);
+
+        InChase();
+
         return true;
+    }
+
+    public override void FixedUpdateController()
+    {
+        base.FixedUpdateController();
+
+        switch (_creaturState)
+        {
+            case Define.eCreatureAnimState.Chase:
+                ModifyChase();
+                break;
+        }
     }
 
     // 몬스터 상태에 맞춰서 메소드 실행
@@ -49,107 +70,148 @@ public class MonsterController : CreatureController
     {
         base.UpdateController();
 
-        switch(_creaturState)
+        switch (_creaturState)
         {
-            case Define.eCreatureAnimState.Idle:
-                UpdateIdle();
+            case Define.eCreatureAnimState.Skill:
+                ModifySkill();
                 break;
-            case Define.eCreatureAnimState.Walk:
-                UpdateWalk();
-                break;
-            case Define.eCreatureAnimState.Dead:
-                UpdateDead();
-                break;
-            case Define.eCreatureAnimState.Attack:
-                UpdateAttack();
-                break;
-            case Define.eCreatureAnimState.Skill_01:
-                UpdateSkill_01();
+            case Define.eCreatureAnimState.AttackIdle:
+                ModifyAttackIdle();
                 break;
         }
     }
 
-    protected virtual void UpdateIdle() { }
-    protected virtual void UpdateWalk() { }
-    protected virtual void UpdateDead() { }
-    protected virtual void UpdateAttack()
+    #region Chase
+    private void InChase()
     {
-        _curTime += Time.deltaTime;
-
-        // 일정 시간마다 공격
-        if (_curTime >= _attackCoolTime)
-        {
-            CheckPlayerNear();
-            _curTime = 0;
-        }
+        _creaturState = Define.eCreatureAnimState.Chase;
+        _animController.Play(Define.eCreatureAnimState.Chase);
+        _checkTime = Time.time + CHECK_DELAY;
     }
-    protected virtual void UpdateSkill_01() { }
 
-
-    // Update is called once per frame
-    void FixedUpdate()
+    private void ModifyChase()
     {
-        if (_creaturState != Define.eCreatureAnimState.Walk)
-            return;
-
         _target = Managers.Instance.ObjectManager.Player;
         _targetTrans = _target.transform;
 
-        if (_target == null) 
+        if (_target == null)
             return;
 
-        Vector3 dir = _target.transform.position - _trans.position;
-        Vector3 monPos = transform.position + dir.normalized * Time.deltaTime * _creatureData.MoveSpeed;
-
-        _rb.MovePosition(monPos);
-        _trans.LookAt(_targetTrans);
-      
-        CheckPlayerNear();
-    }
-
-    // 플레이어가 주위에 있는지 탐색하는 메소드
-    private void CheckPlayerNear()
-    {
-        RaycastHit rayHit = new RaycastHit();
-        bool isNear = Physics.Raycast(_rayPos.position, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
-
-        Debug.DrawRay(_rayPos.position, _trans.forward, Color.red);
-
-        // 현재 문제 : 감지 후 공격 모션 시작 -> 밀려서 감지가 풀림 -> 걷기 모션 시작 -> 빠르게 감지가 됨 -> 공격모션 시작 (반복 시 애니메이션 이상하게 보임)
-
-        if (isNear)
+        // 일정 시간마다 타겟이 근처에 있는지 확인
+        if (Time.time > _checkTime)
         {
-            // 가까이 있는 경우 Walk -> Attack으로 변경
-            _creaturState = Define.eCreatureAnimState.Attack;
-            _animController.Play(Define.eCreatureAnimState.Attack);
+           _isTargetNear = CheckPlayerNear();
+            _checkTime = Time.time + CHECK_DELAY;
+        }
+
+        if (_isTargetNear)
+        {
+            // 스킬 사용
+            OutChase();
+            InSkill();
         }
         else
         {
-            // 가까이 있다가 멀어지는 경우 Attack -> Walk로 변경
-            if (_creaturState == Define.eCreatureAnimState.Attack)
-            {
-                _creaturState = Define.eCreatureAnimState.Walk;
-                _animController.Play(Define.eCreatureAnimState.Walk);
+            // 추적
+            Vector3 dir = _target.transform.position - _trans.position;
+            Vector3 monPos = transform.position + dir.normalized * Time.deltaTime * _creatureData.moveSpeed;
 
-                _curTime = 0;
-            }
+            _rb.MovePosition(monPos);
+            _trans.LookAt(_targetTrans);
+        }
+
+    }
+
+    private void OutChase()
+    {
+
+    }
+    #endregion
+
+    #region Skill
+    private void InSkill()
+    {
+        _skillWait = true;
+
+        // 사용할 스킬 목록 가져옴
+
+    }
+
+    private void ModifySkill()
+    {
+        if (_skillWait == false)
+        {
+            OutSkill();
+            InAttackIdle();
         }
     }
 
-    // 공격 애니메이션 플레이 시 등록된 이벤트
-    public void AnimEvent_Attack()
+    private void OutSkill()
     {
-        // 공격 모션이 적절한 타이밍에 다시 한번 거리 체크
+
+    }
+
+    public void AnimEvent_Skill()
+    {
+        bool isNear = CheckPlayerNear();
+
+        if (isNear) // 스킬 판정 성공
+        {
+            // 데미지
+        }
+
+        _skillWait = false;
+    }
+    #endregion
+
+    #region AttackIdle
+    private void InAttackIdle()
+    {
+        _creaturState = Define.eCreatureAnimState.AttackIdle;
+        _animController.Play(Define.eCreatureAnimState.AttackIdle);
+
+        _lastAttackTime = Time.time;
+    }
+
+    private void ModifyAttackIdle()
+    {
+        // 일반 공격 딜레이 체크
+        if (Time.time > _lastAttackTime + _idleCoolTime)
+        {
+            OutAttackIdle();
+            InChase();
+        }
+    }
+
+    private void OutAttackIdle()
+    {
+
+    }
+    #endregion
+
+    // 플레이어가 주위에 있는지 탐색하는 메소드
+    private bool CheckPlayerNear()
+    {
+        int checkCount = 0;
+        // 거리 체크
         RaycastHit rayHit = new RaycastHit();
-        bool isNear = Physics.Raycast(_rayPos.position, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
+        bool isNear = Physics.Raycast(_trans.position + Vector3.up, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
 
-        if(isNear) // 공격 판정 성공
-        {
+        if(isNear)
+          checkCount++;
 
-        }
-        else // 공격 판정 실패
-        {
+        isNear = false;
+       
+        // 각도 체크
+        Vector3 targetDir = (_targetTrans.position - _trans.position).normalized;
+        Vector3 nowViewAngle = _targetTrans.forward;
+        float detectAngle = Vector3.Angle(nowViewAngle, targetDir);
 
-        }
+        if (detectAngle <= _viewAngle)
+            checkCount++;
+
+        // 필요시 장애물 체크
+      
+        return checkCount > 1;
     }
 }

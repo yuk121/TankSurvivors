@@ -44,7 +44,7 @@ public class PlayerController : CreatureController
     private void PlayerMove()
     {
         Vector3 moveDir = Managers.Instance.ObjectManager.Player.MoveDir;
-        Vector3 dir = moveDir * CreatureData.MoveSpeed * Time.deltaTime;
+        Vector3 dir = moveDir * Time.deltaTime * _creatureData.moveSpeed;
 
         Vector3 newPos = new Vector3(transform.position.x + dir.x, transform.position.y, transform.position.z + dir.y);
        // transform.position = newPos;
