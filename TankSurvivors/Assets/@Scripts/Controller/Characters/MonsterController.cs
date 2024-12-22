@@ -1,3 +1,4 @@
+using Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,10 +32,7 @@ public class MonsterController : CreatureController
     float _idleCoolTime = 1f;
 
     bool _isTargetNear;
-    bool _attackWait = false;
     bool _skillWait = false;
-
-
 
     public override bool Init()
     {
@@ -109,15 +107,19 @@ public class MonsterController : CreatureController
             // 스킬 사용
             OutChase();
             InSkill();
+
+            return;
         }
         else
         {
             // 추적
             Vector3 dir = _target.transform.position - _trans.position;
+            dir.y = 0;
+      
             Vector3 monPos = transform.position + dir.normalized * Time.deltaTime * _creatureData.moveSpeed;
 
             _rb.MovePosition(monPos);
-            _trans.LookAt(_targetTrans);
+            _trans.forward = dir;
         }
 
     }
@@ -132,6 +134,7 @@ public class MonsterController : CreatureController
     private void InSkill()
     {
         _skillWait = true;
+        _creaturState = Define.eCreatureAnimState.Skill;
 
         // 사용할 스킬 목록 가져옴
 
@@ -143,6 +146,8 @@ public class MonsterController : CreatureController
         {
             OutSkill();
             InAttackIdle();
+
+            return;
         }
     }
 
@@ -180,6 +185,8 @@ public class MonsterController : CreatureController
         {
             OutAttackIdle();
             InChase();
+
+            return;
         }
     }
 
@@ -194,6 +201,8 @@ public class MonsterController : CreatureController
     {
         int checkCount = 0;
         // 거리 체크
+
+        Debug.DrawRay(_trans.position + Vector3.up, _trans.forward *_detectDistance, Color.red);
         RaycastHit rayHit = new RaycastHit();
         bool isNear = Physics.Raycast(_trans.position + Vector3.up, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
 
@@ -201,10 +210,10 @@ public class MonsterController : CreatureController
           checkCount++;
 
         isNear = false;
-       
+
         // 각도 체크
         Vector3 targetDir = (_targetTrans.position - _trans.position).normalized;
-        Vector3 nowViewAngle = _targetTrans.forward;
+        Vector3 nowViewAngle = _trans.forward;
         float detectAngle = Vector3.Angle(nowViewAngle, targetDir);
 
         if (detectAngle <= _viewAngle)

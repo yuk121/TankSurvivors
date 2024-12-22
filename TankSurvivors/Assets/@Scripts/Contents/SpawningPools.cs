@@ -46,7 +46,7 @@ public class SpawningPools : MonoBehaviour
             //onceSpawnCount = 1;
 
             //if (Managers.Instance.ObjectManager.Monsters.Count > 0)
-            //    break;
+            //  break;
 
             // 몬스터를 주기적으로 소환
             // 현재 스테이지에서 몬스터 종류가 하나 인 경우
