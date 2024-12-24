@@ -61,6 +61,7 @@
     <Compile Include="Assets\@Scripts\Data\DataTableWave.cs" />
     <Compile Include="Assets\@Scripts\Utils\Define.cs" />
     <Compile Include="Assets\@Scripts\Contents\SpawningPools.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableSkill.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBase.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableStage.cs" />

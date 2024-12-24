@@ -40,10 +40,11 @@ public class DataTableWave
 
         TableLoader loader = TableLoader.Instance;
         loader.LoadTable(dataText);
+        WaveData waveData;
 
         for (int i = 0; i < loader.GetLength(); i++)
         {
-            WaveData waveData = new WaveData();
+            waveData = new WaveData();
 
             waveData.stageIndex = loader.GetInt("StageIndex", i);
             waveData.spawnMonsterId = loader.GetList_Int("SpawnMonsterId", i);

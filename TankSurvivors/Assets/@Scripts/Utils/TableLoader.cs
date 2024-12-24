@@ -159,4 +159,22 @@ public class TableLoader  : Singleton<TableLoader>
 
         return getList;
     }
+
+    public List<string> GetList_String(string key, int index)
+    {
+        List<string> getList = new List<string>();
+        string data = GetData(key, index);
+
+        string[] splitData = data.Split('&');
+
+        for (int i = 0; i < splitData.Length; i++)
+        {
+            if (splitData[i] == null)
+                continue;
+
+            getList.Add(splitData[i]);
+        }
+
+        return getList;
+    }
 } 

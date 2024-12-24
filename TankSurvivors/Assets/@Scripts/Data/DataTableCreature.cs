@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using static DataTableWave;
+using static Define;
 
 public class CreatureData
 {
     public int creatureId;
     public string creatureLocalName;
-    public Define.eObjectType objectType;
+    public eObjectType objectType;
     public float maxHp;
     public float atk;
     public float def;
@@ -37,14 +37,15 @@ public class DataTableCreature
       
         TableLoader loader = TableLoader.Instance;
         loader.LoadTable(dataText);
+        CreatureData creatureData;
 
         for (int i = 0; i < loader.GetLength(); i++)
         {
-            CreatureData creatureData = new CreatureData();
+            creatureData = new CreatureData();
 
             creatureData.creatureId = loader.GetInt("CreatureId", i);
             creatureData.creatureLocalName = loader.GetString("CreatureLocalName", i);
-            creatureData.objectType = loader.GetEnum<Define.eObjectType>("ObjectType", i);
+            creatureData.objectType = loader.GetEnum<eObjectType>("ObjectType", i);
             creatureData.maxHp = loader.GetFloat("MaxHp", i);
             creatureData.atk = loader.GetFloat("Atk", i);
             creatureData.def = loader.GetFloat("Def", i);
