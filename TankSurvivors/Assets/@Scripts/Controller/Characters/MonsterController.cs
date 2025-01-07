@@ -44,7 +44,7 @@ public class MonsterController : CreatureController
         _rb = GetComponent<Rigidbody>();
 
         // ½ºÅ³
-        //_skillBook.SetSkillList(Define.CreatureData.SkillList);
+        _skillBook.SetSkillBook(CreatureData.skillList);
 
         InChase();
 

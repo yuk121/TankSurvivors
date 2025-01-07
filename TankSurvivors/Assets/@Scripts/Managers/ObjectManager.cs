@@ -61,10 +61,10 @@ public class ObjectManager
             go.transform.rotation = Quaternion.identity;
 
             MonsterController mon = Utils.GetOrAddComponent<MonsterController>(go);
-            mon.Init();
-
             // 크리쳐 정보
             mon.CreatureData = creatrueData;
+
+            mon.Init();
 
             // 몬스터 HashSet에 추가하여 관리
             Monsters.Add(mon);

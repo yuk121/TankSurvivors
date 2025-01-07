@@ -13,7 +13,7 @@ public class CreatureController : BaseController
         set => _creatureData = value;
     }
 
-    protected SkillBook _skillBook;
+    protected SkillBook _skillBook = new SkillBook();
     protected AnimationController _animController;
 
     public override bool Init()

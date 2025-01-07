@@ -21,7 +21,7 @@ public class BaseController : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+        //Init();
     }
     
     private void FixedUpdate()

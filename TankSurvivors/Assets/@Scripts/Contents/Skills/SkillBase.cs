@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SkillBase
 {
-   // private SkillDataTable.Data _skillData;
-  //  public SkillDataTable.Data SkillData { get => _skillData; }
+    private SkillData _skillData = new SkillData();
+    public SkillData SkillData { get => _skillData; set => _skillData = value; }
 
     private int _skillLevel;
     public int SkillLevel { get => _skillLevel; }
 
     public void SkillUpdate(int skillId)
     {
-        //SkillDataTable.Data data = new SkillDataTable.Data();
+        SkillData data = new SkillData();
     }
 }

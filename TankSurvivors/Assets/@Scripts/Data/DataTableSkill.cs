@@ -61,4 +61,20 @@ public class DataTableSkill
 
         loader.Clear();
     }
+
+    public SkillData GetSkillData(int skillId)
+    {
+        SkillData data = new SkillData();
+
+        foreach(var skillData in _datas)
+        {
+            if(skillData.skillId == skillId)
+            {
+                data = skillData;
+                break;
+            }
+        }
+
+        return data;
+    }
 }
