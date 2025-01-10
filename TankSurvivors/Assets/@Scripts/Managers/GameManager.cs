@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class GameData
 {
-    //public StageDataTable.StageInfo stageInfo;
-    //public WaveDataTable.Data waveData;
+    public StageData stageInfo;
+    public WaveData waveInfo;
 }
 
 public class GameManager 
 {
-    public GameData gameData = new GameData();
+    private GameData _gameData = new GameData();
+    public GameData GameData { get => _gameData; set => _gameData = value; }
     public CameraController CameraController { get; set; }
+
+    public bool IsPause { get; set; }
 }

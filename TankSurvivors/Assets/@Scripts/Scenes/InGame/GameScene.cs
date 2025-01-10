@@ -26,6 +26,14 @@ public class GameScene : MonoBehaviour
         var player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f,0.8f,0f), userCharId);
         Camera.main.GetComponent<CameraController>().Init(player.transform);
 
+        // юс╫ц
+        StageData stageInfo = Managers.Instance.DataTableManager.DataTableStage.Datas[0];
+        Managers.Instance.GameManager.GameData.stageInfo = stageInfo;
+        int stageIndex = Managers.Instance.GameManager.GameData.stageInfo.stageIndex;
+     
+        WaveData waveInfo = Managers.Instance.DataTableManager.DataTableWave.GetWaveData(stageIndex);
+        Managers.Instance.GameManager.GameData.waveInfo = waveInfo;
+
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
         _spawnPools.StartSpawn();
     }

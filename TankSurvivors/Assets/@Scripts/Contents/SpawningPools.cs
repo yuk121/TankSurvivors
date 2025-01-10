@@ -22,31 +22,25 @@ public class SpawningPools : MonoBehaviour
     IEnumerator SpwanCreatureCor()
     {     
         yield return null;
-        
-        // 임시
-        int curStageId = 1;
-        WaveData waveInfo = null;
-       
-        // 웨이브 정보 필요
-        foreach (var Data in Managers.Instance.DataTableManager.DataTableWave.Datas)
-        {
-            if (Data.stageIndex == curStageId)
-            {
-                waveInfo = Data;
-                break;
-            }
-        }
 
+        // 임시
+        int curStageId = Managers.Instance.GameManager.GameData.stageInfo.stageIndex;
+        WaveData waveInfo = Managers.Instance.GameManager.GameData.waveInfo;
+       
         while(true)
         {
             int spawnMonsterId = -1;
             int onceSpawnCount = waveInfo.onceSpawnCount;
 
             // 테스트용 (한마리만 소환)
-            //onceSpawnCount = 1;
+            
+            {
+                onceSpawnCount = 1;
 
-            //if (Managers.Instance.ObjectManager.Monsters.Count > 0)
-            //  break;
+                if (Managers.Instance.ObjectManager.Monsters.Count > 0)
+                    break;
+            }
+            /**/
 
             // 몬스터를 주기적으로 소환
             // 현재 스테이지에서 몬스터 종류가 하나 인 경우

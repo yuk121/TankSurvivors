@@ -22,6 +22,12 @@ public class AnimationController : MonoBehaviour
         _animator.enabled = true;
     }
 
+    public void Play(string parameter, bool isBlend = false)
+    {
+        Define.eCreatureAnimState paraEnum = Utils.ToEnum<Define.eCreatureAnimState>(parameter);
+        Play(paraEnum, isBlend);
+    }
+
     public void Play(Define.eCreatureAnimState parameter, bool isBlend = false)
     {
         if (_prevAnimState != Define.eCreatureAnimState.None)

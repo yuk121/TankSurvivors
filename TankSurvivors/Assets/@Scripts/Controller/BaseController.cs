@@ -18,11 +18,6 @@ public class BaseController : MonoBehaviour
         _init = true;
         return true;
     }
-
-    private void Awake()
-    {
-        //Init();
-    }
     
     private void FixedUpdate()
     {

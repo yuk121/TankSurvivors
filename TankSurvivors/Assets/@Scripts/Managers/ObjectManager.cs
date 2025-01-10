@@ -32,9 +32,9 @@ public class ObjectManager
 
             PlayerController pc = Utils.GetOrAddComponent<PlayerController>(go);
             Player = pc;
-            pc.Init();
-
             pc.CreatureData = creatrueData;
+            
+            pc.Init();
 
             return pc as T;
         }

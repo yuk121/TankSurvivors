@@ -69,4 +69,19 @@ public class DataTableWave
         loader.Clear();
     }
 
+    public WaveData GetWaveData(int stageIndex)
+    {
+        WaveData waveData = new WaveData();
+
+        foreach(WaveData data in Datas)
+        {
+            if(data.stageIndex == stageIndex)
+            {
+                waveData = data;
+            }
+        }
+
+        return waveData;
+    }
+
 }

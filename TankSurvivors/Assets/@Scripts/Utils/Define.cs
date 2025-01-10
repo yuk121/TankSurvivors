@@ -22,10 +22,20 @@ public static class Define
     {
         None = -1,
         Chase,
-        Skill,
+        Skill1,
+        Skill2,
         AttackIdle,
         Dead,
         Max
+    }
+
+    public enum eMonsterFSMState
+    {
+        None,
+        Chase,
+        Skill,
+        AttackIdle,
+        Pause,
     }
     public enum eObjectType
     {

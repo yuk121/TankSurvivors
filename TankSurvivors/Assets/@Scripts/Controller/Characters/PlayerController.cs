@@ -60,6 +60,12 @@ public class PlayerController : CreatureController
         GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 
+    public override void OnDead()
+    {
+        _isAlive = false;
+        gameObject.SetActive(false);
+    }
+
     private void CollectEnv()
     {
 

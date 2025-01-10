@@ -1,16 +1,18 @@
 using Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterController : CreatureController
 {
+    private const float ATTACKIDlE_INTERVAL = 0.5f;
     // Monster Info
-    Define.eCreatureAnimState _creaturState = Define.eCreatureAnimState.None;
-    public Define.eCreatureAnimState CreatureState
+    Define.eMonsterFSMState _state = Define.eMonsterFSMState.None;
+    public Define.eMonsterFSMState State
     {
-        get { return _creaturState; }
-        set { _creaturState = value; }
+        get { return _state; }
+        set { _state = value; }
     }
     Transform _trans = null;
     Rigidbody _rb = null;
@@ -20,6 +22,7 @@ public class MonsterController : CreatureController
     readonly float CHECK_DELAY = 0.5f;
     float _checkTime = 0f;
     float _viewAngle = 60;
+    bool _isChaseInit = true;
 
     // Player Info
     PlayerController _target = null;
@@ -29,7 +32,6 @@ public class MonsterController : CreatureController
 
     // Attack Idle
     float _lastAttackTime;
-    float _idleCoolTime = 1f;
 
     bool _isTargetNear;
     bool _skillWait = false;
@@ -43,9 +45,6 @@ public class MonsterController : CreatureController
         _trans = transform;
         _rb = GetComponent<Rigidbody>();
 
-        // 스킬
-        _skillBook.SetSkillBook(CreatureData.skillList);
-
         InChase();
 
         return true;
@@ -55,9 +54,9 @@ public class MonsterController : CreatureController
     {
         base.FixedUpdateController();
 
-        switch (_creaturState)
+        switch (_state)
         {
-            case Define.eCreatureAnimState.Chase:
+            case Define.eMonsterFSMState.Chase:
                 ModifyChase();
                 break;
         }
@@ -68,13 +67,16 @@ public class MonsterController : CreatureController
     {
         base.UpdateController();
 
-        switch (_creaturState)
+        switch (_state)
         {
-            case Define.eCreatureAnimState.Skill:
+            case Define.eMonsterFSMState.Skill:
                 ModifySkill();
                 break;
-            case Define.eCreatureAnimState.AttackIdle:
+            case Define.eMonsterFSMState.AttackIdle:
                 ModifyAttackIdle();
+                break;
+            case Define.eMonsterFSMState.Pause:
+
                 break;
         }
     }
@@ -82,7 +84,10 @@ public class MonsterController : CreatureController
     #region Chase
     private void InChase()
     {
-        _creaturState = Define.eCreatureAnimState.Chase;
+        _isTargetNear = false;
+        _isChaseInit = true;
+        
+        _state = Define.eMonsterFSMState.Chase;
         _animController.Play(Define.eCreatureAnimState.Chase);
         _checkTime = Time.time + CHECK_DELAY;
     }
@@ -92,16 +97,25 @@ public class MonsterController : CreatureController
         _target = Managers.Instance.ObjectManager.Player;
         _targetTrans = _target.transform;
 
-        if (_target == null)
-            return;
-
-        // 일정 시간마다 타겟이 근처에 있는지 확인
-        if (Time.time > _checkTime)
+        if (_target == null || _target.CheckAlive() == false)
         {
-           _isTargetNear = CheckPlayerNear();
+            // TODO : Puase 상태로 보내기
+            return;
+        }
+
+        // 첫 추적인 경우 또는 일정 시간마다 타겟이 근처에 있는지 확인
+        if (_isChaseInit == true || Time.time > _checkTime)
+        {
+            if(_isChaseInit == true)
+            {
+                _isChaseInit = false;
+            }    
+         
+            _isTargetNear = CheckPlayerNear();
             _checkTime = Time.time + CHECK_DELAY;
         }
 
+        // 타겟이 근처에 있는 경우
         if (_isTargetNear)
         {
             // 스킬 사용
@@ -134,10 +148,20 @@ public class MonsterController : CreatureController
     private void InSkill()
     {
         _skillWait = true;
-        _creaturState = Define.eCreatureAnimState.Skill;
+        _state = Define.eMonsterFSMState.Skill;
 
-        // 사용할 스킬 목록 가져옴
+        //스킬 목록중에서 인덱스가 높은 스킬 부터 쿨타임 체크 후 사용
+        SkillBase skill = GetCoolTimeEndSkill();
 
+        if (skill == null)
+            Debug.LogError("### Monster Skill is Null !! ");
+
+        string skillAnimState = $"Skill{skill.Index}"; 
+        _animController.Play(skillAnimState);
+
+        // 스킬 쿨타임 설정
+        skill.SetCoolTime();
+        _skillBook.PrevUseSkill = skill;
     }
 
     private void ModifySkill()
@@ -156,15 +180,25 @@ public class MonsterController : CreatureController
 
     }
 
-    public void AnimEvent_Skill()
+    public void AnimEvent_SkillDamage()
     {
         bool isNear = CheckPlayerNear();
 
         if (isNear) // 스킬 판정 성공
         {
             // 데미지
-        }
+            // TODO : 스킬 데미지 산정 방식 필요
+            int stageLevel = Managers.Instance.GameManager.GameData.stageInfo.stageLevel;
+            float damage = (float)(stageLevel * 0.1) + _skillBook.PrevUseSkill.SkillData.damage;
 
+            // TODO : 사운드 추가
+
+            _target.OnDamaged(this ,damage);
+        }
+    }
+
+    public void AnimEvent_SkillEnd()
+    {
         _skillWait = false;
     }
     #endregion
@@ -172,8 +206,8 @@ public class MonsterController : CreatureController
     #region AttackIdle
     private void InAttackIdle()
     {
-        _creaturState = Define.eCreatureAnimState.AttackIdle;
-        _animController.Play(Define.eCreatureAnimState.AttackIdle);
+        _state = Define.eMonsterFSMState.AttackIdle;
+        _animController.Play(Define.eCreatureAnimState.AttackIdle,true);
 
         _lastAttackTime = Time.time;
     }
@@ -181,7 +215,7 @@ public class MonsterController : CreatureController
     private void ModifyAttackIdle()
     {
         // 일반 공격 딜레이 체크
-        if (Time.time > _lastAttackTime + _idleCoolTime)
+        if (Time.time > _lastAttackTime + ATTACKIDlE_INTERVAL)
         {
             OutAttackIdle();
             InChase();
@@ -196,13 +230,34 @@ public class MonsterController : CreatureController
     }
     #endregion
 
+    #region Pause
+    private void InPause()
+    {
+        _state = Define.eMonsterFSMState.AttackIdle;
+        _animController.Play(Define.eCreatureAnimState.AttackIdle, true);
+
+        _lastAttackTime = Time.time;
+    }
+
+    private void ModifyPause()
+    {
+        // 일반 공격 딜레이 체크
+
+    }
+
+    private void OutPause()
+    {
+
+    }
+    #endregion
+
     // 플레이어가 주위에 있는지 탐색하는 메소드
     private bool CheckPlayerNear()
     {
         int checkCount = 0;
         // 거리 체크
 
-        Debug.DrawRay(_trans.position + Vector3.up, _trans.forward *_detectDistance, Color.red);
+        //Debug.DrawRay(_trans.position + Vector3.up, _trans.forward *_detectDistance, Color.red);
         RaycastHit rayHit = new RaycastHit();
         bool isNear = Physics.Raycast(_trans.position + Vector3.up, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
 
