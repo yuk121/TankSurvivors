@@ -53,10 +53,6 @@ public class Managers : MonoBehaviour
 
     public DataTableManager DataTableManager { get { return Instance?._dataTableManager; } }
 
-    private GameManager _gameManager = new GameManager();    
-    public GameManager GameManager { get { return Instance?._gameManager; } }
-
-
     // Core
     private UserDataManager _userDataManager = new UserDataManager();
     public UserDataManager UserDataManager { get {  return Instance?._userDataManager; } }

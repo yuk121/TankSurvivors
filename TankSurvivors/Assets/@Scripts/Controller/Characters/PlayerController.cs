@@ -6,8 +6,8 @@ public class PlayerController : CreatureController
 {
     [SerializeField]
     private Transform _tankBody = null;
-    [SerializeField]
-    private Transform _tankTurret = null;
+    //[SerializeField]
+    //private Transform _tankTurret = null;
 
     private Vector2 _moveDir = Vector2.zero;
     public Vector2 MoveDir { get { return _moveDir; } set { _moveDir = value; } }
@@ -17,7 +17,9 @@ public class PlayerController : CreatureController
     //  private CharacterController _characterController;
     private Rigidbody _tankRigid = null;
 
-    // Start is called before the first frame update
+    // Damaged Color
+    private MeshRenderer[] _meshRenderers;
+    private MaterialPropertyBlock _materialProperty;
 
     public override bool Init()
     {
@@ -26,6 +28,11 @@ public class PlayerController : CreatureController
 
         //_characterController = GetComponent<CharacterController>(); 
         _tankRigid = GetComponent<Rigidbody>();
+
+        // renderer
+        _meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        _materialProperty = new MaterialPropertyBlock();
+
         return true;
     }
 
@@ -69,5 +76,37 @@ public class PlayerController : CreatureController
     private void CollectEnv()
     {
 
+    }
+
+    public override void OnDamaged(BaseController attacker, float damage)
+    {
+        base.OnDamaged(attacker, damage);
+
+        SetDamagedColor();
+        Invoke("SetDefaultColor", 0.2f);
+    }
+
+    void SetDamagedColor()
+    {
+        if (_materialProperty != null)
+        {
+            foreach(Renderer render in _meshRenderers)
+            {
+                _materialProperty.SetColor("_Color", Color.red);
+                render.SetPropertyBlock(_materialProperty);
+            }
+        }
+    }
+
+    void SetDefaultColor()
+    {
+        if (_materialProperty != null)
+        {
+            foreach (Renderer render in _meshRenderers)
+            {
+                _materialProperty.SetColor("_Color", Color.white);
+                render.SetPropertyBlock(_materialProperty);
+            }
+        }
     }
 }

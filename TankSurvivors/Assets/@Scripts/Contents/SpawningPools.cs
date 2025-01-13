@@ -24,8 +24,8 @@ public class SpawningPools : MonoBehaviour
         yield return null;
 
         // 임시
-        int curStageId = Managers.Instance.GameManager.GameData.stageInfo.stageIndex;
-        WaveData waveInfo = Managers.Instance.GameManager.GameData.waveInfo;
+        int curStageId = GameManager.Instance.GameData.stageInfo.stageIndex;
+        WaveData waveInfo = GameManager.Instance.GameData.waveInfo;
        
         while(true)
         {
@@ -33,13 +33,12 @@ public class SpawningPools : MonoBehaviour
             int onceSpawnCount = waveInfo.onceSpawnCount;
 
             // 테스트용 (한마리만 소환)
-            
-            {
-                onceSpawnCount = 1;
+            //{
+            //    onceSpawnCount = 1;
 
-                if (Managers.Instance.ObjectManager.Monsters.Count > 0)
-                    break;
-            }
+            //    if (Managers.Instance.ObjectManager.Monsters.Count > 0)
+            //        break;
+            //}
             /**/
 
             // 몬스터를 주기적으로 소환

@@ -188,7 +188,7 @@ public class MonsterController : CreatureController
         {
             // 데미지
             // TODO : 스킬 데미지 산정 방식 필요
-            int stageLevel = Managers.Instance.GameManager.GameData.stageInfo.stageLevel;
+            int stageLevel = GameManager.Instance.GameData.stageInfo.stageLevel;
             float damage = (float)(stageLevel * 0.1) + _skillBook.PrevUseSkill.SkillData.damage;
 
             // TODO : 사운드 추가

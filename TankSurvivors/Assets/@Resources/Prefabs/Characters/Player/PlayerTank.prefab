@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da4dd4f21064b24b9339668c3b5be9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _curHp: 0
   _tankBody: {fileID: 672221882971161554}
   _tankTurret: {fileID: 4339861350199996378}
 --- !u!65 &2037129916160179730

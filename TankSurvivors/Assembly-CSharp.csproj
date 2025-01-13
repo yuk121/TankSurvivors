@@ -85,7 +85,6 @@
     <Compile Include="Assets\@Scripts\Utils\TableLoader.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
-    <Compile Include="Assets\@Scripts\Scenes\InGame\GameScene.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
   </ItemGroup>
   <ItemGroup>
