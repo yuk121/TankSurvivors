@@ -22,13 +22,13 @@ public class WaveData
 public class DataTableWave
 {
 
-    private List<WaveData> _datas = new List<WaveData>(); 
-    public List<WaveData> Datas { get => _datas; }
+    private List<WaveData> _dataList = new List<WaveData>(); 
+    public List<WaveData> DataList { get => _dataList; }
     private void Unload()
     {
-        if (_datas != null && _datas.Count > 0)
+        if (_dataList != null && _dataList.Count > 0)
         {
-            _datas.Clear();
+            _dataList.Clear();
         }
     }
     public void DataLoad(byte[] dataText)
@@ -63,7 +63,7 @@ public class DataTableWave
             waveData.blueGemDropRate = loader.GetFloat("BlueGemDropRate", i);
             waveData.purpleGemDropRate = loader.GetFloat("PurpleGemDropRate", i);
 
-            _datas.Add(waveData);
+            _dataList.Add(waveData);
         }
 
         loader.Clear();
@@ -73,7 +73,7 @@ public class DataTableWave
     {
         WaveData waveData = new WaveData();
 
-        foreach(WaveData data in Datas)
+        foreach(WaveData data in DataList)
         {
             if(data.stageIndex == stageIndex)
             {

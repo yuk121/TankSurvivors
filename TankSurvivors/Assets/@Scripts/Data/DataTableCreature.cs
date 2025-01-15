@@ -17,14 +17,14 @@ public class CreatureData
 
 public class DataTableCreature 
 {
-    private List<CreatureData> _datas = new List<CreatureData>();
-    public List<CreatureData> Datas { get => _datas; }
+    private List<CreatureData> _dataList = new List<CreatureData>();
+    public List<CreatureData> DataList { get => _dataList; }
 
     private void Unload()
     {
-        if(_datas != null && _datas.Count > 0) 
+        if(_dataList != null && _dataList.Count > 0) 
         {
-            _datas.Clear();
+            _dataList.Clear();
         }
     }
 
@@ -53,7 +53,7 @@ public class DataTableCreature
             creatureData.prefabName = loader.GetString("PrefabName", i);
             creatureData.skillList = loader.GetList_Int("SkillList", i);
 
-            _datas.Add(creatureData);
+            _dataList.Add(creatureData);
         }
 
         loader.Clear();

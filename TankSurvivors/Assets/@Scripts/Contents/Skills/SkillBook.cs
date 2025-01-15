@@ -24,4 +24,51 @@ public class SkillBook
             _skillList.Add(skill);
         }
     }
+
+    public void UpgradeSkill(int skillId)
+    {
+        SkillBase skill = GetSkill(skillId);
+
+        skill.SkillLevelup();
+
+        if (skill.CurSkillLevel > 1)
+        {
+            // 현재 스킬의 다음 스킬 존재하는지 확인
+            int nextSkillId = skill.SkillData.skillId + 1;
+            bool isMax = CheckMaxLevelSkill(nextSkillId);
+
+            if (isMax)
+                return;
+
+            // 다음 스킬이 존재하는 경우 현재 스킬북에 담긴 스킬의 데이터를 다음 스킬 데이터로 덮어 씌어준다.
+            SkillData nextSkillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(nextSkillId);
+            skill.SkillData = nextSkillData;
+
+            skill.RemoveCoolTime();
+        }
+    }
+
+    private bool CheckMaxLevelSkill(int nextSkillId)
+    {
+        bool isMax = false;
+        SkillData nextSkillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(nextSkillId);
+
+        if(nextSkillData == null)
+            isMax = true;
+
+        return isMax;
+    }
+
+    private SkillBase GetSkill(int skillId)
+    {
+        for(int i =0; i < _skillList.Count; i++)
+        {
+            if(_skillList[i].SkillData.skillId == skillId)
+            {
+                return _skillList[i];
+            }
+        }
+
+        return null;
+    }
 }

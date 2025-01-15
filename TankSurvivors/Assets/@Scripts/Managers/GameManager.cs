@@ -34,6 +34,8 @@ public class GameManager : FSM<eGameManagerState>
 
     SpawningPools _spawnPools;
 
+    PlayerController _player;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -108,11 +110,12 @@ public class GameManager : FSM<eGameManagerState>
     private void InGame()
     {
         int userCharId = 10001;
-        var player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
-        Camera.main.GetComponent<CameraController>().Init(player.transform);
+        // 플레이어 소환
+        _player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
+        Camera.main.GetComponent<CameraController>().Init(_player.transform);
 
         // 임시
-        StageData stageInfo = Managers.Instance.DataTableManager.DataTableStage.Datas[0];
+        StageData stageInfo = Managers.Instance.DataTableManager.DataTableStage.DataList[0];
         GameData.stageInfo = stageInfo;
         int stageIndex = GameData.stageInfo.stageIndex;
 
@@ -125,7 +128,19 @@ public class GameManager : FSM<eGameManagerState>
 
     private void ModifyGame()
     {
+        // 플레이어 사망시 Result 
+        if(CheckPlayerAlive() == false)
+        {
+            MoveState(eGameManagerState.Result);
+            return;
+        }
+    }
 
+    public bool CheckPlayerAlive()
+    {
+        bool isAlive = _player.CheckAlive();
+
+        return isAlive;
     }
     #endregion
 

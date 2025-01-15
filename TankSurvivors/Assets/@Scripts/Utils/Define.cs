@@ -51,8 +51,10 @@ public static class Define
 
     public enum eSkillType
     {
-        Active,
-        Passive
+        TankShell = 1001,
+        SubTank = 1011,
+        ElectircField = 1021,
+        Mine = 1031,
     }
 }
 

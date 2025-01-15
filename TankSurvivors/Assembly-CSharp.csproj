@@ -86,6 +86,7 @@
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\TankShell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

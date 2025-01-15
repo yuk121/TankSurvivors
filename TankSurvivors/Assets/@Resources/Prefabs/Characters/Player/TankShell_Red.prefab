@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 692907534891094489}
   - component: {fileID: 8838394306009765424}
   m_Layer: 0
-  m_Name: Missile_Red
+  m_Name: TankShell_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -18,14 +18,7 @@ public class SkillBase
     private int _Index;    // 스킬 순서
     public int Index { get => _Index; set => _Index = value; }
 
-    public void SkillUpgrade()
-    {
-        _curSkillLevel++;
-
-        // TODO : 스킬 레벨업에 따라 다음 스킬 데이터 가져오기 및 맥스 상태인 경우 확인하기
-    }
-
-    public void SetCoolTime()
+    public void StartCoolTime()
     {
         _remainCoolTime = SkillData.coolTime;
     }
@@ -33,5 +26,10 @@ public class SkillBase
     public void RemoveCoolTime()
     {
         _remainCoolTime = 0f;
+    }
+
+    public void SkillLevelup()
+    {
+        _curSkillLevel++;
     }
 }

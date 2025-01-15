@@ -16,7 +16,7 @@ public class ObjectManager
             string charPrefabPath = string.Empty;
             CreatureData creatrueData = null;
 
-            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.Datas)
+            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.DataList)
             {
                 if (implementID == Data.creatureId)
                 {
@@ -44,7 +44,7 @@ public class ObjectManager
             string monsterPrefabPath = string.Empty;
             CreatureData creatrueData = null;
 
-            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.Datas)
+            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.DataList)
             {
                 if (implementID == Data.creatureId)
                 {

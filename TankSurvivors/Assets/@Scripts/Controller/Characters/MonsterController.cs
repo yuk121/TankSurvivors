@@ -154,13 +154,16 @@ public class MonsterController : CreatureController
         SkillBase skill = GetCoolTimeEndSkill();
 
         if (skill == null)
+        {
             Debug.LogError("### Monster Skill is Null !! ");
+            return;
+        }
 
         string skillAnimState = $"Skill{skill.Index}"; 
         _animController.Play(skillAnimState);
 
         // 스킬 쿨타임 설정
-        skill.SetCoolTime();
+        skill.StartCoolTime();
         _skillBook.PrevUseSkill = skill;
     }
 

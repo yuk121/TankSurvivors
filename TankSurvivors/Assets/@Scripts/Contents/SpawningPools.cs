@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class SpawningPools : MonoBehaviour
 {
-    private Coroutine _spawnCor = null;
+    private Coroutine _corSpawn = null;
 
     public bool SpawnStop { get; set; } = false;
 
     public void StartSpawn()
     {
-        if (_spawnCor != null) 
+        if (_corSpawn != null) 
         {
-            StopCoroutine(_spawnCor);
+            StopCoroutine(_corSpawn);
         }
 
-        _spawnCor = StartCoroutine(SpwanCreatureCor());
+        _corSpawn = StartCoroutine(SpwanCreatureCor());
     }
 
 
@@ -29,16 +29,21 @@ public class SpawningPools : MonoBehaviour
        
         while(true)
         {
+            // 플레이어가 사망시 더이상 작동하지 않는다.
+            if (GameManager.Instance.CheckPlayerAlive() == false)
+                break;
+
             int spawnMonsterId = -1;
             int onceSpawnCount = waveInfo.onceSpawnCount;
 
             // 테스트용 (한마리만 소환)
-            //{
-            //    onceSpawnCount = 1;
+            //*
+            {
+                onceSpawnCount = 1;
 
-            //    if (Managers.Instance.ObjectManager.Monsters.Count > 0)
-            //        break;
-            //}
+                if (Managers.Instance.ObjectManager.Monsters.Count > 0)
+                    break;
+            }
             /**/
 
             // 몬스터를 주기적으로 소환

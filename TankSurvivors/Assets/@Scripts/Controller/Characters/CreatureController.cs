@@ -75,8 +75,6 @@ public class CreatureController : BaseController
         if (_curHp <= 0)
             return;
 
-        // TODO : 맞았을때 시각적으로 보여주기 위해 RimMeshRenderer 살짝 빨갛게 적용하기
-        // MaterialPropertyBlock? 활용하기
         _curHp -= damage;
 
         if(_curHp <= 0)

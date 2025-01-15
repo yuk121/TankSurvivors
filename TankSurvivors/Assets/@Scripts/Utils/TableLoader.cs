@@ -121,6 +121,12 @@ public class TableLoader  : Singleton<TableLoader>
         return getFloat;
     }
 
+    public bool GetBool(string key, int index)
+    {
+        bool getBool = bool.Parse(GetData(key, index));
+        return getBool;
+    }
+
     public List<int> GetList_Int(string key, int index)
     {
         List<int> getList = new List<int>();

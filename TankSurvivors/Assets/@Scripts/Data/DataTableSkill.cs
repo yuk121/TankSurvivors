@@ -5,29 +5,27 @@ using static Define;
 public class SkillData
 {
     public int skillId;
-    public string skillLocalName;
-    public eSkillType skillType;
-    public string prefabName;
-    public float coolTime;
-    public float damage;
-    public float damageIncRate;
-    public float duration;
-    public float castSpeed;
-    public float castSpeedIncRate;
-    public float scaleIncRate;
-    public int startCreateCount;
-    public string castSound;
+    public string skillLocalName;        // 로컬 이름
+    public string prefabName;           // 프리팹 이름 
+    public float coolTime;                  // 스킬 쿨타임
+    public float damage;                    // 데미지  
+    public float damageIncRate;          // 데미지 증가량
+    public float duration;                   // 지속 시간
+    public float projectileSpeed;           // 발사체 속도
+    public float scaleIncRate;              // 크기 증가량
+    public int startCreateCount;            // 초기 생성 수  
+    public string castSound;                // 사용 사운드
 }
 
 public class DataTableSkill
 {
-    private List<SkillData> _datas = new List<SkillData>();
-    public List<SkillData> Datas { get => _datas; }
+    private List<SkillData> _dataList = new List<SkillData>();
+    public List<SkillData> DataList { get => _dataList; }
     private void Unload()
     {
-        if (_datas != null && _datas.Count > 0)
+        if (_dataList != null && _dataList.Count > 0)
         {
-            _datas.Clear();
+            _dataList.Clear();
         }
     }
     public void DataLoad(byte[] dataText)
@@ -44,19 +42,17 @@ public class DataTableSkill
 
             skillData.skillId = loader.GetInt("SkillId",i);
             skillData.skillLocalName = loader.GetString("SkillLocalName", i);
-            skillData.skillType = loader.GetEnum<eSkillType>("SkillType", i);
             skillData.prefabName = loader.GetString("PrefabName", i);
             skillData.coolTime = loader.GetFloat("CoolTime", i);
             skillData.damage = loader.GetFloat("Damage", i);
             skillData.damageIncRate = loader.GetFloat("DamgaIncRate", i);
             skillData.duration = loader.GetFloat("Duration", i);
-            skillData.castSpeed = loader.GetFloat("CastSpeed", i);
-            skillData.castSpeedIncRate = loader.GetFloat("CastSpeedIncRate", i);
+            skillData.projectileSpeed = loader.GetFloat("ProjectileSpeed", i);
             skillData.scaleIncRate = loader.GetFloat("ScaleIncRate", i);
             skillData.startCreateCount = loader.GetInt("StartCreateCount", i);
             skillData.castSound = loader.GetString("CastSound", i);
 
-            _datas.Add(skillData);  
+            _dataList.Add(skillData);  
         }
 
         loader.Clear();
@@ -66,7 +62,7 @@ public class DataTableSkill
     {
         SkillData data = new SkillData();
 
-        foreach(var skillData in _datas)
+        foreach(var skillData in _dataList)
         {
             if(skillData.skillId == skillId)
             {

@@ -17,13 +17,13 @@ public class StageData
 }
 public class DataTableStage
 {
-    private List<StageData> _datas = new List<StageData>();
-    public List<StageData> Datas { get => _datas; }
+    private List<StageData> _dataList = new List<StageData>();
+    public List<StageData> DataList { get => _dataList; }
     private void Unload()
     {
-        if (_datas != null && _datas.Count > 0)
+        if (_dataList != null && _dataList.Count > 0)
         {
-            _datas.Clear();
+            _dataList.Clear();
         }
     }
     public void DataLoad(byte[] dataText)
@@ -54,7 +54,7 @@ public class DataTableStage
             stageData.spawnElite = loader.GetList_String("SpawnElite", i);
             stageData.spawnBoss = loader.GetString("SpawnBoss", i);
 
-            _datas.Add(stageData);
+            _dataList.Add(stageData);
         }
 
         loader.Clear();
