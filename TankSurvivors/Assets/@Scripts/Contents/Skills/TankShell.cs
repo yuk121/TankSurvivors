@@ -2,21 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankShell : MonoBehaviour
+public class TankShell : SkillBase
 {
-    SkillData _skillData;
-    Transform _targetPos;
-
-    public void Init(SkillData data, Transform targetPos)
+    public override void UseSkill()
     {
-        _skillData = data;
-        _targetPos = targetPos;
-    }
+        base.UseSkill();
 
-    private IEnumerator CorSkill()
-    {
-        // 날라가서 충돌 체크
-        yield return null;
+        Transform spawnPos = GameManager.Instance.Player.DummyFirePos;
+        GenerateSkillPrefab(spawnPos);
     }
 
 }

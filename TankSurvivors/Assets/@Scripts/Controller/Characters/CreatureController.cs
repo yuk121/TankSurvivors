@@ -12,7 +12,7 @@ public class CreatureController : BaseController
         set => _creatureData = value;
     }
 
-    protected SkillBook _skillBook = new SkillBook();
+    protected SkillBook _skillBook;
     protected AnimationController _animController;
   
     [SerializeField]
@@ -24,7 +24,8 @@ public class CreatureController : BaseController
         base.Init();
 
         _animController = Utils.GetOrAddComponent<AnimationController>(gameObject);
-        
+
+        _skillBook = Utils.GetOrAddComponent<SkillBook>(gameObject);        
         // 보유 스킬 데이터 
         _skillBook.SetSkillBook(_creatureData.skillList);
 
@@ -42,32 +43,6 @@ public class CreatureController : BaseController
     public override void UpdateController()
     {
         base.UpdateController();
-
-        // 스킬 쿨타임 관리
-        if(_skillBook.SkillList.Count > 0)
-        {
-            for(int i =0; i < _skillBook.SkillList.Count; i++)
-            {
-                //Debug.Log($"#CreatureController : {_skillBook.SkillList[i]} remain CoolTime : {_skillBook.SkillList[i].RemainCoolTime}");
-                if (_skillBook.SkillList[i].RemainCoolTime > 0)
-                {
-                    _skillBook.SkillList[i].RemainCoolTime -= Time.deltaTime;
-                }    
-            }
-        }
-    }
-
-    public SkillBase GetCoolTimeEndSkill()
-    {
-        for(int i = _skillBook.SkillList.Count -1; i >= 0; i--)
-        {
-            if(_skillBook.SkillList[i].RemainCoolTime <= 0f)
-            {
-                return _skillBook.SkillList[i];     
-            }
-        }
-
-        return null;
     }
 
     public virtual void OnDamaged(BaseController attacker , float  damage) 

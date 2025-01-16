@@ -8,11 +8,13 @@ public class PlayerController : CreatureController
     [SerializeField]
     private Transform _tankBody = null;
     [SerializeField]
+    private Transform _tankHead = null;
+    [SerializeField]
     private Transform _dummyFirePos = null;
+    public Transform DummyFirePos { get => _dummyFirePos; }
 
     private Vector2 _moveDir = Vector2.zero;
     public Vector2 MoveDir { get { return _moveDir; } set { _moveDir = value; } }
-    private Vector3 _turretDir = Vector3.zero;
     private Rigidbody _tankRigid = null;
 
     // Damaged Color
@@ -72,7 +74,7 @@ public class PlayerController : CreatureController
     // 플레이어의 스킬 목록에 맞춰서 자동으로 스킬 사용
     private void UseAutoSkill()
     {
-        for(int i = 0; i < _skillBook.SkillList.Count; i++)
+        for (int i = 0; i < _skillBook.SkillList.Count; i++)
         {
             // 스킬 레벨이 0이라면 통과
             if (_skillBook.SkillList[i].CurSkillLevel < 1)
@@ -82,43 +84,41 @@ public class PlayerController : CreatureController
             if (_skillBook.SkillList[i].RemainCoolTime > 0)
                 continue;
 
-            // 스킬 사용했으니 쿨타임 채워지도록 함
-            _skillBook.SkillList[i].StartCoolTime();
-
-            // 프리팹을 이용해서 오브젝트 생성
-            string prefabName = _skillBook.SkillList[i].SkillData.prefabName;
-            string skillPrefabPath = $"PlayerPrefab/{prefabName}.prefab";
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath, pooling: true);
-            go.name = _skillBook.SkillList[i].SkillData.prefabName;
-
-            // 스킬에 맞는 컴포넌트 붙여주기
-            Define.eSkillType skillType = (Define.eSkillType)_skillBook.SkillList[i].SkillData.skillId;
-
-            switch (skillType)
+            if(_skillBook.SkillList[i].SkillType == Define.eSkillType.TankShell)
             {
-                case Define.eSkillType.TankShell:
-                    {
-                        go.transform.position = _dummyFirePos.position;
-                        go.transform.forward = _dummyFirePos.forward;
-
-                        go.AddComponent<TankShell>();
-                        TankShell tankShell = go.GetComponent<TankShell>();
-                        tankShell.Init(_skillBook.SkillList[i].SkillData, null);
-                    }
-                    break;
-
-                case Define.eSkillType.SubTank:
-                    break;
-
-                case Define.eSkillType.ElectircField:
-                    break;
-
-                case Define.eSkillType.Mine:
-                    break;
-
+                // 기본공격인 포탄 스킬인 경우 탱크의 머리도 움직여 줘야한다.
+                // 가장 근처의 적 위치 탐색
+                MonsterController mc = GetNearEnemy();
+                // 감지된 적을 향해 머리방향 변경
+                _tankHead.LookAt(mc.transform);
             }
+
+            // 스킬 사용
+            _skillBook.SkillList[i].UseSkill();
         }
     }
+
+    private MonsterController GetNearEnemy()
+    {
+        MonsterController nearEnemy = null;
+
+        float minDis = float.MaxValue;
+        float curDis = 0f;
+
+        foreach(MonsterController mc in Managers.Instance.ObjectManager.Monsters)
+        {
+            curDis = Vector3.Distance(_tankBody.position, mc.transform.position);
+            
+            if(curDis < minDis)
+            {
+                curDis = minDis;
+                nearEnemy = mc;
+            }
+        }
+
+        return nearEnemy;
+    }
+
     // 주변에 있는 자원 줍기
     private void CollectEnv()
     {

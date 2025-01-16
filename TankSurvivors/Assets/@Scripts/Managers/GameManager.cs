@@ -30,11 +30,14 @@ public class GameManager : FSM<eGameManagerState>
     public GameData GameData { get => _gameData; set => _gameData = value; }
     public CameraController CameraController { get; set; }
 
+    private SpawningPools _spawnPools;
+
+    private PlayerController _player;
+    public PlayerController Player { get => _player; }
+
     public bool IsPause { get; set; }
 
-    SpawningPools _spawnPools;
-
-    PlayerController _player;
+    
 
     // Start is called before the first frame update
     private void Awake()

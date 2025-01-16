@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillBook
+public class SkillBook : MonoBehaviour
 {
+    [SerializeField]
     private List<SkillBase> _skillList = new List<SkillBase>();
     public List<SkillBase> SkillList { get => _skillList; }
 
@@ -15,13 +17,20 @@ public class SkillBook
     { 
         for(int i =0; i < skillList.Count; i++) 
         {
-            SkillBase skill = new SkillBase();
             SkillData data = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(skillList[i]);
+            
+            Define.eSkillType skillType = (Define.eSkillType)skillList[i];
+            string className = skillType.ToString(); 
+            SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
 
-            skill.SkillData = data;
-            skill.Index = i+1;
+            if (skill != null)
+            {
+                skill.SkillData = data;
+                skill.SkillType = skillType;
+                skill.Index = i + 1;
 
-            _skillList.Add(skill);
+                _skillList.Add(skill);
+            }
         }
     }
 
@@ -71,4 +80,18 @@ public class SkillBook
 
         return null;
     }
+
+    public SkillBase GetCoolTimeEndSkill()
+    {
+        for (int i = _skillList.Count - 1; i >= 0; i--)
+        {
+            if (_skillList[i].RemainCoolTime <= 0f)
+            {
+                return _skillList[i];
+            }
+        }
+
+        return null;
+    }
+
 }

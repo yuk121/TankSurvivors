@@ -51,6 +51,7 @@ public static class Define
 
     public enum eSkillType
     {
+        None,
         TankShell = 1001,
         SubTank = 1011,
         ElectircField = 1021,
