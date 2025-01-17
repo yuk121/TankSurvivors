@@ -37,7 +37,7 @@ public class SpawningPools : MonoBehaviour
             int onceSpawnCount = waveInfo.onceSpawnCount;
 
             // 테스트용 (한마리만 소환)
-            //*
+            /*
             {
                 onceSpawnCount = 1;
 

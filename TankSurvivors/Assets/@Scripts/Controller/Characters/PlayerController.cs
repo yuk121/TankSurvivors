@@ -63,10 +63,13 @@ public class PlayerController : CreatureController
         // 회전
         if(moveDir != Vector3.zero)
             _tankBody.rotation = Quaternion.Euler(0, Mathf.Atan2(moveDir.x, moveDir.y) * Mathf.Rad2Deg, 0);
+    
+        // TODO : 움직이는 소리 추가
     }
 
     public override void OnDead()
     {
+        // TODO : 터지는 효과 추가
         _isAlive = false;
         gameObject.SetActive(false);
     }
@@ -88,13 +91,19 @@ public class PlayerController : CreatureController
             {
                 // 기본공격인 포탄 스킬인 경우 탱크의 머리도 움직여 줘야한다.
                 // 가장 근처의 적 위치 탐색
-                MonsterController mc = GetNearEnemy();
-                // 감지된 적을 향해 머리방향 변경
-                _tankHead.LookAt(mc.transform);
+                MonsterController mon = GetNearEnemy();
+
+                if (mon != null && mon.CheckAlive() == true)
+                {
+                    // 감지된 적을 향해 머리방향 변경
+                    Vector3 dir = mon.transform.position - _tankHead.position;
+                    dir.y = 0;
+                    _tankHead.transform.forward = dir;
+                }
             }
 
             // 스킬 사용
-            _skillBook.SkillList[i].UseSkill();
+            _skillBook.SkillList[i].UseSkill(this);
         }
     }
 
@@ -111,7 +120,7 @@ public class PlayerController : CreatureController
             
             if(curDis < minDis)
             {
-                curDis = minDis;
+                minDis = curDis;
                 nearEnemy = mc;
             }
         }
@@ -127,6 +136,8 @@ public class PlayerController : CreatureController
 
     public override void OnDamaged(BaseController attacker, float damage)
     {
+        // TODO : 맞는 소리 추가
+
         base.OnDamaged(attacker, damage);
 
         SetDamagedColor();

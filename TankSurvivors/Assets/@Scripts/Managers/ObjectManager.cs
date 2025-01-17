@@ -56,7 +56,6 @@ public class ObjectManager
             }
 
             GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling: true);
-            go.name = creatrueData.creatureLocalName;
             go.transform.position = position;
             go.transform.rotation = Quaternion.identity;
 

@@ -52,10 +52,18 @@ public static class Define
     public enum eSkillType
     {
         None,
+        // Player
         TankShell = 1001,
         SubTank = 1011,
         ElectircField = 1021,
         Mine = 1031,
+
+        // Enemy
+        ZombieAttack01 = 2001,
+        ZombieAttack02 = 2002,
+        EliteZombieAttack01 = 3001,
+        BossZombieAttack01 = 4001,
+        BossZombieSkill01 = 4002,
     }
 }
 

@@ -38,13 +38,13 @@ public class SkillBase : MonoBehaviour
             _curSkillLevel++;
     }
     
-    public virtual void UseSkill()
+    public virtual void UseSkill(CreatureController owner)
     {
         // 스킬 사용했으니 쿨타임 적용
         StartCoolTime();
     }
 
-    protected virtual void GenerateSkillPrefab(Transform spawnPos)
+    protected virtual void GenerateProjectileSkill(CreatureController owenr, Transform spawnPos)
     {
         string prefabName = _skillData.prefabName;
         string skillPrefabPath = $"SkillPrefab/{prefabName}.prefab";
@@ -53,13 +53,8 @@ public class SkillBase : MonoBehaviour
         go.name = _skillData.prefabName;
         go.transform.position = spawnPos.position;
         go.transform.forward = spawnPos.forward;
-    }
 
-    private void Update()
-    {
-        if(RemainCoolTime > 0)
-        {
-            RemainCoolTime -= Time.deltaTime;
-        }
+        Projectile projectile = Utils.GetOrAddComponent<Projectile>(go);
+        projectile.Init(owenr, _skillData,_skillType);
     }
 }

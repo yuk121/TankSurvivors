@@ -2461,9 +2461,9 @@ GameObject:
   - component: {fileID: -6479590134948619236}
   - component: {fileID: -755170986184803355}
   - component: {fileID: 8504665971205523804}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyElite_01
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2547,6 +2547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f91d65744805745a3fcececc899a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _curHp: 0
 --- !u!1 &9035218666139498169
 GameObject:
   m_ObjectHideFlags: 0

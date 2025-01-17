@@ -44,6 +44,7 @@ public class MonsterController : CreatureController
         _objectType = Define.eObjectType.Enemy;
         _trans = transform;
         _rb = GetComponent<Rigidbody>();
+        _isAlive = true;
 
         // 스킬들을 1레벨로 설정
         for(int i = 0; i < _skillBook.SkillList.Count; i++)
@@ -102,6 +103,10 @@ public class MonsterController : CreatureController
     {
         _target = Managers.Instance.ObjectManager.Player;
         _targetTrans = _target.transform;
+
+        // 죽은상태면 움직이지 않는다.
+        if (_isAlive == false)
+            return;
 
         if (_target == null || _target.CheckAlive() == false)
         {
@@ -261,6 +266,20 @@ public class MonsterController : CreatureController
 
     }
     #endregion
+
+    public override void OnDead()
+    {
+        // TODO : 죽는 소리 추가
+        _isAlive = false;
+        // 죽는 애니메이션 재생 
+        _animController.Play(Define.eCreatureAnimState.Dead, true);
+    }
+
+    public void AnimeEvent_DeadEnd()
+    {
+        // 죽은 개체는 풀에 다시 넣어준다.
+        Managers.Instance.PoolManager.Push(gameObject);
+    }
 
     // 플레이어가 주위에 있는지 탐색하는 메소드
     private bool CheckPlayerNear()
