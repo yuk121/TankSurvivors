@@ -44,17 +44,9 @@ public class SkillBase : MonoBehaviour
         StartCoolTime();
     }
 
-    protected virtual void GenerateProjectileSkill(CreatureController owenr, Transform spawnPos)
+    protected virtual void GenerateProjectileSkill(CreatureController owenr, Transform spawnTrans)
     {
-        string prefabName = _skillData.prefabName;
-        string skillPrefabPath = $"SkillPrefab/{prefabName}.prefab";
-
-        GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath, pooling: true);
-        go.name = _skillData.prefabName;
-        go.transform.position = spawnPos.position;
-        go.transform.forward = spawnPos.forward;
-
-        Projectile projectile = Utils.GetOrAddComponent<Projectile>(go);
-        projectile.Init(owenr, _skillData,_skillType);
+        Projectile projectile = Managers.Instance.ObjectManager.Spawn<Projectile>(spawnTrans.position, _skillData.skillId, spawnTrans.forward);
+        projectile.Init(owenr, _skillData, _skillType);
     }
 }

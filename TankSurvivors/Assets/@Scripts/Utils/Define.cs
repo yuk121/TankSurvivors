@@ -40,13 +40,12 @@ public static class Define
     public enum eObjectType
     {
         Player,
-        Enemy
-    }
-
-    public enum eDropItemType
-    {
+        Enemy,
         Gem,
-        Item
+        HpRecorvery,
+        Bomb,
+        Magent,
+        Box
     }
 
     public enum eSkillType

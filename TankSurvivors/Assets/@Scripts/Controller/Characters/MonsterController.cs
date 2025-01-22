@@ -41,7 +41,7 @@ public class MonsterController : CreatureController
         if (base.Init() == false)
             return false;
 
-        _objectType = Define.eObjectType.Enemy;
+        ObjectType = Define.eObjectType.Enemy;
         _trans = transform;
         _rb = GetComponent<Rigidbody>();
         _isAlive = true;
@@ -277,6 +277,10 @@ public class MonsterController : CreatureController
 
     public void AnimeEvent_DeadEnd()
     {
+        // 경험치 젬 또는 아이템을 떨궈준다.
+        //GameObject item = 
+        //Managers.Instance.PoolManager.Pop();
+
         // 죽은 개체는 풀에 다시 넣어준다.
         Managers.Instance.PoolManager.Push(gameObject);
     }

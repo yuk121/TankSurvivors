@@ -25,7 +25,8 @@ public class PlayerController : CreatureController
     {
         if(base.Init() == false)
             return false;
-            
+
+        ObjectType = Define.eObjectType.Player;
         _tankRigid = GetComponent<Rigidbody>();
 
         // renderer

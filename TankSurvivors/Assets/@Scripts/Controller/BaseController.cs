@@ -5,7 +5,7 @@ using static Define;
 
 public class BaseController : MonoBehaviour
 {
-    public eObjectType _objectType { get; protected set; }
+    public eObjectType ObjectType { get; protected set; }
     protected bool _init = false;
 
     public virtual bool Init()

@@ -59,10 +59,12 @@
     <Compile Include="Assets\@Scripts\Controller\MapTileController.cs" />
     <Compile Include="Assets\@Scripts\Utils\FSM.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableWave.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\Projectile.cs" />
     <Compile Include="Assets\@Scripts\Utils\Define.cs" />
     <Compile Include="Assets\@Scripts\Contents\SpawningPools.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableSkill.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBase.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\Enemy\ZombieAttack01.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableStage.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
@@ -87,8 +89,11 @@
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
-    <Compile Include="Assets\@Scripts\Contents\Skills\Projectile.cs" />
-    <Compile Include="Assets\@Scripts\Contents\Skills\Enemy\ZombieAttack01.cs" />
+    <Compile Include="Assets\@Scripts\Controller\DropItemController.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemGem.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemHeart.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBomb.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemMagent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
