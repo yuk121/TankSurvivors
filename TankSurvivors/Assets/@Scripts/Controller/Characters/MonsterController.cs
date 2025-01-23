@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MonsterController : CreatureController
 {
     private const float ATTACKIDlE_INTERVAL = 0.5f;
@@ -14,6 +15,9 @@ public class MonsterController : CreatureController
         get { return _state; }
         set { _state = value; }
     }
+
+    Define.eMonsterGrade _grade = Define.eMonsterGrade.Normal;
+
     Transform _trans = null;
     Rigidbody _rb = null;
 
@@ -50,6 +54,20 @@ public class MonsterController : CreatureController
         for(int i = 0; i < _skillBook.SkillList.Count; i++)
         {
             _skillBook.UpgradeSkill(_skillBook.SkillList[i].SkillData.skillId);
+        }
+        
+        // 몬스터 등급 결정
+        if(gameObject.name.Contains("Normal"))
+        {
+            _grade = Define.eMonsterGrade.Normal;
+        }
+        else if(gameObject.name.Contains("Elite"))
+        {
+            _grade = Define.eMonsterGrade.Elite;
+        }
+        else
+        {
+            _grade = Define.eMonsterGrade.Boss;
         }
 
         InChase();
@@ -277,12 +295,41 @@ public class MonsterController : CreatureController
 
     public void AnimeEvent_DeadEnd()
     {
-        // 경험치 젬 또는 아이템을 떨궈준다.
-        //GameObject item = 
-        //Managers.Instance.PoolManager.Pop();
+        DropItem();
 
         // 죽은 개체는 풀에 다시 넣어준다.
         Managers.Instance.PoolManager.Push(gameObject);
+    }
+
+    private void DropItem()
+    {
+        // 경험치 젬 또는 아이템을 떨궈준다.
+        // Test용 타입 
+        Define.eObjectType dropItemType = Define.eObjectType.Gem;
+
+        // TODO : 드랍 아이템을 무엇으로 줄지 결정해줘야함
+        DropItemData dropItemData = GameManager.Instance.GetRandomDropItem(_grade);
+
+        // TODO : dropItemType => dropItemData.dropItemType으로 바꿀것
+        switch(dropItemType)
+        {
+            case Define.eObjectType.Gem:
+                // implementID => dropItemData.dropItemId로 바꿀것
+                Managers.Instance.ObjectManager.Spawn<DropItemGem>(_trans.position, 50001);
+                break;
+
+            case Define.eObjectType.Bomb:
+                break;
+
+            case Define.eObjectType.Magnet:
+                break;
+
+            case Define.eObjectType.HpRecorvery:
+                break;
+
+            case Define.eObjectType.Box:
+                break;
+        }
     }
 
     // 플레이어가 주위에 있는지 탐색하는 메소드

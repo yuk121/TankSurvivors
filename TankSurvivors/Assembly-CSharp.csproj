@@ -53,7 +53,7 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\@Scripts\Controller\MapTileController.cs" />
@@ -65,10 +65,13 @@
     <Compile Include="Assets\@Scripts\Data\DataTableSkill.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBase.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\Enemy\ZombieAttack01.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemMagent.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemGem.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableStage.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
     <Compile Include="Assets\@Scripts\Controller\AnimationController.cs" />
+    <Compile Include="Assets\@Scripts\Controller\DropItemController.cs" />
     <Compile Include="Assets\@Scripts\Utils\DontDestory.cs" />
     <Compile Include="Assets\@Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\Singleton.cs" />
@@ -81,19 +84,18 @@
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\Player\TankShell.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\MonsterController.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBomb.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Base.cs" />
     <Compile Include="Assets\@Scripts\Managers\PoolManager.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemHeart.cs" />
     <Compile Include="Assets\@Scripts\Controller\BaseController.cs" />
     <Compile Include="Assets\@Scripts\Managers\UserDataManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\TableLoader.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
-    <Compile Include="Assets\@Scripts\Controller\DropItemController.cs" />
-    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemGem.cs" />
-    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemHeart.cs" />
-    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBomb.cs" />
-    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemMagent.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableDropItem.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

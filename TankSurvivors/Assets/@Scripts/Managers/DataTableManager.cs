@@ -24,6 +24,9 @@ public class DataTableManager
     DataTableStage _stageTable = new DataTableStage();
     public DataTableStage DataTableStage { get => _stageTable; }
 
+    DataTableDropItem _dropItemTable = new DataTableDropItem();
+    public DataTableDropItem DataTableDropItem { get => _dropItemTable; }
+
     private void LoadFromLocal(Action callback)
     {
         ResourceManager resoureceManager = Managers.Instance.ResourceManager;
@@ -40,11 +43,13 @@ public class DataTableManager
         TextAsset waveText = resoureceManager.Load<TextAsset>($"{lable}/DataTableWave.bytes");
         TextAsset skillText = resoureceManager.Load<TextAsset>($"{lable}/DataTableSkill.bytes");
         TextAsset stageText = resoureceManager.Load<TextAsset>($"{lable}/DataTableStage.bytes");
+        TextAsset dropItemText = resoureceManager.Load<TextAsset>($"{lable}/DataTableDropItem.bytes");
 
         _creatureTable.DataLoad(creatureText.bytes);
         _waveTable.DataLoad(waveText.bytes);
         _skillTable.DataLoad(skillText.bytes);
         _stageTable.DataLoad(stageText.bytes);
+        _dropItemTable.DataLoad(dropItemText.bytes);    
 
         callback?.Invoke();
     }

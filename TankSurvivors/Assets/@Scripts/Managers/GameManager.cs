@@ -145,6 +145,20 @@ public class GameManager : FSM<eGameManagerState>
 
         return isAlive;
     }
+
+    public DropItemData  GetRandomDropItem(Define.eMonsterGrade monsterGrade)
+    {
+        DropItemData dropItemData = new DropItemData();
+
+        // TODO :
+        // 1. waveInfo.dropItemRate에 따라서 아이템을 줄지 젬을 줄지 결정
+        // 2. 젬을 주게 되면 waveInfo의 젬 드랍율에 맞춰서 무슨 젬을 줄지 결정
+        // 3. 아이템을 주게 되면 노말 몬스터, 엘리트 몬스터 구분하여
+        // 노말 몬스터면 waveInfo.normalDropId 참조해서 아이템을 주고
+        // 엘리트 몬스터면 waveInfo.EliteDropId 참조해서 줄것
+
+        return dropItemData;
+    }
     #endregion
 
     #region Pause

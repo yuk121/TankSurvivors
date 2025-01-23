@@ -7,6 +7,10 @@ using UnityEngine;
 
 public static class Define
 {
+    public const int GEM_RED_EXP_AMOUNT = 1;
+    public const int GEM_GREEN_EXP_AMOUNT = 3;
+    public const int GEM_BLUE_EXP_AMOUNT = 7;
+    public const int GEM_PURPLE_EXP_AMOUNT = 15;
     public enum eUIEvent
     {
         Click,
@@ -37,6 +41,14 @@ public static class Define
         AttackIdle,
         Pause,
     }
+    
+    public enum eMonsterGrade
+    {
+        Normal,
+        Elite,
+        Boss
+    }
+
     public enum eObjectType
     {
         Player,
@@ -44,8 +56,16 @@ public static class Define
         Gem,
         HpRecorvery,
         Bomb,
-        Magent,
+        Magnet,
         Box
+    }
+
+    public enum eGemType
+    {
+        RedGem,
+        GreenGem,
+        BlueGem,
+        PurpleGem,
     }
 
     public enum eSkillType

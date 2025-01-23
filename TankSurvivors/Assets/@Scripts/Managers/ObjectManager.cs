@@ -8,24 +8,17 @@ public class ObjectManager
     public HashSet<MonsterController> Monsters { get; } = new HashSet<MonsterController>();
     public HashSet<Projectile> Projectiles { get; } = new HashSet<Projectile>();
 
+    public HashSet<DropItemController> Gems { get; } = new HashSet<DropItemController>();
+
     public T Spawn<T>(Vector3 spawnPos, int implementID = 0, Vector3 spawnDir = default(Vector3)) where T : BaseController
     {
         System.Type type = typeof(T);
 
         if (type == typeof(PlayerController))
         {
-            string charPrefabPath = string.Empty;
-            CreatureData creatrueData = null;
+            CreatureData creatrueData = Managers.Instance.DataTableManager.DataTableCreature.GetCreatureData(implementID);
 
-            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.DataList)
-            {
-                if (implementID == Data.creatureId)
-                {
-                    charPrefabPath = $"PlayerPrefab/{Data.prefabName}.prefab";
-                    creatrueData = Data;
-                    break;
-                }
-            }
+            string charPrefabPath = $"PlayerPrefab/{creatrueData.prefabName}.prefab";
 
             GameObject go = Managers.Instance.ResourceManager.Instantiate(charPrefabPath);
             go.name = "Player";
@@ -42,19 +35,9 @@ public class ObjectManager
 
         if (type == typeof(MonsterController))
         {
-            string monsterPrefabPath = string.Empty;
-            CreatureData creatrueData = null;
+            CreatureData creatrueData = Managers.Instance.DataTableManager.DataTableCreature.GetCreatureData(implementID);
 
-            foreach (var Data in Managers.Instance.DataTableManager.DataTableCreature.DataList)
-            {
-                if (implementID == Data.creatureId)
-                {
-                    monsterPrefabPath = $"EnemyPrefab/{Data.prefabName}.prefab";
-                    creatrueData = Data;
-
-                    break;
-                }
-            }
+            string monsterPrefabPath = $"EnemyPrefab/{creatrueData.prefabName}.prefab";
 
             GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling: true);
             go.transform.position = spawnPos;
@@ -74,19 +57,9 @@ public class ObjectManager
 
         if(type == typeof(Projectile))
         {
-            string skillPrefabPath = string.Empty;
-            SkillData skillData = null;
-
-            foreach (var Data in Managers.Instance.DataTableManager.DataTableSkill.DataList)
-            {
-                if (implementID == Data.skillId)
-                {
-                    skillPrefabPath = $"EnemyPrefab/{Data.prefabName}.prefab";
-                    skillData = Data;
-
-                    break;
-                }
-            }
+            SkillData skillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(implementID); ;
+          
+            string skillPrefabPath = $"SkillPrefab/{skillData.prefabName}.prefab";
 
             GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath, pooling: true);
             go.name = skillData.prefabName;
@@ -99,6 +72,26 @@ public class ObjectManager
             Projectiles.Add(projectile);
 
             return projectile as T;
+        }
+
+        if(type == typeof(DropItemGem)) 
+        {
+            DropItemData dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(implementID); 
+
+            string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+
+            go.transform.position = spawnPos+Vector3.up;
+
+            DropItemController dropItem = Utils.GetOrAddComponent<DropItemController>(go);
+
+            dropItem.Init(dropItemData);
+
+            if(dropItem.ObjectType == Define.eObjectType.Gem)
+            {
+                Gems.Add(dropItem);
+            }
         }
 
         return null;

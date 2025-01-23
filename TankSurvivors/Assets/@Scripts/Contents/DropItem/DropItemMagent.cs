@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DropItemMagent : MonoBehaviour
+public class DropItemMagent : DropItemController
 {
-    // Start is called before the first frame update
-    void Start()
+    public override bool Init()
     {
-        
-    }
+        base.Init();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return true;
     }
 }

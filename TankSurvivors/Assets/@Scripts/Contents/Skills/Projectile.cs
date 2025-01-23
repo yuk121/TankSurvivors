@@ -30,7 +30,7 @@ public class Projectile : BaseController
             float moveDis = speed * Time.deltaTime;
             RaycastHit hit;
 
-            Debug.DrawRay(_trans.position, transform.forward * (moveDis + 0.4f)  , Color.red);
+            //Debug.DrawRay(_trans.position, transform.forward * (moveDis + 0.4f)  , Color.red);
 
             if (Physics.Raycast(_trans.position,transform.forward, out hit, moveDis +0.4f))
             {

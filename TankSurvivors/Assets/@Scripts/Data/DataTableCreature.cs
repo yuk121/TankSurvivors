@@ -58,4 +58,20 @@ public class DataTableCreature
 
         loader.Clear();
     }
+
+    public CreatureData GetCreatureData(int creatureId)
+    {
+        CreatureData data = new CreatureData();
+
+        foreach (var creatureData in _dataList)
+        {
+            if (creatureData.creatureId == creatureId)
+            {
+                data = creatureData;
+                break;
+            }
+        }
+
+        return data;
+    }
 }
