@@ -115,7 +115,6 @@ public class GameManager : FSM<eGameManagerState>
         int userCharId = 10001;
         // 플레이어 소환
         _player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
-        Camera.main.GetComponent<CameraController>().Init(_player.transform);
 
         // 임시
         StageData stageInfo = Managers.Instance.DataTableManager.DataTableStage.DataList[0];

@@ -67,8 +67,10 @@
     <Compile Include="Assets\@Scripts\Contents\Skills\Enemy\ZombieAttack01.cs" />
     <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemMagent.cs" />
     <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemGem.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableDropItem.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableStage.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBox.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
     <Compile Include="Assets\@Scripts\Controller\AnimationController.cs" />
     <Compile Include="Assets\@Scripts\Controller\DropItemController.cs" />
@@ -94,8 +96,6 @@
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
-    <Compile Include="Assets\@Scripts\Data\DataTableDropItem.cs" />
-    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

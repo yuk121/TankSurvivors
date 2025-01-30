@@ -173,6 +173,67 @@ public static class Utils
         return outPos;
     }
 
+    public static Vector3 GetRotatedCamOutRandPos3D(Camera camera, float minDis, float maxDis)
+    {
+        float camNear = camera.nearClipPlane; // 카메라의 Near Clip 거리
+        Vector3 outPos = Vector3.zero;
+
+        // 카메라 꼭짓점 좌표 구하기
+        Vector3 nearBottomLeft = camera.ViewportToWorldPoint(new Vector3(0, 0, camNear)); // 좌하단 (Near)
+        Vector3 nearBottomRight = camera.ViewportToWorldPoint(new Vector3(1, 0, camNear)); // 우하단 (Near)
+        Vector3 nearTopLeft = camera.ViewportToWorldPoint(new Vector3(0, 1, camNear)); // 좌상단 (Near)
+        Vector3 nearTopRight = camera.ViewportToWorldPoint(new Vector3(1, 1, camNear)); // 우상단 (Near)
+
+        Vector3 groundPoint = Vector3.zero;
+
+        float dis;
+        dis = Random.Range(minDis, maxDis);
+
+        // 상하좌우 선택 ( 0 : 상, 1 : 하 , 2 : 좌 , 3 : 우)
+        int rand = Random.Range(0, 4);
+
+        switch (rand)
+        {
+            case 0: // 상
+                break;
+
+            case 1: // 하
+                break;
+
+            case 2: // 좌
+                break;
+
+            case 3:  // 우
+                nearTopRight = GetCamRayToGroundPos(camera, nearTopRight);
+                nearBottomRight = GetCamRayToGroundPos(camera, nearBottomRight);
+
+                nearTopRight = nearTopRight * (1 + dis);
+                nearBottomRight = nearBottomRight * (1 + dis);
+
+               // float randHeight = 
+
+                break;
+        }
+
+       
+        return outPos;
+    }
+
+    public static Vector3 GetCamRayToGroundPos(Camera camera, Vector3 point)
+    {
+        Transform _cameraTrans = camera.transform;
+        Ray ray = new Ray(point, _cameraTrans.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100f)) // 최대 100m 거리까지 탐색
+        {
+            return hit.point;
+        }
+
+        return point;
+    }
+
+
     public static T ToEnum<T>(string str)
     {
         // 받은 Enum을 배열로 반환
