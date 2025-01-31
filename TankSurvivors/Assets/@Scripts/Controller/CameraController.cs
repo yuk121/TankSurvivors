@@ -52,33 +52,17 @@ public class CameraController : MonoBehaviour
         Vector3 nearTopLeft = cam.ViewportToWorldPoint(new Vector3(0, 1, camNear)); // 좌상단 (Near)
         Vector3 nearTopRight = cam.ViewportToWorldPoint(new Vector3(1, 1, camNear)); // 우상단 (Near)
 
-        //Vector3 nearBottomMid = (nearBottomLeft + nearBottomRight) / 2f; // 아래쪽 변 중점 (Near)
-        //Vector3 nearTopMid = (nearTopLeft + nearTopRight) / 2f; // 위쪽 변 중점 (Near)
-        //Vector3 nearLeftMid = (nearBottomLeft + nearTopLeft) / 2f; // 왼쪽 변 중점 (Near)
-        //Vector3 nearRightMid = (nearBottomRight + nearTopRight) / 2f; // 오른쪽 변 중점 (Near)
-
-        //Vector3 groundBottomMid = Utils.GetCamRayToGroundPos(cam, nearBottomMid);
-        //Vector3 groundTopMid = Utils.GetCamRayToGroundPos(cam, nearTopMid);
-        //Vector3 groundLeftMid = Utils.GetCamRayToGroundPos(cam, nearLeftMid);
-        //Vector3 groundRightMid = Utils.GetCamRayToGroundPos(cam, nearRightMid);
-
         Vector3 groundBottomLeft = Utils.GetCamRayToGroundPos(cam, nearBottomLeft);
         Vector3 groundBottomRight = Utils.GetCamRayToGroundPos(cam, nearBottomRight);
         Vector3 groundTopLeft = Utils.GetCamRayToGroundPos(cam, nearTopLeft);
         Vector3 groundTopRight = Utils.GetCamRayToGroundPos(cam, nearTopRight);
 
+
         // Gizmos로 시각화
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(groundBottomLeft * 2f, 0.3f);
-        Gizmos.DrawSphere(groundBottomRight * 2f, 0.3f);
-        Gizmos.DrawSphere(groundTopLeft * 2f, 0.3f);
-        Gizmos.DrawSphere(groundTopRight * 2f, 0.3f);
-
-        //// Gizmos로 시각화
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawSphere(groundBottomMid, 0.3f);
-        //Gizmos.DrawSphere(groundTopMid, 0.3f);
-        //Gizmos.DrawSphere(groundLeftMid, 0.3f);
-        //Gizmos.DrawSphere(groundRightMid, 0.3f);
+        Gizmos.DrawSphere(groundBottomLeft, 0.3f);
+        Gizmos.DrawSphere(groundBottomRight, 0.3f);
+        Gizmos.DrawSphere(groundTopLeft, 0.3f);
+        Gizmos.DrawSphere(groundTopRight, 0.3f);
     }
 }

@@ -1,5 +1,3 @@
-/Library/
-/Logs/
-/Temp/
-/Obj/
-/TankSurvivors/Library
+TankSurvivors/Logs
+TankSurvivors/obj
+TankSurvivors/Library
