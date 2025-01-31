@@ -52,7 +52,7 @@ public class SpawningPools : MonoBehaviour
             {
                 for (int i = 0; i < onceSpawnCount; i++)
                 {
-                    Vector3 spawnPos = Utils.GetCamOutPos3D(Camera.main, 0.5f, 2f);
+                    Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
 
                     spawnMonsterId = waveInfo.spawnMonsterId[0];
                     Managers.Instance.ObjectManager.Spawn<MonsterController>(spawnPos, spawnMonsterId);
@@ -71,7 +71,7 @@ public class SpawningPools : MonoBehaviour
               
                 for (int i = 0; i < waveInfo.onceSpawnCount; i++)
                 {
-                    Vector3 spawnPos = Utils.GetCamOutPos3D(Camera.main, 0.5f, 3f);
+                    Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
                    
                     // 여러 몬스터 중 하나 선택
                     float rand = Random.value * totalRate;

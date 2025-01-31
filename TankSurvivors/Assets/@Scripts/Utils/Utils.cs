@@ -173,7 +173,7 @@ public static class Utils
         return outPos;
     }
 
-    public static Vector3 GetRotatedCamOutRandPos3D(Camera camera, float minDis, float maxDis)
+    public static Vector3 GetRotatedCamOutRandPos3D(Camera camera, float minDis = 0, float maxDis = 0)
     {
         float camNear = camera.nearClipPlane; // 카메라의 Near Clip 거리
         Vector3 outPos = Vector3.zero;
@@ -184,10 +184,10 @@ public static class Utils
         Vector3 nearTopLeft = camera.ViewportToWorldPoint(new Vector3(0, 1, camNear)); // 좌상단 (Near)
         Vector3 nearTopRight = camera.ViewportToWorldPoint(new Vector3(1, 1, camNear)); // 우상단 (Near)
 
-        Vector3 groundPoint = Vector3.zero;
+        float dis = 0;
 
-        float dis;
-        dis = Random.Range(minDis, maxDis);
+        if(minDis > 0 && maxDis > 0)
+            dis = Random.Range(minDis, maxDis);
 
         // 상하좌우 선택 ( 0 : 상, 1 : 하 , 2 : 좌 , 3 : 우)
         int rand = Random.Range(0, 4);
@@ -195,12 +195,33 @@ public static class Utils
         switch (rand)
         {
             case 0: // 상
+                nearTopLeft = GetCamRayToGroundPos(camera, nearTopLeft);
+                nearTopRight = GetCamRayToGroundPos(camera, nearTopRight);
+
+                nearTopLeft = nearTopLeft * (1 + dis);
+                nearTopRight = nearTopRight * (1 + dis);
+
+                outPos = RandomRangeVector(nearTopLeft, nearTopRight);
                 break;
 
             case 1: // 하
+                nearBottomLeft = GetCamRayToGroundPos(camera, nearBottomLeft);
+                nearBottomRight = GetCamRayToGroundPos(camera, nearBottomRight);
+
+                nearBottomLeft = nearBottomLeft * (1 + dis);
+                nearBottomRight = nearBottomRight * (1 + dis);
+
+                outPos = RandomRangeVector(nearBottomLeft, nearBottomRight);
                 break;
 
             case 2: // 좌
+                nearTopLeft = GetCamRayToGroundPos(camera, nearTopLeft);
+                nearBottomLeft = GetCamRayToGroundPos(camera, nearBottomLeft);
+
+                nearTopLeft = nearTopLeft * (1 + dis);
+                nearBottomLeft = nearBottomLeft * (1 + dis);
+
+                outPos = RandomRangeVector(nearTopLeft, nearBottomLeft);
                 break;
 
             case 3:  // 우
@@ -210,13 +231,20 @@ public static class Utils
                 nearTopRight = nearTopRight * (1 + dis);
                 nearBottomRight = nearBottomRight * (1 + dis);
 
-               // float randHeight = 
-
+                outPos = RandomRangeVector(nearTopRight, nearBottomRight);
                 break;
         }
-
-       
         return outPos;
+    }
+
+    public static Vector3 RandomRangeVector(Vector3 vectorA, Vector3 vectorB)
+    {
+        Vector3 randVector = Vector3.zero;
+        float rand = Random.Range(0f, 1f);
+
+        randVector = Vector3.Lerp(vectorA, vectorB, rand);
+
+        return randVector;
     }
 
     public static Vector3 GetCamRayToGroundPos(Camera camera, Vector3 point)

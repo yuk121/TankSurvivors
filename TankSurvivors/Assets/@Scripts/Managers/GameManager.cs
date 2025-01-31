@@ -35,6 +35,9 @@ public class GameManager : FSM<eGameManagerState>
     private PlayerController _player;
     public PlayerController Player { get => _player; }
 
+    private FogController _fogController;
+
+
     public bool IsPause { get; set; }
 
     
@@ -111,7 +114,7 @@ public class GameManager : FSM<eGameManagerState>
 
     #region Game
     private void InGame()
-    {
+    { 
         int userCharId = 10001;
         // 플레이어 소환
         _player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
@@ -123,6 +126,10 @@ public class GameManager : FSM<eGameManagerState>
 
         WaveData waveInfo = Managers.Instance.DataTableManager.DataTableWave.GetWaveData(stageIndex);
         GameData.waveInfo = waveInfo;
+
+        // Fog 
+        FogController fog = Managers.Instance.ObjectManager.Spawn<FogController>(Vector3.zero);
+        fog.SetFog(_player);
 
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
         _spawnPools.StartSpawn();

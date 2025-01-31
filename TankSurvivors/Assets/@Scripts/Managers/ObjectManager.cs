@@ -92,6 +92,22 @@ public class ObjectManager
             {
                 Gems.Add(dropItem);
             }
+
+            return dropItem as T;
+        }
+
+        if(type == typeof(FogController))
+        {
+            string fogPrefabPath = $"MapPrefab/Fog.prefab";
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(fogPrefabPath);
+
+            go.transform.position = spawnPos;
+
+            FogController fog = Utils.GetOrAddComponent<FogController>(go);
+            fog.Init();
+
+            return fog as T;
         }
 
         return null;
