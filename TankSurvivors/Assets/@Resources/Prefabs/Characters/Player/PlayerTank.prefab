@@ -180,8 +180,8 @@ GameObject:
   - component: {fileID: 6907145695517216547}
   - component: {fileID: 8808128122493214712}
   - component: {fileID: -7599279675198614136}
-  - component: {fileID: -6224096038098516010}
   - component: {fileID: 2037129916160179730}
+  - component: {fileID: -6224096038098516010}
   m_Layer: 6
   m_Name: PlayerTank
   m_TagString: Player
@@ -206,6 +206,7 @@ Transform:
   - {fileID: 6901132729350649733}
   - {fileID: 966580088011516690}
   - {fileID: 2644060796637298071}
+  - {fileID: 3233537232057190614}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,12 +270,25 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!65 &2037129916160179730
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153093373755847779}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.7, y: 1.3, z: 2.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-6224096038098516010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,19 +305,7 @@ MonoBehaviour:
   _tankBody: {fileID: 672221882971161554}
   _tankHead: {fileID: 4339861350199996378}
   _dummyFirePos: {fileID: 3015828318319422707}
---- !u!65 &2037129916160179730
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1153093373755847779}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7, y: 1.3, z: 2.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  _dummyIndicatorPos: {fileID: 3233537232057190614}
 --- !u!1 &1397629665669033979
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +390,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1821317825561144719
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3233537232057190614}
+  m_Layer: 0
+  m_Name: Dummy_IndicatorPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3233537232057190614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821317825561144719}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.73, z: -0.08876333}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 672221882971161554}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3396724856166880957
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3015828318319422707}
   m_Layer: 0
-  m_Name: dummy_FirePos
+  m_Name: Dummy_FirePos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

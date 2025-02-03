@@ -30,6 +30,12 @@ public class ObjectManager
             
             pc.Init();
 
+            // Indicator 
+            Transform indicator = Managers.Instance.ResourceManager.Instantiate(Define.DUMMY_INDICATOR_PREFAB_PATH).GetComponent<Transform>();
+
+            indicator.SetParent(pc.DummyIndicatorPos);
+            indicator.localPosition = new Vector3(0, 0.01f, 0);
+           
             return pc as T;
         }
 

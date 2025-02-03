@@ -6,7 +6,7 @@ public class MapTileController : MonoBehaviour
 {
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("PlayerArea") == false)
+        if (other.gameObject.CompareTag("ViewArea") == false)
             return;
 
         Vector3 playerPos = Managers.Instance.ObjectManager.Player.transform.position;

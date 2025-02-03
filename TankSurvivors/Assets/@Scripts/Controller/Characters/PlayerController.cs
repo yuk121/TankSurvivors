@@ -12,6 +12,10 @@ public class PlayerController : CreatureController
     [SerializeField]
     private Transform _dummyFirePos = null;
     public Transform DummyFirePos { get => _dummyFirePos; }
+    [SerializeField]
+    private Transform _dummyIndicatorPos = null;
+    public Transform DummyIndicatorPos { get => _dummyIndicatorPos; }
+
 
     private Vector2 _moveDir = Vector2.zero;
     public Vector2 MoveDir { get { return _moveDir; } set { _moveDir = value; } }

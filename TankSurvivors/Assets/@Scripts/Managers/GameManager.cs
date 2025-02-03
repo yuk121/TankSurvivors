@@ -128,11 +128,11 @@ public class GameManager : FSM<eGameManagerState>
         GameData.waveInfo = waveInfo;
 
         // Fog 
-        FogController fog = Managers.Instance.ObjectManager.Spawn<FogController>(Vector3.zero);
-        fog.SetFog(_player);
+        //FogController fog = Managers.Instance.ObjectManager.Spawn<FogController>(Vector3.zero);
+        //fog.SetFog(_player);
 
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
-        _spawnPools.StartSpawn();
+       // _spawnPools.StartSpawn();
     }
 
     private void ModifyGame()

@@ -11,6 +11,9 @@ public static class Define
     public const int GEM_GREEN_EXP_AMOUNT = 3;
     public const int GEM_BLUE_EXP_AMOUNT = 7;
     public const int GEM_PURPLE_EXP_AMOUNT = 15;
+
+    public const string DUMMY_INDICATOR_PREFAB_PATH = "EtcPrefab/Indicator.prefab";
+    public const string DUMMY_FIREPOS_MUZZLE_PREFAB_PATH = "SkillPrefab/Tracer_GoldFire_Small_MuzzleFlare.prefab";
     public enum eUIEvent
     {
         Click,
