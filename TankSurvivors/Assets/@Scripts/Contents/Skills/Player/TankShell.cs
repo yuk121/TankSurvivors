@@ -12,7 +12,13 @@ public class TankShell : SkillBase
         Transform spawnTrans = GameManager.Instance.Player.DummyFirePos;
 
         // Æ÷±¸ È­¿° 
-        Managers.Instance.ResourceManager.Instantiate(Define.DUMMY_FIREPOS_MUZZLE_PREFAB_PATH, spawnTrans, true);
+        GameObject muzzleFire= Managers.Instance.ResourceManager.Instantiate(Define.DUMMY_FIREPOS_MUZZLE_PREFAB_PATH, pooling: true);
+        muzzleFire.transform.position = spawnTrans.transform.position;
+        muzzleFire.transform.forward = spawnTrans.transform.forward;
+
+        ParticleController muzzleParticle = muzzleFire.GetComponent<ParticleController>();
+        muzzleParticle.SetPooling();
+        
         // Æ÷Åº
         GenerateProjectileSkill(owner, spawnTrans);
     }
