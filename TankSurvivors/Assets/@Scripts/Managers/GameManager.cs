@@ -132,7 +132,7 @@ public class GameManager : FSM<eGameManagerState>
         //fog.SetFog(_player);
 
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
-       // _spawnPools.StartSpawn();
+        _spawnPools.StartSpawn();
     }
 
     private void ModifyGame()
