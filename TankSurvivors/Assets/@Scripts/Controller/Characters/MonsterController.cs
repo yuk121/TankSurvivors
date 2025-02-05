@@ -298,7 +298,7 @@ public class MonsterController : CreatureController
         DropItem();
 
         // 죽은 개체는 풀에 다시 넣어준다.
-        Managers.Instance.PoolManager.Push(gameObject);
+        Managers.Instance.ObjectManager.Despawn(this);
     }
 
     private void DropItem()

@@ -253,7 +253,7 @@ public static class Utils
         Ray ray = new Ray(point, _cameraTrans.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100f)) // 최대 100m 거리까지 탐색
+        if (Physics.Raycast(ray, out hit, 100f, 1 << LayerMask.NameToLayer("Ground"))) // 최대 100m 거리까지 탐색
         {
             return hit.point;
         }

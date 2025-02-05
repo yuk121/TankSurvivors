@@ -8,26 +8,25 @@ public class ParticleController : BaseController
     private float _duration = 1.5f;
 
     private Coroutine _corDestroyParticle;
-    private GameObject _goParticle;
     private float _destroyTime;
-    private bool _isPooling = false;
+    Transform _trans;
 
-    public void SetPooling()
+    public void Init(Vector3 spawnPos = default(Vector3), Vector3 spawnFoward = default(Vector3))
     {
-        _isPooling = true;
-        SetDestroy();
-    }
+        base.Init();
 
-    public void SetDestroy()
-    {
+        _trans = transform;
+        _trans.position = spawnPos;
+        _trans.forward = spawnFoward;
+
         _destroyTime = Time.time + _duration;
 
-        if( _corDestroyParticle != null )
-            StopCoroutine(_corDestroyParticle );
+        if (_corDestroyParticle != null)
+            StopCoroutine(_corDestroyParticle);
 
         _corDestroyParticle = StartCoroutine(CorDestroyParticle());
-
     }
+
 
     private IEnumerator CorDestroyParticle()
     {
@@ -35,18 +34,8 @@ public class ParticleController : BaseController
         {
             if (Time.time > _destroyTime)
             {
-                if (_isPooling == true)
-                {
-                    // 풀링이 된 상태라면 
-                    Managers.Instance.PoolManager.Push(gameObject);
-                    break;
-                }
-                else
-                {
-                    // 풀링이 안되는 파티클인 경우
-                    Destroy(gameObject);
-                    break;
-                }
+                Managers.Instance.ResourceManager.Destory(gameObject);
+                break;
             }
             yield return null;
         }

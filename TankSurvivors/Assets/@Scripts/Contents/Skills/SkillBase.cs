@@ -48,11 +48,5 @@ public class SkillBase : MonoBehaviour
     {
         Projectile projectile = Managers.Instance.ObjectManager.Spawn<Projectile>(spawnTrans.position, _skillData.skillId, spawnTrans.forward);
         projectile.Init(owenr, _skillData, _skillType);
-
-        ParticleController particleController = projectile.gameObject.GetComponent<ParticleController>();
-        if(particleController != null)
-        {
-            particleController.SetPooling();
-        }
     }
 }

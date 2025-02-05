@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Projectile : BaseController
 {
-    SkillData _skillData;
-    Transform _trans;
-    CreatureController _owner;
+    private SkillData _skillData;
+    private Transform _trans;
+    private CreatureController _owner;
+    private float _destroyTime;
 
     public void Init(CreatureController owenr , SkillData data, Define.eSkillType skillType)
     {
         _trans = transform;
         _owner = owenr;
         _skillData = data;
+
+        _destroyTime = Time.time + data.duration;
 
         switch(skillType)
         {
@@ -27,6 +30,12 @@ public class Projectile : BaseController
         float speed = _skillData.projectileSpeed;
         while(true)
         {
+            // 지속시간이 지난 경우
+            if(Time.time > _destroyTime)
+            {
+                Managers.Instance.ObjectManager.Despawn(this);
+            }
+
             float moveDis = speed * Time.deltaTime;
             RaycastHit hit;
 

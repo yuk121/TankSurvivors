@@ -27,14 +27,6 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            Ray ray = new Ray(_cameraTrans.position, _cameraTrans.forward);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100f)) // 최대 100m 거리까지 탐색
-            {
-                _groundCenterPos = hit.point;
-            }
-
             transform.position = _target.position;
         }
     }

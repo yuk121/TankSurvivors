@@ -215,7 +215,7 @@ Transform:
   m_Children:
   - {fileID: 485765041}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &79179954
 GameObject:
@@ -453,10 +453,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 51428241}
     m_Modifications:
+    - target: {fileID: 134516934706374480, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 405819726960564521, guid: a982d025ce4044c4bb4b3ccb24683e99,
         type: 3}
       propertyPath: m_Name
       value: Map01
+      objectReference: {fileID: 0}
+    - target: {fileID: 975089260038188551, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3165776269126368262, guid: a982d025ce4044c4bb4b3ccb24683e99,
         type: 3}
@@ -513,6 +523,56 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3912595678823963273, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912595678823963273, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131214728397258445, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131214728397258445, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594315513367217213, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674826665494266809, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674826665494266809, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 5411624356160083644, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5411624356160083644, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 5411624356160084290, guid: a982d025ce4044c4bb4b3ccb24683e99,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a982d025ce4044c4bb4b3ccb24683e99, type: 3}
 --- !u!4 &485765041 stripped
@@ -531,6 +591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 557553971}
   - component: {fileID: 557553970}
+  - component: {fileID: 557553972}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -563,8 +624,20 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &557553972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557553969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b98d7a132a9d844ab59bd31c008d682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &631089399
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +787,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &670053646
 BoxCollider:

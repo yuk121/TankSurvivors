@@ -99,4 +99,14 @@ public class PoolManager
         Pool pool = new Pool(prefab);
         _pools.Add(prefab.name, pool);
     }
+
+    public bool IsContainPooling(GameObject prefab)
+    {
+        if(_pools.ContainsKey (prefab.name))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

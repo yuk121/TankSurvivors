@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectManager
@@ -38,8 +39,7 @@ public class ObjectManager
            
             return pc as T;
         }
-
-        if (type == typeof(MonsterController))
+        else if (type == typeof(MonsterController))
         {
             CreatureData creatrueData = Managers.Instance.DataTableManager.DataTableCreature.GetCreatureData(implementID);
 
@@ -60,8 +60,7 @@ public class ObjectManager
 
             return mon as T;
         }
-
-        if(type == typeof(Projectile))
+        else if(type == typeof(Projectile))
         {
             SkillData skillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(implementID); ;
           
@@ -79,8 +78,7 @@ public class ObjectManager
 
             return projectile as T;
         }
-
-        if(type == typeof(DropItemGem)) 
+        else if(type == typeof(DropItemGem)) 
         {
             DropItemData dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(implementID); 
 
@@ -102,20 +100,64 @@ public class ObjectManager
             return dropItem as T;
         }
 
-        if(type == typeof(FogController))
-        {
-            string fogPrefabPath = $"MapPrefab/Fog.prefab";
+        //if(type == typeof(FogController))
+        //{
+        //    string fogPrefabPath = $"MapPrefab/Fog.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(fogPrefabPath);
+        //    GameObject go = Managers.Instance.ResourceManager.Instantiate(fogPrefabPath);
 
-            go.transform.position = spawnPos;
+        //    go.transform.position = spawnPos;
 
-            FogController fog = Utils.GetOrAddComponent<FogController>(go);
-            fog.Init();
+        //    FogController fog = Utils.GetOrAddComponent<FogController>(go);
+        //    fog.Init();
 
-            return fog as T;
-        }
+        //    return fog as T;
+        //}
 
         return null;
+    }
+
+    public void Despawn <T>( T gameobject) where T : BaseController
+    {
+        if (gameobject == null)
+            return;
+
+        System.Type type = typeof(T);
+
+        if (type == typeof(MonsterController))
+        {
+            MonsterController mon = gameobject as MonsterController;
+            Monsters.Remove(mon);
+
+            Managers.Instance.ResourceManager.Destory(mon.gameObject);
+            return;
+        }
+        else if (type == typeof(Projectile))
+        {
+            Projectile projectile = gameobject as Projectile;
+            Projectiles.Remove(projectile);
+
+            Managers.Instance.ResourceManager.Destory(projectile.gameObject);
+            return;
+        }
+        else if (type == typeof(DropItemGem))
+        {
+            DropItemGem gem = gameobject as DropItemGem;
+            Gems.Remove(gem);
+
+            Managers.Instance.ResourceManager.Destory(gem.gameObject);
+        }
+        else if (type == typeof(DropItemBomb))
+        {
+
+        }
+        else if (type == typeof(DropItemHeart))
+        {
+
+        }
+        else if (type == typeof(DropItemMagent))
+        {
+
+        }
     }
 }
