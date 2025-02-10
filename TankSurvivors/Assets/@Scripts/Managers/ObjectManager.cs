@@ -88,16 +88,17 @@ public class ObjectManager
 
             go.transform.position = spawnPos+Vector3.up;
 
-            DropItemController dropItem = Utils.GetOrAddComponent<DropItemController>(go);
+            DropItemGem gem = Utils.GetOrAddComponent<DropItemGem>(go);
 
-            dropItem.Init(dropItemData);
+            gem.SetData(dropItemData);
+            gem.Init();
 
-            if(dropItem.ObjectType == Define.eObjectType.Gem)
-            {
-                Gems.Add(dropItem);
-            }
+            Gems.Add(gem);
+           
+            // GridManager에 추가
+            GridManager.Instance.Add(gem);
 
-            return dropItem as T;
+            return gem as T;
         }
 
         //if(type == typeof(FogController))
@@ -145,19 +146,31 @@ public class ObjectManager
             DropItemGem gem = gameobject as DropItemGem;
             Gems.Remove(gem);
 
+            // GridManager에서 제거
+            GridManager.Instance.Remove(gem);
+
             Managers.Instance.ResourceManager.Destory(gem.gameObject);
         }
         else if (type == typeof(DropItemBomb))
         {
-
+            DropItemBomb bomb = gameobject as DropItemBomb;
+            
+            GridManager.Instance.Remove(bomb);
+            Managers.Instance.ResourceManager.Destory(bomb.gameObject);
         }
         else if (type == typeof(DropItemHeart))
         {
+            DropItemHeart heart = gameobject as DropItemHeart;
 
+            GridManager.Instance.Remove(heart);
+            Managers.Instance.ResourceManager.Destory(heart.gameObject);
         }
         else if (type == typeof(DropItemMagent))
         {
+            DropItemMagent magent = gameobject as DropItemMagent;
 
+            GridManager.Instance.Remove(magent);
+            Managers.Instance.ResourceManager.Destory(magent.gameObject);
         }
     }
 }

@@ -127,6 +127,9 @@ public class GameManager : FSM<eGameManagerState>
         WaveData waveInfo = Managers.Instance.DataTableManager.DataTableWave.GetWaveData(stageIndex);
         GameData.waveInfo = waveInfo;
 
+        // GridManager
+        GridManager.Instance.Init();
+
         // Fog 
         //FogController fog = Managers.Instance.ObjectManager.Spawn<FogController>(Vector3.zero);
         //fog.SetFog(_player);

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : CreatureController
 {
+    private const float ENV_COLLECT_DISTANCE_BASIC = 1f;
+
     [SerializeField]
     private Transform _tankBody = null;
     [SerializeField]
@@ -24,6 +26,9 @@ public class PlayerController : CreatureController
     // Damaged Color
     private MeshRenderer[] _meshRenderers;
     private MaterialPropertyBlock _materialProperty;
+
+    // Stat
+    public int Exp { get; set; } = 0;
 
     public override bool Init()
     {
@@ -136,6 +141,30 @@ public class PlayerController : CreatureController
     // 주변에 있는 자원 줍기
     private void CollectEnv()
     {
+        List<DropItemController> findDropItems = GridManager.Instance.GatherDropObjects(transform.position, ENV_COLLECT_DISTANCE_BASIC + 0.5f);
+        float collectSqr = ENV_COLLECT_DISTANCE_BASIC * ENV_COLLECT_DISTANCE_BASIC;
+
+        foreach(DropItemController item in findDropItems)
+        {
+            Vector3 dir = item.transform.position - transform.position;
+       
+            if(dir.sqrMagnitude <= collectSqr)
+            {
+                switch(item.ItemType)
+                {
+                    case Define.eObjectType.Bomb:
+                    case Define.eObjectType.HpRecorvery:
+                    case Define.eObjectType.Magnet:
+                    case Define.eObjectType.Box:
+                        item.GetItem();
+                        break;
+
+                    default:
+                        item.GetItem();
+                        break;
+                }
+            }
+        }
 
     }
 

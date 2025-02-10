@@ -10,9 +10,11 @@ public class DropItemController : BaseController
     private Define.eObjectType _itemType;
     public Define.eObjectType ItemType { get => _itemType; set => _itemType = value; }
 
-    public void Init(DropItemData data)
+    public void SetData(DropItemData data)
     {
         _dropItemData = data;
         _itemType = data.dropItemType;
     }
+
+    public virtual void GetItem() { }
 }
