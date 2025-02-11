@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class UI_Joystick : UI_Base
 {
-    enum eGameOjbect
+    enum eGameObject
     {
         JoystickBG,
         Handler
@@ -18,16 +18,16 @@ public class UI_Joystick : UI_Base
     private Vector2 _moveDir;
     private float _joystickRadius;
 
-    public override bool init()
+    public override bool Init()
     {
-        if(base.init() == false)
+        if(base.Init() == false)
         {
             return false;
         }
 
-        BindOjbect(typeof(eGameOjbect));
-        _handler = GetObject((int)eGameOjbect.Handler);
-        _joystickBG = GetObject((int)eGameOjbect.JoystickBG);
+        BindOjbect(typeof(eGameObject));
+        _handler = GetObject((int)eGameObject.Handler);
+        _joystickBG = GetObject((int)eGameObject.JoystickBG);
 
         BindEvent(gameObject, OnPointerDown, null, Define.eUIEvent.PointerDown);
         BindEvent(gameObject, OnPointerUp, null, Define.eUIEvent.PointerUp);

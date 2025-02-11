@@ -11,7 +11,7 @@ public class UI_Base : MonoBehaviour
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
     protected bool _init = false;
 
-    public virtual bool init()
+    public virtual bool Init()
     {
         if (_init)
             return false;
@@ -23,7 +23,7 @@ public class UI_Base : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        init();
+        Init();
     }
 
     protected void Bind<T>(Type type) where T : UnityEngine.Object
@@ -38,7 +38,7 @@ public class UI_Base : MonoBehaviour
                 objects[i] = Utils.FindChild(gameObject, names[i], true);
 
             else
-                objects[i] = Utils.FindChild(gameObject, names[i], true);
+                objects[i] = Utils.FindChild<T>(gameObject, names[i], true);
 
             if (objects[i] == null)
                 Debug.Log($"Failed to bind {names[i]}");
@@ -58,7 +58,8 @@ public class UI_Base : MonoBehaviour
         if(_objects.TryGetValue(typeof(T), out objects) == false)
             return null;
 
-        return objects[index] as T;
+        T get = objects[index] as T;
+        return get;
     }
     
     protected GameObject GetObject(int index) { return Get<GameObject>(index); }

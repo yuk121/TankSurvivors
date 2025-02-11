@@ -41,7 +41,7 @@ public class Projectile : BaseController
 
             //Debug.DrawRay(_trans.position, transform.forward * (moveDis + 0.4f)  , Color.red);
 
-            if (Physics.Raycast(_trans.position,transform.forward, out hit, moveDis +0.4f))
+            if (Physics.Raycast(_trans.position,transform.forward, out hit, moveDis +0.15f))
             {
                 MonsterController mon = hit.collider.gameObject.GetComponent<MonsterController>();
                 

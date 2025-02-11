@@ -9,7 +9,7 @@ public class SkillBook : MonoBehaviour
     private List<SkillBase> _skillList = new List<SkillBase>();
     public List<SkillBase> SkillList { get => _skillList; }
 
-    private SkillBase _prevUseSkill = new SkillBase();
+    private SkillBase _prevUseSkill = null;
     public SkillBase PrevUseSkill { get => _prevUseSkill; set => _prevUseSkill = value; }
 
 
@@ -18,11 +18,16 @@ public class SkillBook : MonoBehaviour
         for(int i =0; i < skillList.Count; i++) 
         {
             SkillData data = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(skillList[i]);
-            
-            Define.eSkillType skillType = (Define.eSkillType)skillList[i];
-            string className = skillType.ToString(); 
-            SkillBase skill = gameObject.AddComponent(Type.GetType(className)) as SkillBase;
+            SkillBase skill = null;
 
+            Define.eSkillType skillType = (Define.eSkillType)skillList[i];
+            string className = skillType.ToString();
+           
+            Type type = Type.GetType(className);
+            
+            if(type != null)
+                skill = gameObject.AddComponent(type) as SkillBase;
+ 
             if (skill != null)
             {
                 skill.SkillData = data;

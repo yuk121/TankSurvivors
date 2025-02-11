@@ -16,5 +16,8 @@ public class DropItemController : BaseController
         _itemType = data.dropItemType;
     }
 
-    public virtual void GetItem() { }
+    public virtual void GetItem() 
+    {
+        GridManager.Instance.Remove(this);
+    }
 }

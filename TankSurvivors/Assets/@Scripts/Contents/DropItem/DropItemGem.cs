@@ -32,14 +32,14 @@ public class DropItemGem : DropItemController
             _corMoveToPlayer = null;
         }
 
-
         PlayerController player = GameManager.Instance.Player;
 
         Vector3 dir = (_trans.position - player.transform.position).normalized;
-        Vector3 target = _trans.position + dir * 1.5f;
+        Vector3 target = _trans.position + dir * 2f;
+        _trans.DOKill();
         _trans.DOMove(target, 0.3f).SetEase(Ease.Linear).OnComplete(() =>
         {
-            _corMoveToPlayer = StartCoroutine(CorMoveToPlayer());
+            _corMoveToPlayer = StartCoroutine(CorMoveToPlayer(player));
         });
     }
 
@@ -65,13 +65,24 @@ public class DropItemGem : DropItemController
         }
     }
 
-    IEnumerator CorMoveToPlayer()
+    IEnumerator CorMoveToPlayer(PlayerController player)
     {
-        PlayerController player = GameManager.Instance.Player;
-
-        while(true)
+        if (player == null)
         {
-            float distance = Vector3.Distance(_trans.position, player.transform.position);
+            Debug.LogError($"{this} : Player is null !!!");
+            yield break;
+        }
+
+        Vector3 playerPos = Vector3.zero;
+        float moveToPlayerSpeed = Time.deltaTime * Define.ITEM_MOVE_SPEED;
+
+        while (true)
+        {
+            if (player == null)
+                yield break;
+
+            playerPos = player.transform.position;
+            float distance = Vector3.Distance(_trans.position, playerPos);
 
             if(distance < 0.4f)
             {
@@ -80,7 +91,7 @@ public class DropItemGem : DropItemController
                 yield break; 
             }
 
-            _trans.position = Vector3.MoveTowards(_trans.position, player.transform.position, Time.deltaTime * Define.ITEM_MOVE_SPEED);
+            _trans.position = Vector3.MoveTowards(_trans.position, playerPos, moveToPlayerSpeed);
            
             yield return null;
         }

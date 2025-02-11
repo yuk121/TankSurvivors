@@ -7,7 +7,7 @@ using UnityEngine;
 
 public static class Define
 {
-    public const float ITEM_MOVE_SPEED = 3f;
+    public const float ITEM_MOVE_SPEED = 15f;
 
     public const int GEM_RED_EXP_AMOUNT = 1;
     public const int GEM_GREEN_EXP_AMOUNT = 3;

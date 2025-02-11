@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PlayerController : CreatureController
 {
-    private const float ENV_COLLECT_DISTANCE_BASIC = 1f;
+    private const float ENV_COLLECT_DISTANCE_BASIC = 1.5f;
 
+    [Header("BASE")]
     [SerializeField]
     private Transform _tankBody = null;
     [SerializeField]
@@ -14,10 +15,13 @@ public class PlayerController : CreatureController
     [SerializeField]
     private Transform _dummyFirePos = null;
     public Transform DummyFirePos { get => _dummyFirePos; }
+
+    [Header("UI")]
     [SerializeField]
     private Transform _dummyIndicatorPos = null;
     public Transform DummyIndicatorPos { get => _dummyIndicatorPos; }
-
+    [SerializeField]
+    private UI_PlayerHpBar _playerHpBar = null;
 
     private Vector2 _moveDir = Vector2.zero;
     public Vector2 MoveDir { get { return _moveDir; } set { _moveDir = value; } }
@@ -37,6 +41,9 @@ public class PlayerController : CreatureController
 
         ObjectType = Define.eObjectType.Player;
         _tankRigid = GetComponent<Rigidbody>();
+
+        // UI
+        _playerHpBar.SetPlayer(this);
 
         // renderer
         _meshRenderers = GetComponentsInChildren<MeshRenderer>();
