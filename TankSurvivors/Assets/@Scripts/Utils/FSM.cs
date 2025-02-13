@@ -85,7 +85,44 @@ namespace Common
 			//2-4. loop -> update...
 		}
 
-		protected void Update()
+
+        public void UndoState()
+        {
+
+            //else if (curState.Equals(_nextState))
+            //{
+            //	return;
+            //}
+
+            //1. 현재상태 ... 종료작업...
+            if (cbOut != null)
+            {
+                cbOut();
+            }
+
+            //2-1. 새로운 상태 들어가....
+            T temp = preState;
+
+            preState = curState;
+            curState = temp;
+            nextState = temp;
+
+            //2-2. callback setting...
+            FSMData<T> _data = dicFun[curState];
+            cbIn = _data.cbIn;
+            cbLoop = _data.cbLoop;
+            cbOut = _data.cbOut;
+
+            //2-3. in
+            //if (cbIn != null)
+            //{
+            //    cbIn();
+            //}
+
+            //2-4. loop -> update...
+        }
+
+        protected void Update()
 		{
 			//Debug.Log(this + " " + curState);
 			if(cbLoop != null)

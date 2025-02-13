@@ -35,12 +35,11 @@ public class GameManager : FSM<eGameManagerState>
     private PlayerController _player;
     public PlayerController Player { get => _player; }
 
-    private FogController _fogController;
 
-
-    public bool IsPause { get; set; }
-
-    
+    public float CurTime { get; set; } = 0f;
+    public int KillCount { get; set; } = 0;
+   
+    public bool _bPause;
 
     // Start is called before the first frame update
     private void Awake()
@@ -130,9 +129,8 @@ public class GameManager : FSM<eGameManagerState>
         // GridManager
         GridManager.Instance.Init();
 
-        // Fog 
-        //FogController fog = Managers.Instance.ObjectManager.Spawn<FogController>(Vector3.zero);
-        //fog.SetFog(_player);
+        CurTime = 0f;
+        KillCount = 0;
 
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
         _spawnPools.StartSpawn();
@@ -146,6 +144,15 @@ public class GameManager : FSM<eGameManagerState>
             MoveState(eGameManagerState.Result);
             return;
         }
+
+        // Pause가 된 경우
+        if(_bPause == true)
+        {
+            MoveState(eGameManagerState.Pause);
+            return;
+        }
+
+        CurTime += Time.deltaTime;
     }
 
     public bool CheckPlayerAlive()
@@ -178,12 +185,20 @@ public class GameManager : FSM<eGameManagerState>
 
     private void ModifyPause()
     {
-
+        if(_bPause == false)
+        {
+            UndoState();
+        }
     }
 
     private void OutPause()
     {
 
+    }
+    
+    public void SetPause(bool bPause)
+    {
+        _bPause = bPause;
     }
     #endregion
 

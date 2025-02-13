@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class DataTableManager
 {
-
     public void LoadData(Action callback = null)
     {
         LoadFromLocal(callback);
@@ -27,6 +26,9 @@ public class DataTableManager
     DataTableDropItem _dropItemTable = new DataTableDropItem();
     public DataTableDropItem DataTableDropItem { get => _dropItemTable; }
 
+    DataTableInGameLevel _inGameLevelTable = new DataTableInGameLevel();
+    public DataTableInGameLevel DataTableInGameLevel { get => _inGameLevelTable; }
+
     private void LoadFromLocal(Action callback)
     {
         ResourceManager resoureceManager = Managers.Instance.ResourceManager;
@@ -44,12 +46,14 @@ public class DataTableManager
         TextAsset skillText = resoureceManager.Load<TextAsset>($"{lable}/DataTableSkill.bytes");
         TextAsset stageText = resoureceManager.Load<TextAsset>($"{lable}/DataTableStage.bytes");
         TextAsset dropItemText = resoureceManager.Load<TextAsset>($"{lable}/DataTableDropItem.bytes");
+        TextAsset inGameLevelText = resoureceManager.Load<TextAsset>($"{lable}/DataTableInGameLevel.bytes");
 
         _creatureTable.DataLoad(creatureText.bytes);
         _waveTable.DataLoad(waveText.bytes);
         _skillTable.DataLoad(skillText.bytes);
         _stageTable.DataLoad(stageText.bytes);
         _dropItemTable.DataLoad(dropItemText.bytes);    
+        _inGameLevelTable.DataLoad(inGameLevelText.bytes);
 
         callback?.Invoke();
     }

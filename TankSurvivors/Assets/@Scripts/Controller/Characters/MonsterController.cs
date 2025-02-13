@@ -297,6 +297,9 @@ public class MonsterController : CreatureController
     {
         DropItem();
 
+        // 죽은 개체 카운트 증가
+        GameManager.Instance.KillCount++;
+
         // 죽은 개체는 풀에 다시 넣어준다.
         Managers.Instance.ObjectManager.Despawn(this);
     }

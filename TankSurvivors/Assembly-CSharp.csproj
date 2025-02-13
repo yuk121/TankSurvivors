@@ -53,7 +53,7 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\@Scripts\Controller\MapTileController.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="Assets\@Scripts\Controller\ParticleController.cs" />
     <Compile Include="Assets\@Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\Managers.cs" />
+    <Compile Include="Assets\@Scripts\UI\UI_PlayerHpBar.cs" />
     <Compile Include="Assets\@Scripts\Controller\CameraController.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\CreatureController.cs" />
     <Compile Include="Assets\@Scripts\Managers\DataTableManager.cs" />
@@ -91,7 +92,6 @@
     <Compile Include="Assets\@Scripts\UI\UI_Base.cs" />
     <Compile Include="Assets\@Scripts\Managers\PoolManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\GridManager.cs" />
-    <Compile Include="Assets\@Scripts\Controller\FogController.cs" />
     <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemHeart.cs" />
     <Compile Include="Assets\@Scripts\Controller\BaseController.cs" />
     <Compile Include="Assets\@Scripts\Managers\UserDataManager.cs" />
@@ -99,7 +99,31 @@
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
-    <Compile Include="Assets\@Scripts\UI\UI_PlayerHpBar.cs" />
+    <Compile Include="Assets\@Scripts\UI\UI_TopGameScene.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableInGameLevel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -821,6 +845,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

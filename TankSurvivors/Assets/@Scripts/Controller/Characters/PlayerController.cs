@@ -33,6 +33,7 @@ public class PlayerController : CreatureController
 
     // Stat
     public int Exp { get; set; } = 0;
+    public int Level { get; set; } = 1;
 
     public override bool Init()
     {
@@ -51,6 +52,10 @@ public class PlayerController : CreatureController
 
         // 기본 공격은 미리 1레벨로 설정
         _skillBook.UpgradeSkill(_skillBook.SkillList[0].SkillData.skillId);
+        
+        // Stat 초기화
+        Exp = 0;
+        Level = 1;
 
         return true;
     }
