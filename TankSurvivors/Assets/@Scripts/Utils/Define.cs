@@ -16,6 +16,7 @@ public static class Define
 
     public const string DUMMY_INDICATOR_PREFAB_PATH = "EtcPrefab/Indicator.prefab";
     public const string DUMMY_FIREPOS_MUZZLE_PREFAB_PATH = "SkillPrefab/Tracer_GoldFire_Small_MuzzleFlare.prefab";
+
     public enum eUIEvent
     {
         Click,

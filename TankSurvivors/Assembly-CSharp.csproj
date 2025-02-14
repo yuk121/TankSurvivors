@@ -53,7 +53,7 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\@Scripts\Controller\MapTileController.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="Assets\@Scripts\Data\DataTableStage.cs" />
     <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBox.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableInGameLevel.cs" />
     <Compile Include="Assets\@Scripts\Controller\AnimationController.cs" />
     <Compile Include="Assets\@Scripts\Controller\DropItemController.cs" />
     <Compile Include="Assets\@Scripts\Utils\DontDestory.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\@Scripts\Controller\ParticleController.cs" />
     <Compile Include="Assets\@Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\Managers.cs" />
+    <Compile Include="Assets\@Scripts\UI\UI_TopGameScene.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_PlayerHpBar.cs" />
     <Compile Include="Assets\@Scripts\Controller\CameraController.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\CreatureController.cs" />
@@ -99,8 +101,7 @@
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
-    <Compile Include="Assets\@Scripts\UI\UI_TopGameScene.cs" />
-    <Compile Include="Assets\@Scripts\Data\DataTableInGameLevel.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIPopup\UIPopup_SkillSelect.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -798,6 +799,9 @@
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ResourceManager">
       <HintPath>Library\ScriptAssemblies\Unity.ResourceManager.dll</HintPath>
     </Reference>
@@ -845,9 +849,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
