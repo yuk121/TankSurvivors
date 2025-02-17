@@ -82,7 +82,7 @@
     <Compile Include="Assets\@Scripts\Controller\ParticleController.cs" />
     <Compile Include="Assets\@Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\Managers.cs" />
-    <Compile Include="Assets\@Scripts\UI\UI_TopGameScene.cs" />
+    <Compile Include="Assets\@Scripts\UI\UI_GameScene.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_PlayerHpBar.cs" />
     <Compile Include="Assets\@Scripts\Controller\CameraController.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\CreatureController.cs" />
@@ -98,10 +98,15 @@
     <Compile Include="Assets\@Scripts\Controller\BaseController.cs" />
     <Compile Include="Assets\@Scripts\Managers\UserDataManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\TableLoader.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIPopup\UIPopup_SkillSelect.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBook.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
-    <Compile Include="Assets\@Scripts\UI\UIPopup\UIPopup_SkillSelect.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIList\UIList_OwnedSkills.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIList\UIList_RandomSkills.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIElement\UIElement_RandomSkill.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIList\UIList_Grade.cs" />
+    <Compile Include="Assets\@Scripts\Managers\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

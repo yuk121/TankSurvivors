@@ -8,6 +8,7 @@ TagManager:
   - FX
   - ViewArea
   - Ground
+  - UICanvas
   layers:
   - Default
   - TransparentFX

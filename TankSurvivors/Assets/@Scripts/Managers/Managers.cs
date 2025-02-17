@@ -53,6 +53,9 @@ public class Managers : MonoBehaviour
 
     public DataTableManager DataTableManager { get { return Instance?._dataTableManager; } }
 
+    private UIManager _uiManager = new UIManager();
+    public UIManager UIMananger { get { return Instance?._uiManager; } }
+
     // Core
     private UserDataManager _userDataManager = new UserDataManager();
     public UserDataManager UserDataManager { get {  return Instance?._userDataManager; } }

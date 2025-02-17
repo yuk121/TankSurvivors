@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UI_TopGameScene : UI_Base
+public class UI_GameScene : UI_Base
 {
     #region UI Enum
     enum eButton
@@ -27,6 +27,8 @@ public class UI_TopGameScene : UI_Base
     }
     #endregion
 
+    // GameObject
+    private UIPopup_SkillSelect _uiPopupSkillSelect;
     // Button
     private Button _btnPause;
     // Image
@@ -69,7 +71,7 @@ public class UI_TopGameScene : UI_Base
         _txtKillCount = GetText((int)(eText.Text_KillCount));
 
         // Event
-        BindEvent(_btnPause.gameObject, OnClick_Pause);
+        _btnPause.onClick.AddListener(OnClick_Pause);
        
         return true;
     }
@@ -93,11 +95,11 @@ public class UI_TopGameScene : UI_Base
             return;
 
         // Level
-        _playerLevel = GameManager.Instance.Player.Level;
+        _playerLevel = GameManager.Instance.Player.CurLevel;
         _txtLevel.text = $"{_playerLevel}";
      
         // Exp
-        _curExp = GameManager.Instance.Player.Exp;
+        _curExp = GameManager.Instance.Player.CurExp;
         _requiredExp = Managers.Instance.DataTableManager.DataTableInGameLevel.GetNextLevelRequiredExp(_playerLevel);
 
         _txtExp.text = $"{_curExp} / {_requiredExp}";

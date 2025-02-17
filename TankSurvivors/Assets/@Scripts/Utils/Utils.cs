@@ -273,5 +273,4 @@ public static class Utils
         }
         return default(T);
     }
-
 }

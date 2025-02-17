@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8793615740951231565}
   - component: {fileID: 8793615740951231566}
   m_Layer: 5
-  m_Name: Image_Grade
+  m_Name: Image_Grade2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 8793615741162836573}
   - component: {fileID: 8793615741162836574}
   m_Layer: 5
-  m_Name: Image_Grade
+  m_Name: Image_Grade4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 8793615741569141610}
   - component: {fileID: 8793615741569141611}
   m_Layer: 5
-  m_Name: Image_Grade
+  m_Name: Image_Grade5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -397,6 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8793615741739315505}
   - component: {fileID: 8793615741739315504}
+  - component: {fileID: 425962608}
   m_Layer: 5
   m_Name: UIList_Grade
   m_TagString: Untagged
@@ -411,7 +412,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8793615741739315506}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -455,6 +456,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &425962608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8793615741739315506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc5fd00bc0947c746b9450e3f7814d4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8793615741878978406
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +480,7 @@ GameObject:
   - component: {fileID: 8793615741878978331}
   - component: {fileID: 8793615741878978404}
   m_Layer: 5
-  m_Name: Image_Grade
+  m_Name: Image_Grade3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -544,7 +557,7 @@ GameObject:
   - component: {fileID: 8793615742193334720}
   - component: {fileID: 8793615742193334721}
   m_Layer: 5
-  m_Name: Image_Grade
+  m_Name: Image_Grade1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

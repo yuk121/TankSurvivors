@@ -34,7 +34,7 @@ public class ParticleController : BaseController
         {
             if (Time.time > _destroyTime)
             {
-                Managers.Instance.ResourceManager.Destory(gameObject);
+                Managers.Instance.ResourceManager.Destroy(gameObject);
                 break;
             }
             yield return null;

@@ -86,7 +86,7 @@ public class DropItemGem : DropItemController
 
             if(distance < 0.4f)
             {
-                player.Exp += expAmount;
+                player.GetExp(expAmount);
                 Managers.Instance.ObjectManager.Despawn(this);
                 yield break; 
             }

@@ -116,7 +116,7 @@ public class ObjectManager
             MonsterController mon = gameobject as MonsterController;
             Monsters.Remove(mon);
 
-            Managers.Instance.ResourceManager.Destory(mon.gameObject);
+            Managers.Instance.ResourceManager.Destroy(mon.gameObject);
             return;
         }
         else if (type == typeof(Projectile))
@@ -124,7 +124,7 @@ public class ObjectManager
             Projectile projectile = gameobject as Projectile;
             Projectiles.Remove(projectile);
 
-            Managers.Instance.ResourceManager.Destory(projectile.gameObject);
+            Managers.Instance.ResourceManager.Destroy(projectile.gameObject);
             return;
         }
         else if (type == typeof(DropItemGem))
@@ -135,28 +135,28 @@ public class ObjectManager
             // GridManager에서 제거
             GridManager.Instance.Remove(gem);
 
-            Managers.Instance.ResourceManager.Destory(gem.gameObject);
+            Managers.Instance.ResourceManager.Destroy(gem.gameObject);
         }
         else if (type == typeof(DropItemBomb))
         {
             DropItemBomb bomb = gameobject as DropItemBomb;
             
             GridManager.Instance.Remove(bomb);
-            Managers.Instance.ResourceManager.Destory(bomb.gameObject);
+            Managers.Instance.ResourceManager.Destroy(bomb.gameObject);
         }
         else if (type == typeof(DropItemHeart))
         {
             DropItemHeart heart = gameobject as DropItemHeart;
 
             GridManager.Instance.Remove(heart);
-            Managers.Instance.ResourceManager.Destory(heart.gameObject);
+            Managers.Instance.ResourceManager.Destroy(heart.gameObject);
         }
         else if (type == typeof(DropItemMagent))
         {
             DropItemMagent magent = gameobject as DropItemMagent;
 
             GridManager.Instance.Remove(magent);
-            Managers.Instance.ResourceManager.Destory(magent.gameObject);
+            Managers.Instance.ResourceManager.Destroy(magent.gameObject);
         }
     }
 }

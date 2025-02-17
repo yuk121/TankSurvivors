@@ -7,15 +7,24 @@ using UnityEngine;
 
 public static class Define
 {
+    // Drop Item
     public const float ITEM_MOVE_SPEED = 15f;
 
+    // Gem
     public const int GEM_RED_EXP_AMOUNT = 5;
     public const int GEM_GREEN_EXP_AMOUNT = 15;
     public const int GEM_BLUE_EXP_AMOUNT = 45;
     public const int GEM_PURPLE_EXP_AMOUNT = 100;
 
+    // Prefab
     public const string DUMMY_INDICATOR_PREFAB_PATH = "EtcPrefab/Indicator.prefab";
     public const string DUMMY_FIREPOS_MUZZLE_PREFAB_PATH = "SkillPrefab/Tracer_GoldFire_Small_MuzzleFlare.prefab";
+
+    public const string UI_PREFAB_PATH = "UIPrefab";
+
+    // SkillSelect
+    public const int MAX_SKILL_SELECT_COUNT = 3;
+    public const int MAX_SKILL_GRADE = 5;
 
     public enum eUIEvent
     {

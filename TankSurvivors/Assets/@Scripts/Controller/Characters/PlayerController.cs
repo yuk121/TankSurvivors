@@ -32,8 +32,8 @@ public class PlayerController : CreatureController
     private MaterialPropertyBlock _materialProperty;
 
     // Stat
-    public int Exp { get; set; } = 0;
-    public int Level { get; set; } = 1;
+    public int CurExp { get; set; } = 0;
+    public int CurLevel { get; set; } = 1;
 
     public override bool Init()
     {
@@ -54,8 +54,8 @@ public class PlayerController : CreatureController
         _skillBook.UpgradeSkill(_skillBook.SkillList[0].SkillData.skillId);
         
         // Stat 초기화
-        Exp = 0;
-        Level = 1;
+        CurExp = 0;
+        CurLevel = 1;
 
         return true;
     }
@@ -178,6 +178,23 @@ public class PlayerController : CreatureController
             }
         }
 
+    }
+
+    public void GetExp(int exp)
+    {
+        CurExp += exp;
+
+        int nextRequiredExp = Managers.Instance.DataTableManager.DataTableInGameLevel.GetNextLevelRequiredExp(CurLevel);
+        
+        // 레벨업이 가능한 경험치
+        if (CurExp >= nextRequiredExp)
+        {
+            CurExp -= nextRequiredExp;
+
+            CurLevel++;
+
+            Managers.Instance.UIMananger.OpenPopup<UIPopup_SkillSelect>().SetSkillSelect();
+        }
     }
 
     public override void OnDamaged(BaseController attacker, float damage)

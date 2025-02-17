@@ -28,6 +28,8 @@ public class GameManager : FSM<eGameManagerState>
 
     private GameData _gameData = new GameData();
     public GameData GameData { get => _gameData; set => _gameData = value; }
+
+    // In Game
     public CameraController CameraController { get; set; }
 
     private SpawningPools _spawnPools;
@@ -35,11 +37,11 @@ public class GameManager : FSM<eGameManagerState>
     private PlayerController _player;
     public PlayerController Player { get => _player; }
 
-
     public float CurTime { get; set; } = 0f;
     public int KillCount { get; set; } = 0;
    
-    public bool _bPause;
+    [SerializeField]
+    private bool _bPause;
 
     // Start is called before the first frame update
     private void Awake()
