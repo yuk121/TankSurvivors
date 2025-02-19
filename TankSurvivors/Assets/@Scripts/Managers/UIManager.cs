@@ -7,6 +7,8 @@ using DG.Tweening;
 public class UIManager
 {
     private Stack<UI_Base> _uiPopupStack = new Stack<UI_Base>();
+    private UI_Scene _curScene = null;
+
     public Transform UICanvas
     {
         get 
@@ -22,14 +24,34 @@ public class UIManager
         }
     }
 
+    public void SetSceneInfo<T>(T uiScene) where T : UI_Scene
+    {
+        _curScene = uiScene;
+    }
+
     public T OpenPopup<T>(string name = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
+        {
             name = typeof(T).Name;
+            name = $"UIPrefab/UIPopup/{name}.prefab";
+        }
 
-        GameObject go = Managers.Instance.ResourceManager.Instantiate(name);
-        go.transform.SetParent(UICanvas);
+        Transform parent = null;
         
+        if(_curScene == null)
+        {
+            parent = UICanvas;
+        }
+        else
+        {
+            parent = _curScene.GetComponent<Transform>();
+        }
+
+        GameObject go = Managers.Instance.ResourceManager.Instantiate(name, parent);
+        RectTransform rect = go.GetComponent<RectTransform>();
+        rect.anchoredPosition = Vector2.zero;
+
         T popup = Utils.GetOrAddComponent<T>(go);
 
         _uiPopupStack.Push(popup);
@@ -83,5 +105,28 @@ public class UIManager
         {
             ClosePopup();
         }
+    }
+
+    public T InstantiateUI <T>(Transform parent) where T : UI_Base
+    {
+        string name = typeof(T).Name;
+
+        if(name.Contains("UIList"))
+        {
+            name = $"UIPrefab/UIList/{name}.prefab";
+        }
+        else if(name.Contains("UIElement"))
+        {
+            name = $"UIPrefab/UIElement/{name}.prefab";
+        }
+        
+        GameObject go = Managers.Instance.ResourceManager.Instantiate(name);
+        go.transform.SetParent(parent);
+
+        T popup = Utils.GetOrAddComponent<T>(go);
+
+        _uiPopupStack.Push(popup);
+
+        return popup;
     }
 }

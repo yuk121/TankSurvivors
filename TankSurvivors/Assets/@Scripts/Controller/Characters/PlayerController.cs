@@ -35,6 +35,10 @@ public class PlayerController : CreatureController
     public int CurExp { get; set; } = 0;
     public int CurLevel { get; set; } = 1;
 
+    // Etc
+    private bool _isPuase = false;
+    public bool IsPause { get => _isPuase; set => _isPuase = value; }
+
     public override bool Init()
     {
         if(base.Init() == false)
@@ -62,15 +66,28 @@ public class PlayerController : CreatureController
 
     public override void FixedUpdateController()
     {
+        if (GameManager.Instance.Pause == true)
+            return;
+
         base.FixedUpdateController();
         PlayerMove();
     }
 
     public override void UpdateController()
     {
+        if (GameManager.Instance.Pause == true )
+            return;
+
         base.UpdateController();
         UseAutoSkill();
         CollectEnv();
+
+#if UNITY_EDITOR
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GetExp(50);
+        }
+#endif
     }
 
     private void PlayerMove()
@@ -193,6 +210,7 @@ public class PlayerController : CreatureController
 
             CurLevel++;
 
+            GameManager.Instance.SetPause(true);
             Managers.Instance.UIMananger.OpenPopup<UIPopup_SkillSelect>().SetSkillSelect();
         }
     }

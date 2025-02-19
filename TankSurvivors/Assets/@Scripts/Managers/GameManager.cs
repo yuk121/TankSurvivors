@@ -8,6 +8,17 @@ public class GameData
 {
     public StageData stageInfo;
     public WaveData waveInfo;
+    public float curTime = 0f;
+    public int killCount = 0;
+
+    public void Clear()
+    {
+        stageInfo = null;
+        waveInfo = null;
+
+        curTime = 0f;
+        killCount = 0;
+    }
 }
 
 public enum eGameManagerState
@@ -36,12 +47,10 @@ public class GameManager : FSM<eGameManagerState>
 
     private PlayerController _player;
     public PlayerController Player { get => _player; }
-
-    public float CurTime { get; set; } = 0f;
-    public int KillCount { get; set; } = 0;
    
     [SerializeField]
     private bool _bPause;
+    public bool Pause { get => _bPause; }
 
     // Start is called before the first frame update
     private void Awake()
@@ -115,7 +124,9 @@ public class GameManager : FSM<eGameManagerState>
 
     #region Game
     private void InGame()
-    { 
+    {
+        _gameData.Clear();
+
         int userCharId = 10001;
         // 플레이어 소환
         _player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
@@ -130,9 +141,6 @@ public class GameManager : FSM<eGameManagerState>
 
         // GridManager
         GridManager.Instance.Init();
-
-        CurTime = 0f;
-        KillCount = 0;
 
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
         _spawnPools.StartSpawn();
@@ -154,7 +162,7 @@ public class GameManager : FSM<eGameManagerState>
             return;
         }
 
-        CurTime += Time.deltaTime;
+        _gameData.curTime += Time.deltaTime;
     }
 
     public bool CheckPlayerAlive()
@@ -182,7 +190,13 @@ public class GameManager : FSM<eGameManagerState>
     #region Pause
     private void InPause()
     {
-
+        if (Managers.Instance.ObjectManager.Monsters.Count > 0)
+        {
+            foreach(MonsterController mon in Managers.Instance.ObjectManager.Monsters)
+            {
+                mon.BranchInPause();
+            }
+        }
     }
 
     private void ModifyPause()
@@ -195,9 +209,7 @@ public class GameManager : FSM<eGameManagerState>
 
     private void OutPause()
     {
-
-    }
-    
+    }         
     public void SetPause(bool bPause)
     {
         _bPause = bPause;

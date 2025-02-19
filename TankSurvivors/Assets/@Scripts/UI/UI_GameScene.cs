@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UI_GameScene : UI_Base
+public class UI_GameScene : UI_Scene
 {
     #region UI Enum
     enum eButton
@@ -19,7 +19,7 @@ public class UI_GameScene : UI_Base
 
     enum eText
     {
-        Text_Wave,
+        //Text_Wave,
         Text_Exp,
         Text_Level,
         Text_Time,
@@ -27,14 +27,12 @@ public class UI_GameScene : UI_Base
     }
     #endregion
 
-    // GameObject
-    private UIPopup_SkillSelect _uiPopupSkillSelect;
     // Button
     private Button _btnPause;
     // Image
     private Image _imgExp;
     // Text Mesh Pro
-    private TMP_Text _txtWave;
+    //private TMP_Text _txtWave;
     private TMP_Text _txtExp;
     private TMP_Text _txtLevel;
     private TMP_Text _txtTime;
@@ -54,6 +52,9 @@ public class UI_GameScene : UI_Base
             return false;
         }
 
+        _sceneType = Define.eSceneType.Game;
+        Managers.Instance.UIMananger.SetSceneInfo(this);
+
         // Bind
         BindButton(typeof(eButton));
         BindText(typeof(eText));    
@@ -64,7 +65,7 @@ public class UI_GameScene : UI_Base
 
         _imgExp = GetImage((int)eImage.Image_Exp);
         
-        _txtWave = GetText((int)eText.Text_Wave);
+        //_txtWave = GetText((int)eText.Text_Wave);
         _txtExp = GetText((int)eText.Text_Exp);
         _txtLevel = GetText((int)eText.Text_Level);
         _txtTime = GetText((int)eText.Text_Time);
@@ -78,15 +79,15 @@ public class UI_GameScene : UI_Base
 
     private void SetTime()
     {
-        _minutes = (int)(GameManager.Instance.CurTime / 60f);
-        _seconds = (int)(GameManager.Instance.CurTime % 60f);
+        _minutes = (int)(GameManager.Instance.GameData.curTime / 60f);
+        _seconds = (int)(GameManager.Instance.GameData.curTime % 60f);
 
         _txtTime.text = $"{_minutes:D2}:{_seconds:D2}";
     }
 
     private void SetKillCount()
     {
-        _txtKillCount.text = $"{GameManager.Instance.KillCount}";
+        _txtKillCount.text = $"{GameManager.Instance.GameData.killCount}";
     }
 
     private void SetLevel()
@@ -118,7 +119,6 @@ public class UI_GameScene : UI_Base
             SetTime();
             SetKillCount();
             SetLevel();
-
         }
     }
 }

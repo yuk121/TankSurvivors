@@ -38,10 +38,7 @@ public class UIList_RandomSkills : UI_Base
         {
             for (int i = 0; i < Define.MAX_SKILL_SELECT_COUNT; i++)
             {
-                GameObject go = Managers.Instance.ResourceManager.Instantiate(_uiElementRandomSkillPrefab.name,_trans);
-                go.SetActive(false);
-            
-                UIElement_RandomSkill skill = Utils.GetOrAddComponent<UIElement_RandomSkill>(go);
+                UIElement_RandomSkill skill = Managers.Instance.UIMananger.InstantiateUI<UIElement_RandomSkill>(_trans);
                 _randomSkillList.Add(skill);
             }
         }
@@ -50,6 +47,11 @@ public class UIList_RandomSkills : UI_Base
 
     public void SetRandomSkills(List<SkillBase> skillList)
     {
+        if(_init == false)
+        {
+            Init();
+        }
+
         for(int i =0; i < skillList.Count; i++)
         {
             _randomSkillList[i].gameObject.SetActive(true);

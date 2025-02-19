@@ -13,8 +13,10 @@ public class SkillData
     public float duration;                   // 지속 시간
     public float projectileSpeed;           // 발사체 속도
     public float scaleIncRate;              // 크기 증가량
-    public int startCreateCount;            // 초기 생성 수  
+    public int startCreateCount;            // 초기 생성 수
+    public float value;                           // 공용 값
     public string castSound;                // 사용 사운드
+    public string skillImage;                 // 스킬 이미지
 }
 
 public class DataTableSkill
@@ -50,7 +52,9 @@ public class DataTableSkill
             skillData.projectileSpeed = loader.GetFloat("ProjectileSpeed", i);
             skillData.scaleIncRate = loader.GetFloat("ScaleIncRate", i);
             skillData.startCreateCount = loader.GetInt("StartCreateCount", i);
+            skillData.value = loader.GetFloat("Value", i);
             skillData.castSound = loader.GetString("CastSound", i);
+            skillData.skillImage = loader.GetString("SkillImage", i);
 
             _dataList.Add(skillData);  
         }

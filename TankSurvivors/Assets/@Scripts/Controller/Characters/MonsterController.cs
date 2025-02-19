@@ -101,7 +101,7 @@ public class MonsterController : CreatureController
                 ModifyAttackIdle();
                 break;
             case Define.eMonsterFSMState.Pause:
-
+                ModifyPause();
                 break;
         }
     }
@@ -267,7 +267,7 @@ public class MonsterController : CreatureController
     #region Pause
     private void InPause()
     {
-        _state = Define.eMonsterFSMState.AttackIdle;
+        _state = Define.eMonsterFSMState.Pause;
         _animController.Play(Define.eCreatureAnimState.AttackIdle, true);
 
         _lastAttackTime = Time.time;
@@ -275,13 +275,22 @@ public class MonsterController : CreatureController
 
     private void ModifyPause()
     {
-        // 일반 공격 딜레이 체크
-
+        // TODO : Pause로 인해 몬스터 공격 캔슬 방지 필요
+        
+        if(GameManager.Instance.Pause == false)
+        {
+            OutPause();
+        }
     }
 
     private void OutPause()
     {
 
+    }
+
+    public void BranchInPause()
+    {
+        InPause();
     }
     #endregion
 
@@ -298,7 +307,7 @@ public class MonsterController : CreatureController
         DropItem();
 
         // 죽은 개체 카운트 증가
-        GameManager.Instance.KillCount++;
+        GameManager.Instance.GameData.killCount++;
 
         // 죽은 개체는 풀에 다시 넣어준다.
         Managers.Instance.ObjectManager.Despawn(this);

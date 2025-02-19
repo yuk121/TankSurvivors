@@ -44,6 +44,11 @@ public class UIList_Grade : UI_Base
 
     public void SetGrade(int skillLevel)
     {
+        if(_init == false)
+        {
+            Init();
+        }
+
         for(int i = 0; i < skillLevel; i++)
         {
             _objectGradeList[i].SetActive(true);

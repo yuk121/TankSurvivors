@@ -29,16 +29,16 @@ public class UIPopup_SkillSelect : UI_Base
         _uiListOwnedSkills = GetObject((int)eGameObject.UIList_OwnedSkills).GetComponent<UIList_OwnedSkills>();
         _uiListRandomSkills = GetObject((int)eGameObject.UIList_RandomSkills).GetComponent<UIList_RandomSkills>();
 
-        if (gameObject.activeSelf == true)
-        {
-            gameObject.SetActive(false);
-        }
-
         return true;
     }
 
     public void SetSkillSelect()
     {
+        if(_init == false)
+        {
+            Init();
+        }
+
         gameObject.SetActive(true);
 
         _uiListOwnedSkills.SetOwnedSkills();

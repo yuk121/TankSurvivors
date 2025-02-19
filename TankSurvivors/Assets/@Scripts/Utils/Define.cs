@@ -26,6 +26,13 @@ public static class Define
     public const int MAX_SKILL_SELECT_COUNT = 3;
     public const int MAX_SKILL_GRADE = 5;
 
+    public enum eSceneType
+    {
+        Cs,
+        Title,
+        Lobby,
+        Game,
+    }
     public enum eUIEvent
     {
         Click,

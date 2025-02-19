@@ -29,6 +29,12 @@ public class SpawningPools : MonoBehaviour
        
         while(true)
         {
+            if (GameManager.Instance.Pause == true)
+            {
+                yield return new WaitForSeconds(waveInfo.spawnInterval);
+                continue;
+            }
+
             // 플레이어가 사망시 더이상 작동하지 않는다.
             if (GameManager.Instance.CheckPlayerAlive() == false)
                 break;

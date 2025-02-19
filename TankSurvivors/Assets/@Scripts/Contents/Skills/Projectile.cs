@@ -30,6 +30,12 @@ public class Projectile : BaseController
         float speed = _skillData.projectileSpeed;
         while(true)
         {
+            if (GameManager.Instance.Pause == true)
+            {
+                yield return null;
+                continue;
+            }
+
             // 지속시간이 지난 경우
             if(Time.time > _destroyTime)
             {
