@@ -13,7 +13,7 @@ public class ResourceManager
     {
         if(_resources.TryGetValue(key, out Object resource))
         {
-            if(key.Contains(".sprite") && resource is Texture2D texture)
+            if(/*key.Contains(".sprite") && */resource is Texture2D texture)
             {
                 Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
                 return sprite as T;

@@ -9,6 +9,10 @@ public class SkillBook : MonoBehaviour
     private List<SkillBase> _skillList = new List<SkillBase>();
     public List<SkillBase> SkillList { get => _skillList; }
 
+    private List<SupportSkillData> _supportSkillList = new List<SupportSkillData>();
+
+    public List<SupportSkillData> SupportSkillList { get => _supportSkillList; }
+
     private SkillBase _prevUseSkill = null;
     public SkillBase PrevUseSkill { get => _prevUseSkill; set => _prevUseSkill = value; }
 

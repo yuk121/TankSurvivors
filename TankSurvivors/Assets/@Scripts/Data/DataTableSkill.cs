@@ -23,6 +23,7 @@ public class DataTableSkill
 {
     private List<SkillData> _dataList = new List<SkillData>();
     public List<SkillData> DataList { get => _dataList; }
+
     private void Unload()
     {
         if (_dataList != null && _dataList.Count > 0)

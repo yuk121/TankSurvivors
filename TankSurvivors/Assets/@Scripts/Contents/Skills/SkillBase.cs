@@ -11,7 +11,7 @@ public class SkillBase : MonoBehaviour
     public SkillData SkillData { get => _skillData; set => _skillData = value; }
 
     private Define.eSkillType _skillType = Define.eSkillType.None;
-    public Define.eSkillType SkillType  { get => _skillType; set => _skillType = value; } 
+    public Define.eSkillType SkillType  { get => _skillType; set => _skillType = value; }
 
     private int _curSkillLevel = 0;
     public int CurSkillLevel { get => _curSkillLevel; }

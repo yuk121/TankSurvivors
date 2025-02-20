@@ -20,6 +20,9 @@ public class DataTableManager
     DataTableSkill _skillTable = new DataTableSkill();
     public DataTableSkill DataTableSkill { get => _skillTable; }
 
+    DataTableSupportSkill _supportSkillTable = new DataTableSupportSkill();
+    public DataTableSupportSkill DataTableSupportSkill { get => _supportSkillTable; }
+
     DataTableStage _stageTable = new DataTableStage();
     public DataTableStage DataTableStage { get => _stageTable; }
 
@@ -44,6 +47,7 @@ public class DataTableManager
         TextAsset creatureText = resoureceManager.Load<TextAsset>($"{lable}/DataTableCreature.bytes");
         TextAsset waveText = resoureceManager.Load<TextAsset>($"{lable}/DataTableWave.bytes");
         TextAsset skillText = resoureceManager.Load<TextAsset>($"{lable}/DataTableSkill.bytes");
+        TextAsset supportSkillText = resoureceManager.Load<TextAsset>($"{lable}/DataTableSupportSkill.bytes");
         TextAsset stageText = resoureceManager.Load<TextAsset>($"{lable}/DataTableStage.bytes");
         TextAsset dropItemText = resoureceManager.Load<TextAsset>($"{lable}/DataTableDropItem.bytes");
         TextAsset inGameLevelText = resoureceManager.Load<TextAsset>($"{lable}/DataTableInGameLevel.bytes");
@@ -51,6 +55,7 @@ public class DataTableManager
         _creatureTable.DataLoad(creatureText.bytes);
         _waveTable.DataLoad(waveText.bytes);
         _skillTable.DataLoad(skillText.bytes);
+        _supportSkillTable.DataLoad(supportSkillText.bytes);
         _stageTable.DataLoad(stageText.bytes);
         _dropItemTable.DataLoad(dropItemText.bytes);    
         _inGameLevelTable.DataLoad(inGameLevelText.bytes);

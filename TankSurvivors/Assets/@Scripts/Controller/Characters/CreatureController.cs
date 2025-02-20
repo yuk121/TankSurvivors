@@ -42,6 +42,20 @@ public class CreatureController : BaseController
         return _isAlive;
     }
 
+    public List<SkillBase> GetSkillList()
+    {
+        List<SkillBase> skillList = null;
+        skillList = _skillBook.SkillList;
+        return skillList;
+    }
+
+    public List<SupportSkillData> GetSupportSkillList()
+    {
+        List<SupportSkillData > supportSkillList = null;
+        supportSkillList = _skillBook.SupportSkillList;
+        return supportSkillList;
+    }
+
     public override void UpdateController()
     {
         base.UpdateController();

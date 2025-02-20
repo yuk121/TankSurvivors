@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4640690753133285413}
   - component: {fileID: 4640690753133285412}
   m_Layer: 5
-  m_Name: Image_PassiveSkill_Background (1)
+  m_Name: Image_SupportSkill_Background (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4640690753569958504}
   - component: {fileID: 4640690753569958519}
   m_Layer: 5
-  m_Name: Image_PassiveSkills
+  m_Name: Image_SupportSkills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 4640690753626046956}
   - component: {fileID: 4640690753626046955}
   m_Layer: 5
-  m_Name: Image_PassiveSkill1
+  m_Name: Image_SupportSkill1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 4640690753783282691}
   - component: {fileID: 4640690753783282690}
   m_Layer: 5
-  m_Name: Image_PassiveSkill_Background (4)
+  m_Name: Image_SupportSkill_Background (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,7 +583,7 @@ GameObject:
   - component: {fileID: 4640690753825835584}
   - component: {fileID: 4640690753825835599}
   m_Layer: 5
-  m_Name: Image_PassiveSkill4
+  m_Name: Image_SupportSkill4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 4640690753965376703}
   - component: {fileID: 4640690753965376702}
   m_Layer: 5
-  m_Name: Image_PassiveSkill3
+  m_Name: Image_SupportSkill3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -735,7 +735,7 @@ GameObject:
   - component: {fileID: 4640690754024318111}
   - component: {fileID: 4640690754024318110}
   m_Layer: 5
-  m_Name: Image_PassiveSkill_Background (2)
+  m_Name: Image_SupportSkill_Background (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1008,6 +1008,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd7128a774a16e4ba37f74a270f37b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activeSkillList: []
+  _supportSkillList: []
 --- !u!1 &4640690754241239520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,7 +1209,7 @@ GameObject:
   - component: {fileID: 4640690754378621225}
   - component: {fileID: 4640690754378621224}
   m_Layer: 5
-  m_Name: Image_PassiveSkill_Background
+  m_Name: Image_SupportSkill_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1285,7 +1287,7 @@ GameObject:
   - component: {fileID: 4640690754536708192}
   - component: {fileID: 4640690754536708207}
   m_Layer: 5
-  m_Name: Image_PassiveSkill_Background (3)
+  m_Name: Image_SupportSkill_Background (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1363,7 +1365,7 @@ GameObject:
   - component: {fileID: 4640690754634263730}
   - component: {fileID: 4640690754634263729}
   m_Layer: 5
-  m_Name: Image_PassiveSkill2
+  m_Name: Image_SupportSkill2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1745,7 +1747,7 @@ GameObject:
   - component: {fileID: 4640690755015065395}
   - component: {fileID: 4640690755015065394}
   m_Layer: 5
-  m_Name: Image_PassiveSkill5
+  m_Name: Image_SupportSkill5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

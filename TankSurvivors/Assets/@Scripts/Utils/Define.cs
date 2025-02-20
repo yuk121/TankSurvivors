@@ -25,6 +25,8 @@ public static class Define
     // SkillSelect
     public const int MAX_SKILL_SELECT_COUNT = 3;
     public const int MAX_SKILL_GRADE = 5;
+    public const int MAX_ACTIVE_SKILL_COUNT = 5;
+    public const int MAX_SUPPORT_SKILL_COUNT = 5;
 
     public enum eSceneType
     {
@@ -105,6 +107,15 @@ public static class Define
         EliteZombieAttack01 = 3001,
         BossZombieAttack01 = 4001,
         BossZombieSkill01 = 4002,
+    }
+
+    public enum eSupportSkillType
+    {
+        Magnet = 10001,
+        AttackUp = 10011,
+        ExpGetRateUp = 10021,
+        MaxHpUp = 10031,
+        SpeedUp = 10041
     }
 }
 
