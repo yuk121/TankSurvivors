@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieAttack01 : SkillBase
+public class ZombieAttack01 : ActionSkill
 {
     private void Update()
     {

@@ -45,12 +45,22 @@ public class UIList_RandomSkills : UI_Base
         return true;
     }
 
+    public void HideRandomSkillAll()
+    {
+        for(int i = 0; i < _randomSkillList.Count; i++)
+        {
+            _randomSkillList[i].gameObject.SetActive(false);
+        }
+    }
+
     public void SetRandomSkills(List<SkillBase> skillList)
     {
         if(_init == false)
         {
             Init();
         }
+
+        HideRandomSkillAll();
 
         for(int i =0; i < skillList.Count; i++)
         {

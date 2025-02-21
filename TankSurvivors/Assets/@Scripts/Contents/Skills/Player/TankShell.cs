@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankShell : SkillBase
+public class TankShell : ActionSkill
 {
     public override void UseSkill(CreatureController owner)
     {

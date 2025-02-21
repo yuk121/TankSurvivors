@@ -28,7 +28,7 @@ public class UIList_Grade : UI_Base
         BindOjbect(typeof(eGameObject));
 
         // Get
-        for(int i =0; i < Define.MAX_SKILL_GRADE; i++)
+        for(int i =0; i < Define.MAX_SKILL_LEVEL; i++)
         {
             eGameObject gradeEnum = (eGameObject)(i);
             _objectGradeList.Add(GetObject((int)gradeEnum));

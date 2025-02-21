@@ -55,7 +55,7 @@ public class PlayerController : CreatureController
         _materialProperty = new MaterialPropertyBlock();
 
         // 기본 공격은 미리 1레벨로 설정
-        _skillBook.UpgradeSkill(_skillBook.SkillList[0].SkillData.skillId);
+        _skillBook.UpgradeSkill(_skillBook.ActionSkillList[0].SkillData.skillId);
         
         // Stat 초기화
         CurExp = 0;
@@ -116,17 +116,17 @@ public class PlayerController : CreatureController
     // 플레이어의 스킬 목록에 맞춰서 자동으로 스킬 사용
     private void UseAutoSkill()
     {
-        for (int i = 0; i < _skillBook.SkillList.Count; i++)
+        for (int i = 0; i < _skillBook.ActionSkillList.Count; i++)
         {
             // 스킬 레벨이 0이라면 통과
-            if (_skillBook.SkillList[i].CurSkillLevel < 1)
+            if (_skillBook.ActionSkillList[i].CurSkillLevel < 1)
                 continue;
 
             // 스킬 쿨타임 확인하기
-            if (_skillBook.SkillList[i].RemainCoolTime > 0)
+            if (_skillBook.ActionSkillList[i].RemainCoolTime > 0)
                 continue;
 
-            if(_skillBook.SkillList[i].SkillType == Define.eSkillType.TankShell)
+            if(_skillBook.ActionSkillList[i].SkillType == Define.eSkillType.TankShell)
             {
                 // 기본공격인 포탄 스킬인 경우 탱크의 머리도 움직여 줘야한다.
                 // 가장 근처의 적 위치 탐색
@@ -142,7 +142,7 @@ public class PlayerController : CreatureController
             }
 
             // 스킬 사용
-            _skillBook.SkillList[i].UseSkill(this);
+            _skillBook.ActionSkillList[i].UseSkill(this);
         }
     }
 
@@ -209,9 +209,9 @@ public class PlayerController : CreatureController
             CurExp -= nextRequiredExp;
 
             CurLevel++;
-
-            GameManager.Instance.SetPause(true);
-            Managers.Instance.UIMananger.OpenPopup<UIPopup_SkillSelect>().SetSkillSelect();
+    
+            UIPopup_SkillSelect popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_SkillSelect>(true);
+            popup.SetSkillSelect();
         }
     }
 

@@ -51,9 +51,9 @@ public class MonsterController : CreatureController
         _isAlive = true;
 
         // 스킬들을 1레벨로 설정
-        for(int i = 0; i < _skillBook.SkillList.Count; i++)
+        for(int i = 0; i < _skillBook.ActionSkillList.Count; i++)
         {
-            _skillBook.UpgradeSkill(_skillBook.SkillList[i].SkillData.skillId);
+            _skillBook.UpgradeSkill(_skillBook.ActionSkillList[i].SkillData.skillId);
         }
         
         // 몬스터 등급 결정
@@ -180,7 +180,7 @@ public class MonsterController : CreatureController
         _state = Define.eMonsterFSMState.Skill;
 
         //스킬 목록중에서 인덱스가 높은 스킬 부터 쿨타임 체크 후 사용
-        SkillBase skill = _skillBook.GetCoolTimeEndSkill();
+        ActionSkill skill = _skillBook.GetCoolTimeEndSkill();
 
         if (skill == null)
         {

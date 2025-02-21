@@ -29,7 +29,10 @@ public class CreatureController : BaseController
 
         _skillBook = Utils.GetOrAddComponent<SkillBook>(gameObject);        
         // 보유 스킬 데이터 
-        _skillBook.SetSkillBook(_creatureData.skillList);
+        _skillBook.SetActionSkill(_creatureData.skillList);
+
+        // 서포트 스킬 데이터
+        _skillBook.SetSupportSkill();
 
         // TODO : 장비 기능이 추가될 경우 계산해서 적용
         _curHp = _creatureData.maxHp;
@@ -42,17 +45,17 @@ public class CreatureController : BaseController
         return _isAlive;
     }
 
-    public List<SkillBase> GetSkillList()
+    public List<ActionSkill> GetActionSkillList()
     {
-        List<SkillBase> skillList = null;
-        skillList = _skillBook.SkillList;
+        List<ActionSkill> skillList = null;
+        skillList = _skillBook.ActionSkillList;
         return skillList;
     }
 
-    public List<SupportSkillData> GetSupportSkillList()
+    public List<SupportSkill> GetSupportSkillList()
     {
-        List<SupportSkillData > supportSkillList = null;
-        supportSkillList = _skillBook.SupportSkillList;
+        List<SupportSkill> supportSkillList = null;
+        supportSkillList = _skillBook.SupportSKillList;
         return supportSkillList;
     }
 

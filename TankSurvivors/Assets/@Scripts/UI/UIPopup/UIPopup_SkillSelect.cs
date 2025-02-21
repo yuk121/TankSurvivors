@@ -48,8 +48,40 @@ public class UIPopup_SkillSelect : UI_Base
 
     private List<SkillBase> GetRandomSkills()
     {
-        List<SkillBase> skillData = new List<SkillBase>();
+        List<SkillBase> skillList = new List<SkillBase>();
+        List<SkillBase> skillRandomList = new List<SkillBase>();
 
-        return skillData;
+        // 플레이어가 사용가능한 action skill 목록 가져오기
+        List<ActionSkill> actionSkillList = GameManager.Instance.Player.GetActionSkillList();
+        // 플레이어가 배울수 있는 support skill 목록 가져오기
+        List<SupportSkill> supportSkillList = GameManager.Instance.Player.GetSupportSkillList();
+        
+        for(int i =0; i < actionSkillList.Count; i++)
+        {
+            if(actionSkillList[i].CurSkillLevel < Define.MAX_SKILL_LEVEL)
+            {
+                skillList.Add(actionSkillList[i]);
+            }
+        }
+
+        for(int i = 0; i < supportSkillList.Count; i++)
+        {
+            if(supportSkillList[i].CurSkillLevel < Define.MAX_SKILL_LEVEL)
+            {
+                skillList.Add(supportSkillList[i]);
+            }
+        }
+
+        int RandomSkillCount = Mathf.Min(skillList.Count, Define.MAX_SKILL_SELECT_COUNT);
+        
+        while(skillRandomList.Count < RandomSkillCount)
+        {
+            int rand = Random.Range(0, skillList.Count);
+
+            skillRandomList.Add(skillList[rand]);
+            skillList.RemoveAt(rand);
+        }
+
+        return skillRandomList;
     }
 }

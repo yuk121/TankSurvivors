@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,23 +7,22 @@ using UnityEngine;
 public class SkillBook : MonoBehaviour
 {
     [SerializeField]
-    private List<SkillBase> _skillList = new List<SkillBase>();
-    public List<SkillBase> SkillList { get => _skillList; }
+    private List<ActionSkill> _actionSkillList = new List<ActionSkill>();
+    public List<ActionSkill> ActionSkillList { get => _actionSkillList; }
 
-    private List<SupportSkillData> _supportSkillList = new List<SupportSkillData>();
+    private List<SupportSkill> _supportSkillList = new List<SupportSkill>();
+    public List<SupportSkill> SupportSKillList { get => _supportSkillList; }
 
-    public List<SupportSkillData> SupportSkillList { get => _supportSkillList; }
-
-    private SkillBase _prevUseSkill = null;
-    public SkillBase PrevUseSkill { get => _prevUseSkill; set => _prevUseSkill = value; }
+    private ActionSkill _prevUseSkill = null;
+    public ActionSkill PrevUseSkill { get => _prevUseSkill; set => _prevUseSkill = value; }
 
 
-    public void SetSkillBook(List<int> skillList)
+    public void SetActionSkill(List<int> skillList)
     { 
         for(int i =0; i < skillList.Count; i++) 
         {
             SkillData data = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(skillList[i]);
-            SkillBase skill = null;
+            ActionSkill skill = null;
 
             Define.eSkillType skillType = (Define.eSkillType)skillList[i];
             string className = skillType.ToString();
@@ -30,7 +30,7 @@ public class SkillBook : MonoBehaviour
             Type type = Type.GetType(className);
             
             if(type != null)
-                skill = gameObject.AddComponent(type) as SkillBase;
+                skill = gameObject.AddComponent(type) as ActionSkill;
  
             if (skill != null)
             {
@@ -38,7 +38,28 @@ public class SkillBook : MonoBehaviour
                 skill.SkillType = skillType;
                 skill.Index = i + 1;
 
-                _skillList.Add(skill);
+                _actionSkillList.Add(skill);
+            }
+        }
+    }
+
+    public void SetSupportSkill()
+    {
+        DataTableSupportSkill dataTableSupportSkill = Managers.Instance.DataTableManager.DataTableSupportSkill;
+        List<int> supportSkillEnumList = Enum.GetValues(typeof(Define.eSupportSkillType)).Cast<int>().Where(id => id != 0 ).ToList();
+
+        // 데이터 테이블 순서대로 서포트 스킬 생성 후 세팅
+        for (int i = 0; i < supportSkillEnumList.Count; i++)
+        {
+            SupportSkillData supportSkillData = dataTableSupportSkill.GetSupportSkillData(supportSkillEnumList[i]);
+           
+            if (supportSkillData != null)
+            {
+                SupportSkill supportSkill = new SupportSkill();
+                supportSkill.SupportSkillData = supportSkillData;
+                supportSkill.SupportSkillType = (Define.eSupportSkillType)supportSkillEnumList[i];
+
+                _supportSkillList.Add(supportSkill);
             }
         }
     }
@@ -47,59 +68,70 @@ public class SkillBook : MonoBehaviour
     {
         SkillBase skill = GetSkill(skillId);
 
-        skill.SkillLevelup();
+        if (skill.CurSkillLevel >= Define.MAX_SKILL_LEVEL)
+            return;
+
+        skill.SkillLevelUp();
 
         if (skill.CurSkillLevel > 1)
         {
             // 현재 스킬의 다음 스킬 존재하는지 확인
-            int nextSkillId = skill.SkillData.skillId + 1;
-            bool isMax = CheckMaxLevelSkill(nextSkillId);
+            int nextSkillId = 0;
 
-            if (isMax)
-                return;
+            if (skill is ActionSkill)
+            {
+                ActionSkill actionSkill = skill as ActionSkill;
+                nextSkillId = actionSkill.SkillData.skillId + 1;
 
-            // 다음 스킬이 존재하는 경우 현재 스킬북에 담긴 스킬의 데이터를 다음 스킬 데이터로 덮어 씌어준다.
-            SkillData nextSkillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(nextSkillId);
-            skill.SkillData = nextSkillData;
+                // 다음 스킬이 존재하는 경우 현재 스킬북에 담긴 스킬의 데이터를 다음 스킬 데이터로 덮어 씌어준다.
+                SkillData nextActionSkillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(nextSkillId);
+                actionSkill.SkillData = nextActionSkillData;
 
-            skill.RemoveCoolTime();
+                actionSkill.RemoveCoolTime();
+            }
+            else if (skill is SupportSkill)
+            {
+                SupportSkill supportSkill = skill as SupportSkill;
+                nextSkillId = ((SupportSkill)skill).SupportSkillData.skillId + 1;
+
+                SupportSkillData nextSupportSkillData = Managers.Instance.DataTableManager.DataTableSupportSkill.GetSupportSkillData(nextSkillId);
+                supportSkill.SupportSkillData = nextSupportSkillData;
+            }
         }
-    }
-
-    private bool CheckMaxLevelSkill(int nextSkillId)
-    {
-        bool isMax = false;
-        SkillData nextSkillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(nextSkillId);
-
-        if(nextSkillData == null)
-            isMax = true;
-
-        return isMax;
     }
 
     private SkillBase GetSkill(int skillId)
     {
-        for(int i =0; i < _skillList.Count; i++)
+       // Action Skill Check
+        for(int i =0; i < _actionSkillList.Count; i++)
         {
-            if(_skillList[i].SkillData.skillId == skillId)
+            if(_actionSkillList[i].SkillData.skillId == skillId)
             {
-                return _skillList[i];
+                return _actionSkillList[i];
+            }
+        }
+
+        // Support Skill Check
+        for(int i =0; i < _supportSkillList.Count; i++)
+        {
+            if(_supportSkillList[i].SupportSkillData.skillId == skillId)
+            {
+                return _supportSkillList[i];
             }
         }
 
         return null;
     }
 
-    public SkillBase GetCoolTimeEndSkill()
+    public ActionSkill GetCoolTimeEndSkill()
     {
-        for (int i = _skillList.Count - 1; i >= 0; i--)
+        for (int i = _actionSkillList.Count - 1; i >= 0; i--)
         {
-            if (_skillList[i].RemainCoolTime <= 0f)
+            if (_actionSkillList[i].RemainCoolTime <= 0f)
             {
-                return _skillList[i];
+                return _actionSkillList[i];
             }
         }
-
         return null;
     }
 

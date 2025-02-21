@@ -94,8 +94,8 @@ public class UIList_OwnedSkills : UI_Base
 
         // 플레이어 스킬, 보조스킬을 가져온다
         PlayerController player = GameManager.Instance.Player;
-        List<SkillBase> skillList = player.GetSkillList();
-        List<SupportSkillData> supportSkillList = player.GetSupportSkillList();
+        List<ActionSkill> skillList = player.GetActionSkillList();
+        List<SupportSkill> supportSkillList = player.GetSupportSkillList();
 
         // 스킬 목록에 맞는 이미지 넣기
         for(int i = 0; i < skillList.Count; i++) 
@@ -109,7 +109,7 @@ public class UIList_OwnedSkills : UI_Base
         // 보조스킬 목록에 맞는 이미지 넣기
         for(int i = 0; i < supportSkillList.Count; i++)
         {
-            string skillImage = supportSkillList[i].skillImage;
+            string skillImage = supportSkillList[i].SupportSkillData.skillImage;
             Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
             _supportSkillList[i].sprite = sprite;
             _supportSkillList[i].gameObject.SetActive(true);

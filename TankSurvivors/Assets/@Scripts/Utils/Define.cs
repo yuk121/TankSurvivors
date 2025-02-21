@@ -22,9 +22,9 @@ public static class Define
 
     public const string UI_PREFAB_PATH = "UIPrefab";
 
-    // SkillSelect
+    // Skill
+    public const int MAX_SKILL_LEVEL = 5;
     public const int MAX_SKILL_SELECT_COUNT = 3;
-    public const int MAX_SKILL_GRADE = 5;
     public const int MAX_ACTIVE_SKILL_COUNT = 5;
     public const int MAX_SUPPORT_SKILL_COUNT = 5;
 
@@ -111,6 +111,8 @@ public static class Define
 
     public enum eSupportSkillType
     {
+        None,
+
         Magnet = 10001,
         AttackUp = 10011,
         ExpGetRateUp = 10021,

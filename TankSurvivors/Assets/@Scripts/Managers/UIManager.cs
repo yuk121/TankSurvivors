@@ -28,18 +28,25 @@ public class UIManager
     {
         _curScene = uiScene;
     }
-
-    public T OpenPopup<T>(string name = null) where T : UI_Base
+    /// <summary>
+    /// 팝업창을 여는 메소드
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="bPause"> </param> 팝업창 오픈시 일시정지 여부 확인
+    /// <returns></returns>
+    public T OpenPopup<T>(bool bPause = false) where T : UI_Base
     {
-        if (string.IsNullOrEmpty(name))
+        if(bPause == true)
         {
-            name = typeof(T).Name;
-            name = $"UIPrefab/UIPopup/{name}.prefab";
+            GameManager.Instance.SetPause(true);
         }
 
+        string name = typeof(T).Name;
+        name = $"UIPrefab/UIPopup/{name}.prefab";
+
         Transform parent = null;
-        
-        if(_curScene == null)
+
+        if (_curScene == null)
         {
             parent = UICanvas;
         }
@@ -58,10 +65,16 @@ public class UIManager
 
         return popup;
     }
-
-    public T OpenPopupWithTween<T>(string name = null, Ease ease = Ease.OutBack) where T : UI_Base
+    /// <summary>
+    /// 팝업창을 트윈 효과를 주면서 여는 메소드
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="ease"> 트윈 효과</param>
+    /// <param name="bPause">팝업창 오픈시 일시정지 여부 확인</param>
+    /// <returns></returns>
+    public T OpenPopupWithTween<T>(Ease ease = Ease.OutBack, bool bPause = false) where T : UI_Base
     {
-        T popup = OpenPopup<T>();
+        T popup = OpenPopup<T>(bPause);
 
         Transform popupTransform = popup.GetComponent<Transform>();
 
@@ -76,7 +89,7 @@ public class UIManager
         return popup;
     }
 
-    public void ClosePopup(UI_Base popup)
+    public void ClosePopup(UI_Base popup, bool bUnpause = true)
     {
         if (_uiPopupStack.Count < 1)
             return;
@@ -86,24 +99,29 @@ public class UIManager
             Debug.LogError($"{this} : Close Popup Failed !!!");
         }
 
-        ClosePopup();
+        ClosePopup(bUnpause);
     }
 
-    public void ClosePopup()
+    public void ClosePopup(bool bUnpause = true)
     {
         if (_uiPopupStack.Count == 0)
             return;
+
+        if (bUnpause == true && GameManager.Instance.Pause == true)
+        {
+            GameManager.Instance.SetPause(false);
+        }
 
         UI_Base popup = _uiPopupStack.Pop();
         Managers.Instance.ResourceManager.Destroy(popup.gameObject);
         popup = null;
     }
 
-    public void CloseAllPopup()
+    public void CloseAllPopup(bool bUnpause = true)
     {
         while (_uiPopupStack.Count > 0)
         {
-            ClosePopup();
+            ClosePopup(bUnpause);
         }
     }
 
@@ -123,10 +141,8 @@ public class UIManager
         GameObject go = Managers.Instance.ResourceManager.Instantiate(name);
         go.transform.SetParent(parent);
 
-        T popup = Utils.GetOrAddComponent<T>(go);
+        T ui = Utils.GetOrAddComponent<T>(go);
 
-        _uiPopupStack.Push(popup);
-
-        return popup;
+        return ui;
     }
 }
