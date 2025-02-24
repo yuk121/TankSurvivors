@@ -38,6 +38,7 @@ public class PlayerController : CreatureController
     // Etc
     private bool _isPuase = false;
     public bool IsPause { get => _isPuase; set => _isPuase = value; }
+    private bool _skillAllStop = false;
 
     public override bool Init()
     {
@@ -87,6 +88,10 @@ public class PlayerController : CreatureController
         {
             GetExp(50);
         }
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _skillAllStop = (!_skillAllStop);
+        }
 #endif
     }
 
@@ -116,6 +121,11 @@ public class PlayerController : CreatureController
     // 플레이어의 스킬 목록에 맞춰서 자동으로 스킬 사용
     private void UseAutoSkill()
     {
+#if UNITY_EDITOR
+        if (_skillAllStop == true)
+            return;
+#endif
+
         for (int i = 0; i < _skillBook.ActionSkillList.Count; i++)
         {
             // 스킬 레벨이 0이라면 통과

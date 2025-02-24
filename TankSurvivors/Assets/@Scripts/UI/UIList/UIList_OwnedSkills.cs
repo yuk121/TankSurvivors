@@ -100,19 +100,25 @@ public class UIList_OwnedSkills : UI_Base
         // 스킬 목록에 맞는 이미지 넣기
         for(int i = 0; i < skillList.Count; i++) 
         {
-            string skillImage = skillList[i].SkillData.skillImage;
-            Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
-            _activeSkillList[i].sprite = sprite;
-            _activeSkillList[i].gameObject.SetActive(true);
+            if (skillList[i].CurSkillLevel > 0)
+            {
+                string skillImage = skillList[i].SkillData.skillImage;
+                Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
+                _activeSkillList[i].sprite = sprite;
+                _activeSkillList[i].gameObject.SetActive(true);
+            }
         }
 
         // 보조스킬 목록에 맞는 이미지 넣기
         for(int i = 0; i < supportSkillList.Count; i++)
         {
-            string skillImage = supportSkillList[i].SupportSkillData.skillImage;
-            Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
-            _supportSkillList[i].sprite = sprite;
-            _supportSkillList[i].gameObject.SetActive(true);
+            if (supportSkillList[i].CurSkillLevel > 0)
+            {
+                string skillImage = supportSkillList[i].SupportSkillData.skillImage;
+                Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
+                _supportSkillList[i].sprite = sprite;
+                _supportSkillList[i].gameObject.SetActive(true);
+            }
         }
 
     }

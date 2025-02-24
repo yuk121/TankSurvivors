@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIElement_RandomSkill : UI_Base
 {
@@ -36,7 +37,9 @@ public class UIElement_RandomSkill : UI_Base
     private Image _imgActionSkillBg = null;
     private Image _imgSupportSkillBg = null;
     private UIList_Grade _uiListGrade = null;
-  
+    private TMP_Text _txtSkillName = null;
+    private TMP_Text _txtSkillDesc = null;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -59,6 +62,9 @@ public class UIElement_RandomSkill : UI_Base
 
         _btnRandomSkill = GetButton((int)eButton.UIElement_RandomSkill);
         _btnRandomSkill.onClick.AddListener(OnClick_RandomSkill);
+
+        _txtSkillName = GetText((int)eText.Text_SkillName);
+        _txtSkillDesc = GetText((int)eText.Text_SkillDesc);
        
         return true;
     }
@@ -75,6 +81,9 @@ public class UIElement_RandomSkill : UI_Base
         {
             ActionSkill actionSkill = _skill as ActionSkill;
             _imgSkill.sprite = Managers.Instance.ResourceManager.Load<Sprite>(actionSkill.SkillData.skillImage);
+           
+            _txtSkillName.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(actionSkill.SkillData.skillLocalName);
+            _txtSkillDesc.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(actionSkill.SkillData.skillLocalDesc);
 
             _imgActionSkillBg.gameObject.SetActive(true);
             _imgSupportSkillBg.gameObject.SetActive(false);     
@@ -83,6 +92,9 @@ public class UIElement_RandomSkill : UI_Base
         {
             SupportSkill supportSkill = _skill as SupportSkill;
             _imgSkill.sprite = Managers.Instance.ResourceManager.Load<Sprite>(supportSkill.SupportSkillData.skillImage);
+
+            _txtSkillName.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(supportSkill.SupportSkillData.skillLocalName);
+            _txtSkillDesc.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(supportSkill.SupportSkillData.skillLocalDesc);
 
             _imgActionSkillBg.gameObject.SetActive(false);
             _imgSupportSkillBg.gameObject.SetActive(true);

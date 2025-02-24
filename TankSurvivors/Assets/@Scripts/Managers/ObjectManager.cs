@@ -11,7 +11,7 @@ public class ObjectManager
 
     public HashSet<DropItemController> Gems { get; } = new HashSet<DropItemController>();
 
-    public T Spawn<T>(Vector3 spawnPos, int implementID = 0, Vector3 spawnDir = default(Vector3)) where T : BaseController
+    public T Spawn<T>(Vector3 spawnPos, int implementID = 0, Vector3 spawnDir = default(Vector3), Vector3 spawnRotation = default(Vector3)) where T : BaseController
     {
         System.Type type = typeof(T);
 
@@ -70,6 +70,7 @@ public class ObjectManager
             go.name = skillData.prefabName;
             go.transform.position = spawnPos;
             go.transform.forward = spawnDir;
+            go.transform.rotation = Quaternion.Euler(spawnRotation);
 
             Projectile projectile = Utils.GetOrAddComponent<Projectile>(go);
 

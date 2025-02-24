@@ -6,6 +6,7 @@ public class SkillData
 {
     public int skillId;
     public string skillLocalName;        // 로컬 이름
+    public string skillLocalDesc;          // 로컬 설명
     public string prefabName;           // 프리팹 이름 
     public float coolTime;                  // 스킬 쿨타임
     public float damage;                    // 데미지  
@@ -45,6 +46,7 @@ public class DataTableSkill
 
             skillData.skillId = loader.GetInt("SkillId",i);
             skillData.skillLocalName = loader.GetString("SkillLocalName", i);
+            skillData.skillLocalDesc = loader.GetString("SkillLocalDesc", i);
             skillData.prefabName = loader.GetString("PrefabName", i);
             skillData.coolTime = loader.GetFloat("CoolTime", i);
             skillData.damage = loader.GetFloat("Damage", i);

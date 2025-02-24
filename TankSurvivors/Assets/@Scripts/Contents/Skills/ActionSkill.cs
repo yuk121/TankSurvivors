@@ -31,9 +31,9 @@ public class ActionSkill : MonoBehaviour, SkillBase
         StartCoolTime();
     }
 
-    protected virtual void GenerateProjectileSkill(CreatureController owenr, Transform spawnTrans)
+    protected virtual void GenerateProjectileSkill(CreatureController owenr, Vector3 spawnPos, Vector3 spawnDir, Vector3 spawnRotation)
     {
-        Projectile projectile = Managers.Instance.ObjectManager.Spawn<Projectile>(spawnTrans.position, _skillData.skillId, spawnTrans.forward);
+        Projectile projectile = Managers.Instance.ObjectManager.Spawn<Projectile>(spawnPos, _skillData.skillId, spawnDir);
         projectile.Init(owenr, _skillData, _skillType);
     }
 

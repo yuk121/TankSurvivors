@@ -15,11 +15,11 @@ public class SpawningPools : MonoBehaviour
             StopCoroutine(_corSpawn);
         }
 
-        _corSpawn = StartCoroutine(SpwanCreatureCor());
+        //_corSpawn = StartCoroutine(SpawnCreatureCor());
     }
 
 
-    IEnumerator SpwanCreatureCor()
+    IEnumerator SpawnCreatureCor()
     {     
         yield return null;
 

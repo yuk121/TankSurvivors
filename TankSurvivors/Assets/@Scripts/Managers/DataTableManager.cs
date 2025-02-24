@@ -32,6 +32,9 @@ public class DataTableManager
     DataTableInGameLevel _inGameLevelTable = new DataTableInGameLevel();
     public DataTableInGameLevel DataTableInGameLevel { get => _inGameLevelTable; }
 
+    DataTableLocalization _localizationTable = new DataTableLocalization();
+    public DataTableLocalization DataTableLocalization { get => _localizationTable; }
+
     private void LoadFromLocal(Action callback)
     {
         ResourceManager resoureceManager = Managers.Instance.ResourceManager;
@@ -51,6 +54,7 @@ public class DataTableManager
         TextAsset stageText = resoureceManager.Load<TextAsset>($"{lable}/DataTableStage.bytes");
         TextAsset dropItemText = resoureceManager.Load<TextAsset>($"{lable}/DataTableDropItem.bytes");
         TextAsset inGameLevelText = resoureceManager.Load<TextAsset>($"{lable}/DataTableInGameLevel.bytes");
+        TextAsset localizationText = resoureceManager.Load<TextAsset>($"{lable}/DataTableLocalization.bytes");
 
         _creatureTable.DataLoad(creatureText.bytes);
         _waveTable.DataLoad(waveText.bytes);
@@ -59,6 +63,7 @@ public class DataTableManager
         _stageTable.DataLoad(stageText.bytes);
         _dropItemTable.DataLoad(dropItemText.bytes);    
         _inGameLevelTable.DataLoad(inGameLevelText.bytes);
+        _localizationTable.DataLoad(localizationText.bytes);
 
         callback?.Invoke();
     }

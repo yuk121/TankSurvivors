@@ -73,6 +73,8 @@
     <Compile Include="Assets\@Scripts\Data\DataTableStage.cs" />
     <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemBox.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_Joystick.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\Player\ElectircField.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\SupportSkill.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableInGameLevel.cs" />
     <Compile Include="Assets\@Scripts\Controller\AnimationController.cs" />
     <Compile Include="Assets\@Scripts\Controller\DropItemController.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Assets\@Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\Singleton.cs" />
     <Compile Include="Assets\@Scripts\Managers\ObjectManager.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\Player\Mine.cs" />
     <Compile Include="Assets\@Scripts\Controller\ParticleController.cs" />
     <Compile Include="Assets\@Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\@Scripts\Managers\Managers.cs" />
@@ -89,7 +92,9 @@
     <Compile Include="Assets\@Scripts\UI\UIList\UIList_OwnedSkills.cs" />
     <Compile Include="Assets\@Scripts\Controller\CameraController.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\CreatureController.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\Player\SubTank.cs" />
     <Compile Include="Assets\@Scripts\Managers\DataTableManager.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\ActionSkill.cs" />
     <Compile Include="Assets\@Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\Player\TankShell.cs" />
     <Compile Include="Assets\@Scripts\Controller\Characters\MonsterController.cs" />
@@ -109,11 +114,7 @@
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
     <Compile Include="Assets\@Scripts\UI\UIList\UIList_RandomSkills.cs" />
-    <Compile Include="Assets\@Scripts\Contents\Skills\ActionSkill.cs" />
-    <Compile Include="Assets\@Scripts\Contents\Skills\SupportSkill.cs" />
-    <Compile Include="Assets\@Scripts\Contents\Skills\Player\SubTank.cs" />
-    <Compile Include="Assets\@Scripts\Contents\Skills\Player\ElectircField.cs" />
-    <Compile Include="Assets\@Scripts\Contents\Skills\Player\Mine.cs" />
+    <Compile Include="Assets\@Scripts\Data\DataTableLocalization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -16,6 +16,8 @@ public class MonsterController : CreatureController
         set { _state = value; }
     }
 
+    Define.eMonsterFSMState _prevState = Define.eMonsterFSMState.None;
+
     Define.eMonsterGrade _grade = Define.eMonsterGrade.Normal;
 
     Transform _trans = null;
@@ -267,16 +269,19 @@ public class MonsterController : CreatureController
     #region Pause
     private void InPause()
     {
-        _state = Define.eMonsterFSMState.Pause;
-        _animController.Play(Define.eCreatureAnimState.AttackIdle, true);
+        _prevState = _state;
 
+        if(_prevState == Define.eMonsterFSMState.Skill)
+        {
+            _animController.Pause();
+        }
+
+        _state = Define.eMonsterFSMState.Pause;    
         _lastAttackTime = Time.time;
     }
 
     private void ModifyPause()
     {
-        // TODO : Pause로 인해 몬스터 공격 캔슬 방지 필요
-        
         if(GameManager.Instance.Pause == false)
         {
             OutPause();
@@ -285,7 +290,17 @@ public class MonsterController : CreatureController
 
     private void OutPause()
     {
+        switch(_prevState)
+        {
+            case Define.eMonsterFSMState.Chase:
+                InChase();
+                break;
+            case Define.eMonsterFSMState.Skill:
+                _animController.Resume();
+                break;
+        }
 
+        _state = _prevState;
     }
 
     public void BranchInPause()

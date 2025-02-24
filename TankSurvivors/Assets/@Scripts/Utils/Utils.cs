@@ -106,7 +106,7 @@ public static class Utils
     /// <param name="minDis"></param>
     /// <param name="maxDis"></param>
     /// <returns></returns>
-    public static Vector3 GenerateMonsterSpwanPosition(Vector3 playerPos, float minDis, float maxDis)
+    public static Vector3 GenerateMonsterSpawnPosition(Vector3 playerPos, float minDis, float maxDis)
     {
         float angle = Random.Range(-1,360) *Mathf.Deg2Rad;
         float distance = Random.Range(minDis,maxDis);
