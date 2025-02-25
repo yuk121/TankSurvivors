@@ -81,6 +81,9 @@ public class MonsterController : CreatureController
     {
         base.FixedUpdateController();
 
+        if (_isAlive == false)
+            return;
+
         switch (_state)
         {
             case Define.eMonsterFSMState.Chase:
@@ -93,6 +96,9 @@ public class MonsterController : CreatureController
     public override void UpdateController()
     {
         base.UpdateController();
+
+        if (_isAlive == false)
+            return;
 
         switch (_state)
         {

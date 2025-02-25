@@ -70,7 +70,6 @@ public class ObjectManager
             go.name = skillData.prefabName;
             go.transform.position = spawnPos;
             go.transform.forward = spawnDir;
-            go.transform.rotation = Quaternion.Euler(spawnRotation);
 
             Projectile projectile = Utils.GetOrAddComponent<Projectile>(go);
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TankShell : ActionSkill
 {
     [SerializeField]
-    private float _projectileBaseAnlge = 22.5f;
+    private float _projectileBaseAnlge = 15f;
 
     [Range(1,5)]
     [SerializeField]
@@ -28,7 +28,7 @@ public class TankShell : ActionSkill
 
         if (projectileCount < 2)
         {
-            GenerateProjectileSkill(owner, spawnTrans.position, spawnTrans.forward, Vector3.zero);
+            GenerateProjectileSkill(owner, spawnTrans.position, spawnTrans.forward);
         }
         else
         {
@@ -38,9 +38,9 @@ public class TankShell : ActionSkill
             {
                 float angle = startAngle + (i * _projectileBaseAnlge);
             
-                Quaternion rotation = Quaternion.Euler(0, angle, 0); 
-                Vector3 spawnDir = rotation.eulerAngles;
-                GenerateProjectileSkill(owner, spawnTrans.position,spawnTrans.forward, spawnDir);
+                Quaternion rotation = Quaternion.AngleAxis(angle, spawnTrans.up); 
+                Vector3 newDir = rotation * spawnTrans.forward;
+                GenerateProjectileSkill(owner, spawnTrans.position, newDir);
             }
         }
     }

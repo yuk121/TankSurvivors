@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 public class UIList_OwnedSkills : UI_Base
@@ -9,7 +10,7 @@ public class UIList_OwnedSkills : UI_Base
     {
 
     }
-    
+
     // 순서 건들면 꼬일수 있으므로 주의할 것
     enum eImage
     {
@@ -27,8 +28,8 @@ public class UIList_OwnedSkills : UI_Base
     }
     #endregion
 
-    public List<Image> _activeSkillList = new List<Image>();
-    public List<Image> _supportSkillList = new List<Image>();
+    public List<Image> _imgActiveSkillList = new List<Image>();
+    public List<Image> _imgSupportSkillList = new List<Image>();
 
     public override bool Init()
     {
@@ -42,18 +43,18 @@ public class UIList_OwnedSkills : UI_Base
 
         //Get 
         int totalCount = Define.MAX_ACTIVE_SKILL_COUNT + Define.MAX_SUPPORT_SKILL_COUNT;
-        
-        for (int i =0; i < totalCount; i++)
+
+        for (int i = 0; i < totalCount; i++)
         {
             eImage eSkill = (eImage)i;
 
-            if(i < Define.MAX_ACTIVE_SKILL_COUNT)
+            if (i < Define.MAX_ACTIVE_SKILL_COUNT)
             {
-                _activeSkillList.Add(GetImage((int)eSkill));
+                _imgActiveSkillList.Add(GetImage((int)eSkill));
             }
             else
             {
-                _supportSkillList.Add(GetImage((int)eSkill));
+                _imgSupportSkillList.Add(GetImage((int)eSkill));
             }
         }
 
@@ -64,16 +65,16 @@ public class UIList_OwnedSkills : UI_Base
 
     public void InitSkillImage()
     {
-        for(int i = 0; i < _activeSkillList.Count; i++) 
+        for (int i = 0; i < _imgActiveSkillList.Count; i++)
         {
-            _activeSkillList[i].sprite = null;
-            _activeSkillList[i].gameObject.SetActive(false);
+            _imgActiveSkillList[i].sprite = null;
+            _imgActiveSkillList[i].gameObject.SetActive(false);
         }
 
-        for(int i =0; i < _supportSkillList.Count; i++)
+        for (int i = 0; i < _imgSupportSkillList.Count; i++)
         {
-            _supportSkillList[i].sprite = null;
-            _supportSkillList[i].gameObject.SetActive(false);
+            _imgSupportSkillList[i].sprite = null;
+            _imgSupportSkillList[i].gameObject.SetActive(false);
         }
     }
 
@@ -87,39 +88,34 @@ public class UIList_OwnedSkills : UI_Base
 
     public void GetCurrentPlayerSkill()
     {
-        if(GameManager.Instance == null || GameManager.Instance.Player == null)
+        if (GameManager.Instance == null || GameManager.Instance.Player == null)
         {
             Debug.LogError($"{this} : GameManager Null or Player Null !!!");
         }
 
         // 플레이어 스킬, 보조스킬을 가져온다
         PlayerController player = GameManager.Instance.Player;
-        List<ActionSkill> skillList = player.GetActionSkillList();
-        List<SupportSkill> supportSkillList = player.GetSupportSkillList();
+        List<ActionSkill> actionSkillList = player.GetActionSkillList().Where(skill => skill.CurSkillLevel > 0).ToList();
+        List<SupportSkill> supportSkillList = player.GetSupportSkillList().Where(skill => skill.CurSkillLevel > 0).ToList(); ;
 
         // 스킬 목록에 맞는 이미지 넣기
-        for(int i = 0; i < skillList.Count; i++) 
+        for (int i = 0; i < actionSkillList.Count; i++)
         {
-            if (skillList[i].CurSkillLevel > 0)
-            {
-                string skillImage = skillList[i].SkillData.skillImage;
-                Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
-                _activeSkillList[i].sprite = sprite;
-                _activeSkillList[i].gameObject.SetActive(true);
-            }
+            string skillImage = actionSkillList[i].SkillData.skillImage;
+            Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
+
+            _imgActiveSkillList[i].sprite = sprite;
+            _imgActiveSkillList[i].gameObject.SetActive(true);
         }
 
-        // 보조스킬 목록에 맞는 이미지 넣기
-        for(int i = 0; i < supportSkillList.Count; i++)
+        for (int i = 0; i < supportSkillList.Count; i++)
         {
-            if (supportSkillList[i].CurSkillLevel > 0)
-            {
-                string skillImage = supportSkillList[i].SupportSkillData.skillImage;
-                Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
-                _supportSkillList[i].sprite = sprite;
-                _supportSkillList[i].gameObject.SetActive(true);
-            }
-        }
+            string skillImage = supportSkillList[i].SupportSkillData.skillImage;
+            Sprite sprite = Managers.Instance.ResourceManager.Load<Sprite>(skillImage);
 
+            _imgSupportSkillList[i].sprite = sprite;
+            _imgSupportSkillList[i].gameObject.SetActive(true);
+        }
     }
 }
+

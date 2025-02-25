@@ -219,9 +219,15 @@ public class PlayerController : CreatureController
             CurExp -= nextRequiredExp;
 
             CurLevel++;
-    
+
             UIPopup_SkillSelect popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_SkillSelect>(true);
+
             popup.SetSkillSelect();
+
+            if (GameManager.Instance != null && GameManager.Instance.GameData != null)
+            {
+                GameManager.Instance.GameData.firstLevelUp = true;
+            }
         }
     }
 

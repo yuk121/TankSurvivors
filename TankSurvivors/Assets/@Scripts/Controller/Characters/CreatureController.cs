@@ -59,6 +59,11 @@ public class CreatureController : BaseController
         return supportSkillList;
     }
 
+    public void SkillUpgrade(int skillId)
+    {
+        _skillBook.UpgradeSkill(skillId);
+    }
+
     public override void UpdateController()
     {
         base.UpdateController();

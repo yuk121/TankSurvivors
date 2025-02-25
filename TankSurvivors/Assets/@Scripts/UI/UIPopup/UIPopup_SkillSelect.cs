@@ -74,6 +74,13 @@ public class UIPopup_SkillSelect : UI_Base
 
         int RandomSkillCount = Mathf.Min(skillList.Count, Define.MAX_SKILL_SELECT_COUNT);
         
+        if(GameManager.Instance.GameData != null && GameManager.Instance.GameData.firstLevelUp == false) 
+        {
+            // 첫 레벨업인 경우 기본공격이 선택지에 무조건 포함되도록
+            skillRandomList.Add(skillList[0]);
+            skillList.RemoveAt(0);
+        }
+
         while(skillRandomList.Count < RandomSkillCount)
         {
             int rand = Random.Range(0, skillList.Count);

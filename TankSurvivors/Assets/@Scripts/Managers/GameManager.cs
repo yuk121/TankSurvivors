@@ -10,6 +10,7 @@ public class GameData
     public WaveData waveInfo;
     public float curTime = 0f;
     public int killCount = 0;
+    public bool firstLevelUp = false;
 
     public void Clear()
     {
@@ -18,6 +19,7 @@ public class GameData
 
         curTime = 0f;
         killCount = 0;
+        firstLevelUp = false;
     }
 }
 

@@ -58,6 +58,7 @@ public class SkillBook : MonoBehaviour
                 SupportSkill supportSkill = new SupportSkill();
                 supportSkill.SupportSkillData = supportSkillData;
                 supportSkill.SupportSkillType = (Define.eSupportSkillType)supportSkillEnumList[i];
+                supportSkill.Index = i + 1;
 
                 _supportSkillList.Add(supportSkill);
             }

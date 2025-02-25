@@ -40,6 +40,8 @@ public class UIElement_RandomSkill : UI_Base
     private TMP_Text _txtSkillName = null;
     private TMP_Text _txtSkillDesc = null;
 
+    private int _skillId = -1;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -65,7 +67,7 @@ public class UIElement_RandomSkill : UI_Base
 
         _txtSkillName = GetText((int)eText.Text_SkillName);
         _txtSkillDesc = GetText((int)eText.Text_SkillDesc);
-       
+        
         return true;
     }
 
@@ -76,36 +78,53 @@ public class UIElement_RandomSkill : UI_Base
             Init();
 
         _skill = skill;
-        
-        if(_skill is ActionSkill)
+        _skillId = -1;
+
+        if (_skill is ActionSkill) // 스킬 정보
         {
             ActionSkill actionSkill = _skill as ActionSkill;
+            
+            // 스킬 이미지
             _imgSkill.sprite = Managers.Instance.ResourceManager.Load<Sprite>(actionSkill.SkillData.skillImage);
            
+            // 스킬 이름
             _txtSkillName.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(actionSkill.SkillData.skillLocalName);
+         
+            // 스킬 설명
             _txtSkillDesc.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(actionSkill.SkillData.skillLocalDesc);
 
+            // 스킬 종류에 맞는 배경 선택
             _imgActionSkillBg.gameObject.SetActive(true);
-            _imgSupportSkillBg.gameObject.SetActive(false);     
+            _imgSupportSkillBg.gameObject.SetActive(false);
+
+            // 스킬 id 
+            _skillId = actionSkill.SkillData.skillId;
         }
-        else if(_skill is SupportSkill)
+        else if(_skill is SupportSkill) // 서포트 스킬 정보 
         {
             SupportSkill supportSkill = _skill as SupportSkill;
             _imgSkill.sprite = Managers.Instance.ResourceManager.Load<Sprite>(supportSkill.SupportSkillData.skillImage);
 
             _txtSkillName.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(supportSkill.SupportSkillData.skillLocalName);
+         
             _txtSkillDesc.text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(supportSkill.SupportSkillData.skillLocalDesc);
 
             _imgActionSkillBg.gameObject.SetActive(false);
             _imgSupportSkillBg.gameObject.SetActive(true);
+
+            _skillId = supportSkill.SupportSkillData.skillId;
         }
 
+        // 스킬 레벨에 맞게 별 갯수 보여주기
         _uiListGrade.SetGrade(_skill.CurSkillLevel);
     }
 
     private void OnClick_RandomSkill()
     {
+        // 선택한 스킬의 id를 통해 스킬 업그레이드
         PlayerController player = GameManager.Instance.Player;
+        player.SkillUpgrade(_skillId);
+        
         Managers.Instance.UIMananger.ClosePopup();
     }
 }
