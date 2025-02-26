@@ -66,7 +66,7 @@
     <Compile Include="Assets\@Scripts\Data\DataTableSkill.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\SkillBase.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\Enemy\ZombieAttack01.cs" />
-    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemMagent.cs" />
+    <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemMagnet.cs" />
     <Compile Include="Assets\@Scripts\Contents\DropItem\DropItemGem.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableDropItem.cs" />
     <Compile Include="Assets\@Scripts\UI\UI_EventHandler.cs" />

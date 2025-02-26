@@ -86,10 +86,10 @@ public static class Define
 
     public enum eGemType
     {
-        RedGem,
-        GreenGem,
-        BlueGem,
-        PurpleGem,
+        RedGem = 50001,
+        GreenGem = 50002,
+        BlueGem = 50003,
+        PurpleGem = 50004,
     }
 
     public enum eSkillType

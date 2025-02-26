@@ -337,30 +337,28 @@ public class MonsterController : CreatureController
     private void DropItem()
     {
         // 경험치 젬 또는 아이템을 떨궈준다.
-        // Test용 타입 
-        Define.eObjectType dropItemType = Define.eObjectType.Gem;
-
-        // TODO : 드랍 아이템을 무엇으로 줄지 결정해줘야함
         DropItemData dropItemData = GameManager.Instance.GetRandomDropItem(_grade);
 
-        // TODO : dropItemType => dropItemData.dropItemType으로 바꿀것
-        switch(dropItemType)
+        switch(dropItemData.dropItemType)
         {
             case Define.eObjectType.Gem:
-                // implementID => dropItemData.dropItemId로 바꿀것
-                Managers.Instance.ObjectManager.Spawn<DropItemGem>(_trans.position, 50001);
+                Managers.Instance.ObjectManager.Spawn<DropItemGem>(_trans.position, dropItemData.dropItemId);
                 break;
 
             case Define.eObjectType.Bomb:
+                Managers.Instance.ObjectManager.Spawn<DropItemBomb>(_trans.position, dropItemData.dropItemId);
                 break;
 
             case Define.eObjectType.Magnet:
+                Managers.Instance.ObjectManager.Spawn<DropItemMagnet>(_trans.position, dropItemData.dropItemId);
                 break;
 
             case Define.eObjectType.HpRecorvery:
+                Managers.Instance.ObjectManager.Spawn<DropItemHeart>(_trans.position, dropItemData.dropItemId);
                 break;
 
             case Define.eObjectType.Box:
+                Managers.Instance.ObjectManager.Spawn<DropItemBox>(_trans.position, dropItemData.dropItemId);
                 break;
         }
     }

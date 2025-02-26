@@ -1,8 +1,7 @@
-using System.Collections;
+using Common;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Common;
 
 public class GameData
 {
@@ -174,18 +173,69 @@ public class GameManager : FSM<eGameManagerState>
         return isAlive;
     }
 
-    public DropItemData  GetRandomDropItem(Define.eMonsterGrade monsterGrade)
+    public DropItemData GetRandomDropItem(Define.eMonsterGrade monsterGrade)
     {
         DropItemData dropItemData = new DropItemData();
+        WaveData wave = GameData.waveInfo;
 
-        // TODO :
-        // 1. waveInfo.dropItemRate에 따라서 아이템을 줄지 젬을 줄지 결정
-        // 2. 젬을 주게 되면 waveInfo의 젬 드랍율에 맞춰서 무슨 젬을 줄지 결정
-        // 3. 아이템을 주게 되면 노말 몬스터, 엘리트 몬스터 구분하여
-        // 노말 몬스터면 waveInfo.normalDropId 참조해서 아이템을 주고
-        // 엘리트 몬스터면 waveInfo.EliteDropId 참조해서 줄것
+        float rand = Random.Range(0.0f, 1.0f);
 
-        return dropItemData;
+        // 아이템을 줄지 Gem을 줄 지 결정
+        if (rand <= wave.dropItemRate)
+        {
+            // 아이템을 주는 경우
+            switch (monsterGrade)
+            {
+                case Define.eMonsterGrade.Normal:
+                    // 드랍 아이템 목록 읽어오기
+                    List<DropItemData> dropItemDataList = new List<DropItemData>();
+                    for (int i = 0; i < wave.normalDropId.Count; i++)
+                    {
+                        dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(wave.normalDropId[i]);
+                        dropItemDataList.Add(dropItemData);
+                    }
+                    // 드랍 아이템 목록중 하나만 준다.
+                    int randIndex = Random.Range(0, dropItemDataList.Count);
+
+                    return dropItemDataList[randIndex];
+
+                case Define.eMonsterGrade.Elite:
+                    // 엘리트 몬스터는 드랍 아이템이 하나뿐
+                    dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(wave.eliteDropId);
+                    return dropItemData;
+            }
+        }
+        else
+        {
+            // Gem 드랍
+            float redGemRate = wave.redGemDropRate;
+            float greenGemRate = redGemRate + wave.greenGemDropRate;
+            float blueGemRate = greenGemRate + wave.blueGemDropRate;
+            float purpleGemRate = blueGemRate + wave.purpleGemDropRate;
+
+            rand = Random.Range(0.0f, 1.0f);
+
+            if (rand <= redGemRate)
+            {
+                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.RedGem);
+            }
+            else if (rand <= greenGemRate)
+            {
+                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.GreenGem);
+            }
+            else if (rand <= blueGemRate)
+            {
+                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.BlueGem);
+            }
+            else if (rand <= purpleGemRate)
+            {
+                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.PurpleGem);
+            }
+
+            return dropItemData;
+        }
+
+        return null;
     }
     #endregion
 

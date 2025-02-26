@@ -100,6 +100,64 @@ public class ObjectManager
 
             return gem as T;
         }
+        else if(type == typeof(DropItemBomb))
+        {
+            DropItemData dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(implementID);
+
+            string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+
+            go.transform.position = spawnPos + Vector3.up;
+
+            DropItemBomb bomb = Utils.GetOrAddComponent<DropItemBomb>(go);
+            bomb.Init();
+            GridManager.Instance.Add(bomb);
+
+            return bomb as T;
+        }
+        else if(type == typeof(DropItemMagnet))
+        {
+            DropItemData dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(implementID);
+
+            string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+
+            go.transform.position = spawnPos + Vector3.up;
+
+            DropItemMagnet magnet = Utils.GetOrAddComponent<DropItemMagnet>(go);
+            magnet.Init();
+            GridManager.Instance.Add(magnet);
+        }
+        else if(type == typeof(DropItemHeart)) 
+        {
+            DropItemData dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(implementID);
+
+            string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+
+            go.transform.position = spawnPos + Vector3.up;
+
+            DropItemHeart heart = Utils.GetOrAddComponent<DropItemHeart>(go);
+            heart.Init();
+            GridManager.Instance.Add(heart);
+        }
+        else if(type == typeof(DropItemBox))
+        {
+            DropItemData dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(implementID);
+
+            string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+
+            go.transform.position = spawnPos + Vector3.up;
+
+            DropItemBox box = Utils.GetOrAddComponent<DropItemBox>(go);
+            box.Init();
+            GridManager.Instance.Add(box);
+        }
 
         return null;
     }
@@ -151,12 +209,20 @@ public class ObjectManager
             GridManager.Instance.Remove(heart);
             Managers.Instance.ResourceManager.Destroy(heart.gameObject);
         }
-        else if (type == typeof(DropItemMagent))
+        else if (type == typeof(DropItemMagnet))
         {
-            DropItemMagent magent = gameobject as DropItemMagent;
+            DropItemMagnet magent = gameobject as DropItemMagnet;
 
             GridManager.Instance.Remove(magent);
             Managers.Instance.ResourceManager.Destroy(magent.gameObject);
         }
+        else if(type == typeof(DropItemBox))
+        {
+            DropItemBox box = gameobject as DropItemBox;
+
+            GridManager.Instance.Remove(box);
+            Managers.Instance.ResourceManager.Destroy(box.gameObject);
+        }
+
     }
 }

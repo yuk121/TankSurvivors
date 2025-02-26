@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DropItemMagent : DropItemController
+public class DropItemMagnet : DropItemController
 {
     public override bool Init()
     {
