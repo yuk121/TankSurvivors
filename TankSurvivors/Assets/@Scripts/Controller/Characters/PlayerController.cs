@@ -92,6 +92,10 @@ public class PlayerController : CreatureController
         {
             _skillAllStop = (!_skillAllStop);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Managers.Instance.ObjectManager.AllKillMonsters();
+        }
 #endif
     }
 

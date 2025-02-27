@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class ObjectManager
     public HashSet<MonsterController> Monsters { get; } = new HashSet<MonsterController>();
     public HashSet<Projectile> Projectiles { get; } = new HashSet<Projectile>();
 
-    public HashSet<DropItemController> Gems { get; } = new HashSet<DropItemController>();
+    public HashSet<DropItemGem> Gems { get; } = new HashSet<DropItemGem>();
 
     public T Spawn<T>(Vector3 spawnPos, int implementID = 0, Vector3 spawnDir = default(Vector3), Vector3 spawnRotation = default(Vector3)) where T : BaseController
     {
@@ -90,8 +91,8 @@ public class ObjectManager
 
             DropItemGem gem = Utils.GetOrAddComponent<DropItemGem>(go);
 
-            gem.SetData(dropItemData);
             gem.Init();
+            gem.SetData(dropItemData);
 
             Gems.Add(gem);
            
@@ -111,7 +112,10 @@ public class ObjectManager
             go.transform.position = spawnPos + Vector3.up;
 
             DropItemBomb bomb = Utils.GetOrAddComponent<DropItemBomb>(go);
+            
             bomb.Init();
+            bomb.SetData(dropItemData);
+            
             GridManager.Instance.Add(bomb);
 
             return bomb as T;
@@ -127,7 +131,10 @@ public class ObjectManager
             go.transform.position = spawnPos + Vector3.up;
 
             DropItemMagnet magnet = Utils.GetOrAddComponent<DropItemMagnet>(go);
+
             magnet.Init();
+            magnet.SetData(dropItemData);
+
             GridManager.Instance.Add(magnet);
         }
         else if(type == typeof(DropItemHeart)) 
@@ -141,7 +148,10 @@ public class ObjectManager
             go.transform.position = spawnPos + Vector3.up;
 
             DropItemHeart heart = Utils.GetOrAddComponent<DropItemHeart>(go);
+
             heart.Init();
+            heart.SetData(dropItemData);
+            
             GridManager.Instance.Add(heart);
         }
         else if(type == typeof(DropItemBox))
@@ -224,5 +234,13 @@ public class ObjectManager
             Managers.Instance.ResourceManager.Destroy(box.gameObject);
         }
 
+    }
+
+    public void AllKillMonsters()
+    {
+        foreach (MonsterController monster in Monsters.ToList())
+        {
+            monster.OnDead();
+        }
     }
 }

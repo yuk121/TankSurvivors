@@ -10,37 +10,19 @@ public class DropItemGem : DropItemController
     [SerializeField]
     private Define.eGemType type;
     private int expAmount = 0;
-    private Coroutine _corMoveToPlayer;
-    private Transform _trans;
 
     public override bool Init()
     {
-        base.Init();
+        if(_init == false)
+            base.Init();
         
         SetGemExp(type);
-        _trans = transform;
         return true;
     }
-
-    public override void GetItem()
+    
+    public int GetGemExp()
     {
-        base.GetItem();
-
-        if (_corMoveToPlayer != null)
-        {
-            StopCoroutine(_corMoveToPlayer);
-            _corMoveToPlayer = null;
-        }
-
-        PlayerController player = GameManager.Instance.Player;
-
-        Vector3 dir = (_trans.position - player.transform.position).normalized;
-        Vector3 target = _trans.position + dir * 2f;
-        _trans.DOKill();
-        _trans.DOMove(target, 0.3f).SetEase(Ease.Linear).OnComplete(() =>
-        {
-            _corMoveToPlayer = StartCoroutine(CorMoveToPlayer(player));
-        });
+        return expAmount;   
     }
 
     public void SetGemExp(Define.eGemType gemType)
@@ -65,35 +47,9 @@ public class DropItemGem : DropItemController
         }
     }
 
-    IEnumerator CorMoveToPlayer(PlayerController player)
+    public override void GetItemCompleted()
     {
-        if (player == null)
-        {
-            Debug.LogError($"{this} : Player is null !!!");
-            yield break;
-        }
-
-        Vector3 playerPos = Vector3.zero;
-        float moveToPlayerSpeed = Time.deltaTime * Define.ITEM_MOVE_SPEED;
-
-        while (true)
-        {
-            if (player == null)
-                yield break;
-
-            playerPos = player.transform.position;
-            float distance = Vector3.Distance(_trans.position, playerPos);
-
-            if(distance < 0.4f)
-            {
-                player.GetExp(expAmount);
-                Managers.Instance.ObjectManager.Despawn(this);
-                yield break; 
-            }
-
-            _trans.position = Vector3.MoveTowards(_trans.position, playerPos, moveToPlayerSpeed);
-           
-            yield return null;
-        }
+        _player.GetExp(expAmount);
+        Managers.Instance.ObjectManager.Despawn(this);
     }
 }
