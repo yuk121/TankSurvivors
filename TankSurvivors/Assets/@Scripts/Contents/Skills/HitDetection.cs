@@ -6,16 +6,23 @@ public class HitDetection : BaseController
 {
     private SkillData _skillData;
     private CreatureController _owner;
+    private float _radius;
 
-    public void SetData(SkillData skillData, CreatureController owner)
+    public void SetData(SkillData skillData, CreatureController owner, float radius)
     {
         _skillData = skillData;
         _owner = owner;
+        _radius = radius;
+    }
+
+    public void OnUpdateRadius(float radius)
+    {
+        _radius = radius;
     }
 
     private void Update()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
         
         foreach(Collider collider in colliders)
         {
@@ -25,8 +32,13 @@ public class HitDetection : BaseController
             {
                 float damage = _skillData.damage;
                 mon.OnDamaged(_owner, damage);
-                //  해당 프로젝타일 풀링
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position, _radius);
     }
 }

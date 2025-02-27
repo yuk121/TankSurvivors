@@ -39,7 +39,7 @@ public class SubTank : ActionSkill
             float sin = Mathf.Sin(radian);
 
             Vector3 spawnPoint = _owner.transform.position + (new Vector3(
-                sin, 0f, cos) * Define.SUBTANK_RADIUS);
+                sin, 0f, cos) * Define.SUBTANK_SPAWN_RADIUS);
 
             Quaternion rotation = Quaternion.AngleAxis(angle, _owner.transform.up);
             Vector3 spawnDir = rotation * Vector3.forward;
@@ -51,7 +51,7 @@ public class SubTank : ActionSkill
 
                 subTank.transform.SetParent(_owner.transform);
 
-                subTank.SetData(SkillData, _owner);
+                subTank.SetData(SkillData, _owner, Define.SUBTANK_DETECT_RADIUS);
 
                 _subTankList[i] = subTank;
             }
@@ -85,7 +85,7 @@ public class SubTank : ActionSkill
                 float sin = Mathf.Sin(radian);
 
                 _subTankList[i].transform.position = _owner.transform.position + new Vector3(
-                    sin, 0, cos) * Define.SUBTANK_RADIUS;
+                    sin, 0, cos) * Define.SUBTANK_SPAWN_RADIUS;
 
                 _subTankList[i].transform.position = new Vector3(_subTankList[i].transform.position.x, _fixedY, _subTankList[i].transform.position.z);
 

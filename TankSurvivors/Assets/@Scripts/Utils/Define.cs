@@ -28,7 +28,10 @@ public static class Define
     public const int MAX_SKILL_SELECT_COUNT = 3;
     public const int MAX_ACTIVE_SKILL_COUNT = 5;
     public const int MAX_SUPPORT_SKILL_COUNT = 5;
-    public const float SUBTANK_RADIUS = 3f;
+    public const float SUBTANK_SPAWN_RADIUS = 3f;
+    public const float SUBTANK_DETECT_RADIUS = 3f;
+    public const float ELECTRIC_FIELD_DETECT_RADIUS = 3f;
+    public const float ELECTRIC_FIELD_RADIUS_INC_RATE = 0.6f;
 
     public enum eSceneType
     {

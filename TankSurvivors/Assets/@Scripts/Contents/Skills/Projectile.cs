@@ -55,7 +55,7 @@ public class Projectile : BaseController
                 {
                     float damage = _skillData.damage;
                     mon.OnDamaged(_owner, damage);
-                    //  해당 프로젝타일 풀링
+                    //  해당 발사체 풀링
                     Managers.Instance.PoolManager.Push(gameObject);
                 }
 
