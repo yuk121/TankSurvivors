@@ -13,6 +13,7 @@ public class DropItemHeart : DropItemController
 
     public override void GetItemCompleted()
     {
+        _player.OnRecovery(Define.HEART_RECOVERY_RATE);
         Managers.Instance.ObjectManager.Despawn(this);
     }
 }

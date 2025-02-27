@@ -18,4 +18,8 @@ public class SupportSkill : SkillBase
         if (CurSkillLevel <= Define.MAX_SKILL_LEVEL)
             CurSkillLevel++;
     }
+
+    public virtual void OnUpdatedSkill()
+    {
+    }
 }

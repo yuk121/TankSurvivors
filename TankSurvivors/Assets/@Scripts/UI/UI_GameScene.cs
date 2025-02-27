@@ -15,6 +15,7 @@ public class UI_GameScene : UI_Scene
     enum eImage
     {
         Image_Exp,
+        Image_Hp
     }
 
     enum eText
@@ -31,6 +32,7 @@ public class UI_GameScene : UI_Scene
     private Button _btnPause;
     // Image
     private Image _imgExp;
+    private Image _imgHp;
     // Text Mesh Pro
     //private TMP_Text _txtWave;
     private TMP_Text _txtExp;
@@ -64,7 +66,7 @@ public class UI_GameScene : UI_Scene
         _btnPause = GetButton((int)eButton.Button_Puase);
 
         _imgExp = GetImage((int)eImage.Image_Exp);
-        
+        _imgHp = GetImage((int)eImage.Image_Hp);
         //_txtWave = GetText((int)eText.Text_Wave);
         _txtExp = GetText((int)eText.Text_Exp);
         _txtLevel = GetText((int)eText.Text_Level);
@@ -107,6 +109,17 @@ public class UI_GameScene : UI_Scene
         _imgExp.fillAmount = (float)_curExp / _requiredExp;
     }
 
+    private void SetHp()
+    {
+        if (GameManager.Instance.Player == null)
+            return;
+
+        float curHp = GameManager.Instance.Player.CurHp;
+        float maxHp = GameManager.Instance.Player.CreatureData.maxHp;
+
+        _imgHp.fillAmount = curHp / maxHp;
+    }
+
     private void OnClick_Pause()
     {
 
@@ -119,6 +132,7 @@ public class UI_GameScene : UI_Scene
             SetTime();
             SetKillCount();
             SetLevel();
+            SetHp();
         }
     }
 }

@@ -115,6 +115,7 @@
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
     <Compile Include="Assets\@Scripts\UI\UIList\UIList_RandomSkills.cs" />
+    <Compile Include="Assets\@Scripts\Contents\Skills\HitDetection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -9,6 +9,7 @@ public static class Define
 {
     // Drop Item
     public const float ITEM_MOVE_SPEED = 15f;
+    public const float HEART_RECOVERY_RATE = 0.15f;
 
     // Gem
     public const int GEM_RED_EXP_AMOUNT = 5;
@@ -27,6 +28,7 @@ public static class Define
     public const int MAX_SKILL_SELECT_COUNT = 3;
     public const int MAX_ACTIVE_SKILL_COUNT = 5;
     public const int MAX_SUPPORT_SKILL_COUNT = 5;
+    public const float SUBTANK_RADIUS = 3f;
 
     public enum eSceneType
     {

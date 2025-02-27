@@ -96,8 +96,12 @@ public class SkillBook : MonoBehaviour
                 nextSkillId = ((SupportSkill)skill).SupportSkillData.skillId + 1;
 
                 SupportSkillData nextSupportSkillData = Managers.Instance.DataTableManager.DataTableSupportSkill.GetSupportSkillData(nextSkillId);
-                supportSkill.SupportSkillData = nextSupportSkillData;
+
+                supportSkill.SupportSkillData = nextSupportSkillData;             
             }
+
+            // 변경사항 적용 필요시
+            skill.OnUpdatedSkill();
         }
     }
 

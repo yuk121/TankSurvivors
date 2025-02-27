@@ -86,7 +86,7 @@ public class PlayerController : CreatureController
 #if UNITY_EDITOR
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            GetExp(50);
+            GetExp(Managers.Instance.DataTableManager.DataTableInGameLevel.GetNextLevelRequiredExp(CurLevel));
         }
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -244,6 +244,15 @@ public class PlayerController : CreatureController
         SetDamagedColor();
         Invoke("SetDefaultColor", 0.2f);
     }
+
+    public void OnRecovery(float recoveryRate)
+    {
+        float recoveryValue = CreatureData.maxHp * recoveryRate;
+
+        _curHp = Math.Min(CreatureData.maxHp, _curHp + recoveryValue);
+    }
+
+
 
     void SetDamagedColor()
     {

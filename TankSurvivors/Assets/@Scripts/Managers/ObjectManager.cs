@@ -79,6 +79,21 @@ public class ObjectManager
 
             return projectile as T;
         }
+        else if(type == typeof(HitDetection))
+        {
+            SkillData skillData = Managers.Instance.DataTableManager.DataTableSkill.GetSkillData(implementID); ;
+
+            string skillPrefabPath = $"SkillPrefab/{skillData.prefabName}.prefab";
+
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath);
+            go.name = skillData.prefabName;
+            go.transform.position = spawnPos;
+            go.transform.forward = spawnDir;
+
+            HitDetection hitDetection = Utils.GetOrAddComponent<HitDetection>(go);
+
+            return hitDetection as T;
+        }
         else if(type == typeof(DropItemGem)) 
         {
             DropItemData dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(implementID); 

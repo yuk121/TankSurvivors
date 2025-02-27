@@ -7,10 +7,6 @@ public class TankShell : ActionSkill
     [SerializeField]
     private float _projectileBaseAnlge = 15f;
 
-    [Range(1,5)]
-    [SerializeField]
-    private int _testProjectileCount = 1;
-
     public override void UseSkill(CreatureController owner)
     {
         base.UseSkill(owner);
@@ -24,7 +20,7 @@ public class TankShell : ActionSkill
         muzzleParticle.Init(spawnTrans.position, spawnTrans.forward);
 
         // Æ÷Åº »ý¼º
-        int projectileCount = Mathf.Max(SkillData.startCreateCount, _testProjectileCount);
+        int projectileCount =SkillData.startCreateCount;
 
         if (projectileCount < 2)
         {

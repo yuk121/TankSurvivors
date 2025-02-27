@@ -9,4 +9,5 @@ public interface SkillBase
     public int Index { get; set; }
 
     public abstract void SkillLevelUp();
+    public abstract void OnUpdatedSkill();
 }
