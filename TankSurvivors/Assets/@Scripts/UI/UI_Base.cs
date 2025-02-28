@@ -50,6 +50,7 @@ public class UI_Base : MonoBehaviour
     protected void BindText(Type type) { Bind<TMP_Text>(type);}
     protected void BindButton(Type type) { Bind<Button>(type);}
     protected void BindToggle(Type type) { Bind<Toggle>(type);}
+    protected void BindSlider(Type type) { Bind<Slider>(type);} 
 
     protected T Get<T>(int index) where T : UnityEngine.Object
     {
@@ -67,6 +68,7 @@ public class UI_Base : MonoBehaviour
     protected TMP_Text GetText(int index) { return Get<TMP_Text>(index); }
     protected Button GetButton(int index) { return Get<Button>(index); }
     protected Toggle GetToggle(int index) { return Get<Toggle>(index); }
+    protected Slider GetSlider(int index) { return Get<Slider>(index); }
 
     public void BindEvent(GameObject go, Action action = null, Action<BaseEventData> dragAction = null, Define.eUIEvent type = Define.eUIEvent.Click) 
     {

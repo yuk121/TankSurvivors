@@ -122,7 +122,7 @@ public class UI_GameScene : UI_Scene
 
     private void OnClick_Pause()
     {
-
+       UIPopup_Pause popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_Pause>(true);
     }
 
     private void Update()
