@@ -51,7 +51,7 @@ public class Projectile : BaseController
             {
                 MonsterController mon = hit.collider.gameObject.GetComponent<MonsterController>();
                 
-                if(mon != null)
+                if(mon != null && mon.IsAlive == true)
                 {
                     float damage = _skillData.damage;
                     mon.OnDamaged(_owner, damage);

@@ -42,6 +42,10 @@ public class MonsterController : CreatureController
     bool _isTargetNear;
     bool _skillWait = false;
 
+    // Damaged Color
+    private SkinnedMeshRenderer[] _meshRenderers;
+    private MaterialPropertyBlock _materialProperty;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -50,6 +54,12 @@ public class MonsterController : CreatureController
         ObjectType = Define.eObjectType.Enemy;
         _trans = transform;
         _rb = GetComponent<Rigidbody>();
+        GetComponent<Collider>().enabled = true;
+
+        // renderer
+        _meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        _materialProperty = new MaterialPropertyBlock();
+
         _isAlive = true;
 
         // 스킬들을 1레벨로 설정
@@ -315,9 +325,19 @@ public class MonsterController : CreatureController
     }
     #endregion
 
+    public override void OnDamaged(BaseController attacker, float damage)
+    {
+        base.OnDamaged(attacker, damage);
+
+        // Render
+        SetDamagedColor();
+        Invoke("SetDefaultColor", 0.2f);
+    }
+
     public override void OnDead()
     {
         // TODO : 죽는 소리 추가
+        GetComponent<Collider>().enabled = false;
         _isAlive = false;
         // 죽는 애니메이션 재생 
         _animController.Play(Define.eCreatureAnimState.Dead, true);
@@ -389,5 +409,31 @@ public class MonsterController : CreatureController
         // 필요시 장애물 체크
       
         return checkCount > 1;
+    }
+
+    void SetDamagedColor()
+    {
+        // 피격시 잠깐 빨갛게 되는 효과
+        if (_materialProperty != null)
+        {
+            foreach (Renderer render in _meshRenderers)
+            {
+                _materialProperty.SetColor("_Color", Color.red);
+                render.SetPropertyBlock(_materialProperty);
+            }
+        }
+    }
+
+    void SetDefaultColor()
+    {
+        // 원래 색상으로 돌아옴
+        if (_materialProperty != null)
+        {
+            foreach (Renderer render in _meshRenderers)
+            {
+                _materialProperty.SetColor("_Color", Color.white);
+                render.SetPropertyBlock(_materialProperty);
+            }
+        }
     }
 }

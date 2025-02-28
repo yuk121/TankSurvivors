@@ -8,7 +8,6 @@ public class ElectircField : ActionSkill
     private HitDetection _electricField = null;
     private float _value = 0f;
     private float _duration = 0f;
-    private float _remainTime = 0f;
     private float _prevSkillLevel = 0f;
 
     public override void UseSkill(CreatureController owner)
@@ -50,6 +49,7 @@ public class ElectircField : ActionSkill
 
         // 쿨타임 끝나고 다시 들어온 경우 활성화
         _electricField.gameObject.SetActive(true);
+        _electricField.OnSkillDamage();
        
         // 지속시간 갱신
         _duration = SkillData.duration;

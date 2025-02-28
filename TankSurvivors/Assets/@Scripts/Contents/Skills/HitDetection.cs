@@ -11,6 +11,7 @@ public class HitDetection : BaseController
     private CreatureController _owner;
     
     Define.eSkillType _skillType;
+    private Coroutine _corOnSkillDamage;
     private float _duration;
     private float _radius;
     private float _checkTime = 0;
@@ -21,7 +22,15 @@ public class HitDetection : BaseController
         _owner = owner;
         _radius = radius;
         _skillType = skillType;
-        _duration = skillData.duration + Time.time;     
+        _duration = skillData.duration + Time.time; 
+    }
+
+    public void OnSkillDamage()
+    {
+        if (_corOnSkillDamage != null)
+            StopCoroutine(_corOnSkillDamage);
+
+        _corOnSkillDamage = StartCoroutine(CorOnSkillDamage());
     }
 
     public void OnUpdateRadius(float radius)
@@ -29,43 +38,56 @@ public class HitDetection : BaseController
         _radius = radius;
     }
 
-    private void Update()
+    private IEnumerator CorOnSkillDamage()
     {
-
-        switch (_skillType)
+        float particleDelay = 0.2f;
+        while (true)
         {
-            case Define.eSkillType.ElectircField:
-                // 초당 데미지 
-                if (_checkTime < Time.time)
-                {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
-
-                    foreach (Collider collider in colliders)
+            switch (_skillType)
+            {
+                case Define.eSkillType.ElectircField:
+                    // 초당 데미지 
+                    if (_checkTime < Time.time)
                     {
-                        MonsterController mon = collider.GetComponent<MonsterController>();
+                        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
 
-                        if (mon != null)
+                        yield return new WaitForSeconds(particleDelay);
+
+                        foreach (Collider collider in colliders)
                         {
-                            float damage = _skillData.damage;
-                            mon.OnDamaged(_owner, damage);     
+                            MonsterController mon = collider.GetComponent<MonsterController>();
+
+                            if (mon != null && mon.IsAlive == true)
+                            {
+                                // 넉백
+                                KnockBack(mon);
+
+                                float damage = _skillData.damage;
+                                mon.OnDamaged(_owner, damage);
+                            }
                         }
+
+                        _checkTime = Time.time + COLLISION_CHECK_INTERVAL;
                     }
-
-                    _checkTime = Time.time + COLLISION_CHECK_INTERVAL;
-                }
-                break;
+                    break;
 
 
-            case Define.eSkillType.Mine:
-                if (_duration < Time.time)
-                {
-                    // duration 동안 몬스터 감지 못한 경우 자동폭발
-                    CreateHitEffect();
-                    Managers.Instance.ObjectManager.Despawn(this);
-                }
-                return;
+                case Define.eSkillType.Mine:
+                    if (_duration < Time.time)
+                    {
+                        // duration 동안 몬스터 감지 못한 경우 자동폭발
+                        CreateHitEffect();
+                        Managers.Instance.ObjectManager.Despawn(this);
+                    }
+                    yield break;
+            }
+
+            yield return null;
         }
     }
+
+
+ 
 
     private void CreateHitEffect()
     { 
@@ -76,21 +98,32 @@ public class HitDetection : BaseController
         effect.transform.position = gameObject.transform.position;
     }
 
+    public void KnockBack(MonsterController mon)
+    {
+        // 몬스터가 향하는 방향의 반대 방향
+        Vector3 knockDir = -(_owner.transform.position - mon.transform.position).normalized;
+        knockDir.y = 0;
+        mon.transform.position += knockDir * Define.KNOCKBACK_FORCE;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other == null)
             return;
 
         MonsterController mon = other.GetComponent<MonsterController>();
-        if (mon == null)
+        if (mon == null || mon.IsAlive == false)
             return;
+       
         float damage = _skillData.damage;
         switch (_skillType)
         {
             case Define.eSkillType.SubTank:
+                // 넉백
+                KnockBack(mon);
                 mon.OnDamaged(_owner, damage);
                 break;
-            case Define.eSkillType.Mine:
+            case Define.eSkillType.Mine:   
                 mon.OnDamaged(_owner, damage);
                 CreateHitEffect();
                 Managers.Instance.ObjectManager.Despawn(this);
