@@ -12,7 +12,7 @@ public class ObjectManager
 
     public HashSet<DropItemGem> Gems { get; } = new HashSet<DropItemGem>();
 
-    public T Spawn<T>(Vector3 spawnPos, int implementID = 0, Vector3 spawnDir = default(Vector3), Vector3 spawnRotation = default(Vector3)) where T : BaseController
+    public T Spawn<T>(Vector3 spawnPos, int implementID = 0, Vector3 spawnDir = default(Vector3), bool bPooling = true) where T : BaseController
     {
         System.Type type = typeof(T);
 
@@ -46,7 +46,7 @@ public class ObjectManager
 
             string monsterPrefabPath = $"EnemyPrefab/{creatrueData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling: true);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling: bPooling);
             go.transform.position = spawnPos;
             go.transform.rotation = Quaternion.identity;
 
@@ -67,7 +67,7 @@ public class ObjectManager
           
             string skillPrefabPath = $"SkillPrefab/{skillData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath, pooling: true);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath, pooling: bPooling);
             go.name = skillData.prefabName;
             go.transform.position = spawnPos;
             go.transform.forward = spawnDir;
@@ -85,7 +85,7 @@ public class ObjectManager
 
             string skillPrefabPath = $"SkillPrefab/{skillData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(skillPrefabPath, pooling: bPooling);
             go.name = skillData.prefabName;
             go.transform.position = spawnPos;
             go.transform.forward = spawnDir;
@@ -100,7 +100,7 @@ public class ObjectManager
 
             string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: bPooling);
 
             go.transform.position = spawnPos+Vector3.up;
 
@@ -122,7 +122,7 @@ public class ObjectManager
 
             string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: bPooling);
 
             go.transform.position = spawnPos + Vector3.up;
 
@@ -141,7 +141,7 @@ public class ObjectManager
 
             string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: bPooling);
 
             go.transform.position = spawnPos + Vector3.up;
 
@@ -158,7 +158,7 @@ public class ObjectManager
 
             string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: bPooling);
 
             go.transform.position = spawnPos + Vector3.up;
 
@@ -175,7 +175,7 @@ public class ObjectManager
 
             string dropItemPrefabPath = $"DropItemPrefab/{dropItemData.prefabName}.prefab";
 
-            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: true);
+            GameObject go = Managers.Instance.ResourceManager.Instantiate(dropItemPrefabPath, pooling: bPooling);
 
             go.transform.position = spawnPos + Vector3.up;
 
@@ -210,6 +210,13 @@ public class ObjectManager
             Managers.Instance.ResourceManager.Destroy(projectile.gameObject);
             return;
         }
+        else if(type == typeof(HitDetection))
+        {
+            HitDetection hitDetection = gameobject as HitDetection;
+
+            Managers.Instance.ResourceManager.Destroy(hitDetection.gameObject);
+            return;
+        }
         else if (type == typeof(DropItemGem))
         {
             DropItemGem gem = gameobject as DropItemGem;
@@ -219,6 +226,7 @@ public class ObjectManager
             GridManager.Instance.Remove(gem);
 
             Managers.Instance.ResourceManager.Destroy(gem.gameObject);
+            return;
         }
         else if (type == typeof(DropItemBomb))
         {
@@ -226,6 +234,7 @@ public class ObjectManager
             
             GridManager.Instance.Remove(bomb);
             Managers.Instance.ResourceManager.Destroy(bomb.gameObject);
+            return;
         }
         else if (type == typeof(DropItemHeart))
         {
@@ -233,6 +242,7 @@ public class ObjectManager
 
             GridManager.Instance.Remove(heart);
             Managers.Instance.ResourceManager.Destroy(heart.gameObject);
+            return;
         }
         else if (type == typeof(DropItemMagnet))
         {
@@ -240,6 +250,7 @@ public class ObjectManager
 
             GridManager.Instance.Remove(magent);
             Managers.Instance.ResourceManager.Destroy(magent.gameObject);
+            return;
         }
         else if(type == typeof(DropItemBox))
         {
@@ -247,8 +258,8 @@ public class ObjectManager
 
             GridManager.Instance.Remove(box);
             Managers.Instance.ResourceManager.Destroy(box.gameObject);
+            return;
         }
-
     }
 
     public void AllKillMonsters()

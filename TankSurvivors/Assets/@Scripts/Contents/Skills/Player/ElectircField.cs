@@ -24,9 +24,9 @@ public class ElectircField : ActionSkill
         // 첫 생성
         if (_electricField == null)
         {
-            _electricField = Managers.Instance.ObjectManager.Spawn<HitDetection>(_owner.transform.position, SkillData.skillId);
+            _electricField = Managers.Instance.ObjectManager.Spawn<HitDetection>(_owner.transform.position, SkillData.skillId, bPooling : false);
 
-            _electricField.SetData(SkillData, _owner, Define.ELECTRIC_FIELD_DETECT_RADIUS);
+            _electricField.SetData(SkillData, _owner, Define.ELECTRIC_FIELD_DETECT_RADIUS, Define.eSkillType.ElectircField);
 
             _electricField.transform.SetParent(_owner.transform);
             _electricField.transform.position += Vector3.up * -0.8f;
@@ -38,7 +38,7 @@ public class ElectircField : ActionSkill
             // 레벨업을 한 경우 반경 수치 업데이트
             if(_prevSkillLevel != CurSkillLevel)
             {
-                 _value += SkillData.value;
+                 _value += SkillData.scaleIncRate;
 
                 _electricField.transform.localScale = new Vector3(1f + _value, 0f, 1f + _value);
 

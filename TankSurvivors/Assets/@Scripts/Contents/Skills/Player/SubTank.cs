@@ -47,11 +47,11 @@ public class SubTank : ActionSkill
             // 존재하지 않은 탱크라면 생성
             if (_subTankList[i] == null)
             {
-                HitDetection subTank = Managers.Instance.ObjectManager.Spawn<HitDetection>(spawnPoint, SkillData.skillId, spawnDir);
+                HitDetection subTank = Managers.Instance.ObjectManager.Spawn<HitDetection>(spawnPoint, SkillData.skillId, spawnDir, false);
 
                 subTank.transform.SetParent(_owner.transform);
 
-                subTank.SetData(SkillData, _owner, Define.SUBTANK_DETECT_RADIUS);
+                subTank.SetData(SkillData, _owner, Define.SUBTANK_DETECT_RADIUS, Define.eSkillType.SubTank);
 
                 _subTankList[i] = subTank;
             }

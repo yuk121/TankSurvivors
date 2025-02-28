@@ -39,6 +39,7 @@ public class PlayerController : CreatureController
     private bool _isPuase = false;
     public bool IsPause { get => _isPuase; set => _isPuase = value; }
     private bool _skillAllStop = false;
+    private bool _basicAttackStop = false;
 
     public override bool Init()
     {
@@ -95,6 +96,10 @@ public class PlayerController : CreatureController
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Managers.Instance.ObjectManager.AllKillMonsters();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            _basicAttackStop = (!_basicAttackStop);
         }
 #endif
     }
@@ -154,6 +159,10 @@ public class PlayerController : CreatureController
                     _tankHead.transform.forward = dir;
                 }
             }
+
+            // 기본공격 잠시 멈춤
+            if (_basicAttackStop == true && i == 0)
+                continue;
 
             // 스킬 사용
             _skillBook.ActionSkillList[i].UseSkill(this);

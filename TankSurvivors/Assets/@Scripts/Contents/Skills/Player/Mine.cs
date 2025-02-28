@@ -4,5 +4,33 @@ using UnityEngine;
 
 public class Mine : ActionSkill
 {
+    private CreatureController _owner = null;
 
+    public override void UseSkill(CreatureController owner)
+    {
+        base.UseSkill(owner);
+        _owner = owner;
+
+        int createCount = SkillData.startCreateCount;
+       
+        for (int i = 0; i < createCount; i++)
+        {
+            // 플레이어 기준으로 지뢰 생성
+            Vector3 spawnPos = Utils.GetPlayerNearCirclePos(_owner.transform.position, 5,10);
+
+            spawnPos.y = 0f;
+            
+            HitDetection mine = Managers.Instance.ObjectManager.Spawn<HitDetection>(spawnPos, SkillData.skillId);
+
+            mine.SetData(SkillData, _owner, Define.MINE_DETECT_RADIUS, Define.eSkillType.Mine);
+        }
+    }
+
+    private void Update()
+    {
+        if (RemainCoolTime > 0)
+        {
+            RemainCoolTime -= Time.deltaTime;
+        }
+    }
 }

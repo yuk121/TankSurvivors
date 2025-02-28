@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 3011469963919986407}
   - component: {fileID: 9170957963805065750}
   - component: {fileID: 6530804518502666957}
+  - component: {fileID: 2457206964908426747}
   m_Layer: 0
   m_Name: Tank_Red
   m_TagString: Untagged
@@ -339,6 +340,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &2457206964908426747
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3503318476722469206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.9
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3745786531496338126
 GameObject:
   m_ObjectHideFlags: 0
