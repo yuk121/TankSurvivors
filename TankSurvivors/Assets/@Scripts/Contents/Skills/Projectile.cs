@@ -53,7 +53,15 @@ public class Projectile : BaseController
                 
                 if(mon != null && mon.IsAlive == true)
                 {
-                    float damage = _skillData.damage;
+                    float damage = _skillData.damage ;
+                  
+                    // 공격력에 추가 스탯 반영
+                    if(_owner is PlayerController)
+                    {
+                        PlayerController player = (PlayerController)_owner;
+                        damage = damage * (1 + player.PlayerBonusStat._bonusAtkRate);
+                    }
+
                     mon.OnDamaged(_owner, damage);
                     //  해당 발사체 풀링
                     Managers.Instance.PoolManager.Push(gameObject);

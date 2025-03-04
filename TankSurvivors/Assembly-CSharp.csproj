@@ -83,6 +83,7 @@
     <Compile Include="Assets\@Scripts\Data\DataTableSupportSkill.cs" />
     <Compile Include="Assets\@Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\@Scripts\Utils\Singleton.cs" />
+    <Compile Include="Assets\@Scripts\UI\UIElement\UIElement_SkillSlot.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableLocalization.cs" />
     <Compile Include="Assets\@Scripts\Managers\ObjectManager.cs" />
     <Compile Include="Assets\@Scripts\Contents\Skills\Player\Mine.cs" />
@@ -117,7 +118,6 @@
     <Compile Include="Assets\@Scripts\Controller\Characters\PlayerController.cs" />
     <Compile Include="Assets\@Scripts\Data\DataTableCreature.cs" />
     <Compile Include="Assets\@Scripts\UI\UIList\UIList_RandomSkills.cs" />
-    <Compile Include="Assets\@Scripts\UI\UIElement\UIElement_SkillSlot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

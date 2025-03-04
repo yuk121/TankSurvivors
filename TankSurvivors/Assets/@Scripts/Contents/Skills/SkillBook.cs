@@ -16,7 +16,6 @@ public class SkillBook : MonoBehaviour
     private ActionSkill _prevUseSkill = null;
     public ActionSkill PrevUseSkill { get => _prevUseSkill; set => _prevUseSkill = value; }
 
-
     public void SetActionSkill(List<int> skillList)
     { 
         for(int i =0; i < skillList.Count; i++) 
@@ -97,7 +96,7 @@ public class SkillBook : MonoBehaviour
 
                 SupportSkillData nextSupportSkillData = Managers.Instance.DataTableManager.DataTableSupportSkill.GetSupportSkillData(nextSkillId);
 
-                supportSkill.SupportSkillData = nextSupportSkillData;             
+                supportSkill.SupportSkillData = nextSupportSkillData;                  
             }
 
             // 변경사항 적용 필요시
@@ -105,7 +104,7 @@ public class SkillBook : MonoBehaviour
         }
     }
 
-    private SkillBase GetSkill(int skillId)
+    public SkillBase GetSkill(int skillId)
     {
        // Action Skill Check
         for(int i =0; i < _actionSkillList.Count; i++)

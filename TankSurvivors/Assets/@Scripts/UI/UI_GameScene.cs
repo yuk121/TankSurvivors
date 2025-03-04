@@ -20,7 +20,7 @@ public class UI_GameScene : UI_Scene
 
     enum eText
     {
-        //Text_Wave,
+        Text_Hp,
         Text_Exp,
         Text_Level,
         Text_Time,
@@ -34,7 +34,7 @@ public class UI_GameScene : UI_Scene
     private Image _imgExp;
     private Image _imgHp;
     // Text Mesh Pro
-    //private TMP_Text _txtWave;
+    private TMP_Text _txtHp;
     private TMP_Text _txtExp;
     private TMP_Text _txtLevel;
     private TMP_Text _txtTime;
@@ -67,7 +67,8 @@ public class UI_GameScene : UI_Scene
 
         _imgExp = GetImage((int)eImage.Image_Exp);
         _imgHp = GetImage((int)eImage.Image_Hp);
-        //_txtWave = GetText((int)eText.Text_Wave);
+
+        _txtHp = GetText((int)eText.Text_Hp);
         _txtExp = GetText((int)eText.Text_Exp);
         _txtLevel = GetText((int)eText.Text_Level);
         _txtTime = GetText((int)eText.Text_Time);
@@ -115,9 +116,11 @@ public class UI_GameScene : UI_Scene
             return;
 
         float curHp = GameManager.Instance.Player.CurHp;
-        float maxHp = GameManager.Instance.Player.CreatureData.maxHp;
+        float maxHp = GameManager.Instance.Player.CurMaxHp;
 
         _imgHp.fillAmount = curHp / maxHp;
+
+        _txtHp.text = $"{(int)curHp} / {(int)maxHp}";
     }
 
     private void OnClick_Pause()

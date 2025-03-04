@@ -43,7 +43,7 @@ public class UI_PlayerHpBar : UI_Base
         }
         else
         {
-            _imgHpBar.fillAmount = _player.CurHp / _player.CreatureData.maxHp;
+            _imgHpBar.fillAmount = _player.CurHp / _player.CurMaxHp;
         }
     }
 

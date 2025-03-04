@@ -37,7 +37,7 @@ public static class Define
 
     public const float MINE_DETECT_RADIUS = 1f;
 
-    public const float KNOCKBACK_FORCE = 0.8f;
+    public const float KNOCKBACK_FORCE = 30f;
 
     public enum eSceneType
     {

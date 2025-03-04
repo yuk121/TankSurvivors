@@ -63,6 +63,13 @@ public class HitDetection : BaseController
                                 KnockBack(mon);
 
                                 float damage = _skillData.damage;
+
+                                if (_owner is PlayerController)
+                                {
+                                    PlayerController player = (PlayerController)_owner;
+                                    damage = damage * (1 + player.PlayerBonusStat._bonusAtkRate);
+                                }
+
                                 mon.OnDamaged(_owner, damage);
                             }
                         }
@@ -70,24 +77,11 @@ public class HitDetection : BaseController
                         _checkTime = Time.time + COLLISION_CHECK_INTERVAL;
                     }
                     break;
-
-
-                case Define.eSkillType.Mine:
-                    if (_duration < Time.time)
-                    {
-                        // duration 동안 몬스터 감지 못한 경우 자동폭발
-                        CreateHitEffect();
-                        Managers.Instance.ObjectManager.Despawn(this);
-                    }
-                    yield break;
             }
 
             yield return null;
         }
     }
-
-
- 
 
     private void CreateHitEffect()
     { 
@@ -103,7 +97,10 @@ public class HitDetection : BaseController
         // 몬스터가 향하는 방향의 반대 방향
         Vector3 knockDir = -(_owner.transform.position - mon.transform.position).normalized;
         knockDir.y = 0;
-        mon.transform.position += knockDir * Define.KNOCKBACK_FORCE;
+
+        Rigidbody rigidbody = mon.GetComponent<Rigidbody>();
+
+        rigidbody.AddForce(knockDir * Define.KNOCKBACK_FORCE, ForceMode.Impulse);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -116,6 +113,13 @@ public class HitDetection : BaseController
             return;
        
         float damage = _skillData.damage;
+        
+        if (_owner is PlayerController)
+        {
+            PlayerController player = (PlayerController)_owner;
+            damage = damage * (1 + player.PlayerBonusStat._bonusAtkRate);
+        }
+
         switch (_skillType)
         {
             case Define.eSkillType.SubTank:

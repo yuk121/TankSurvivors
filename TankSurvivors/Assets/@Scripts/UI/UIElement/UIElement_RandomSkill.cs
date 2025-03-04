@@ -123,8 +123,17 @@ public class UIElement_RandomSkill : UI_Base
     {
         // 선택한 스킬의 id를 통해 스킬 업그레이드
         PlayerController player = GameManager.Instance.Player;
+
         player.SkillUpgrade(_skillId);
         
+        SupportSkill supportSkill = _skill as SupportSkill;
+        if(supportSkill != null && supportSkill.SupportSkillType == Define.eSupportSkillType.MaxHpUp)
+        {
+            // 다음 레벨과 현재 레벨의 증가량 만큼만 회복
+            float incRate = player.GetSupportSkillValueFloatInc(_skillId);
+            player.OnRecovery(incRate);
+        }
+
         Managers.Instance.UIMananger.ClosePopup();
     }
 }

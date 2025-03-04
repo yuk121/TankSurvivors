@@ -17,7 +17,6 @@ public class CreatureController : BaseController
   
     [SerializeField]
     protected float _curHp;
-    public float CurHp { get => _curHp; }
     protected bool _isAlive = true;
     public bool IsAlive { get => _isAlive; }
 
@@ -58,10 +57,35 @@ public class CreatureController : BaseController
         supportSkillList = _skillBook.SupportSKillList;
         return supportSkillList;
     }
+    
+    public SkillBase GetOwnedSkillData(int skillId)
+    {
+        return _skillBook.GetSkill(skillId);
+    }
 
     public void SkillUpgrade(int skillId)
     {
         _skillBook.UpgradeSkill(skillId);
+        SkillUpgradeComplete();
+    }
+
+    // 다음 스킬 레벨과 현재 스킬 레벨간의 float 증가량을 가져오는 메소드
+    public float GetSupportSkillValueFloatInc(int skillId)
+    {
+        float inc = 0f;
+        float curValue = 0f; 
+        float nextValue = 0f;
+
+        SupportSkillData curSkillData = Managers.Instance.DataTableManager.DataTableSupportSkill.GetSupportSkillData(skillId);
+
+        SupportSkillData nextSkillData = Managers.Instance.DataTableManager.DataTableSupportSkill.GetSupportSkillData(skillId+1);
+
+        curValue = curSkillData.value;
+        nextValue = nextSkillData == null ? 0f : nextSkillData.value;
+        
+        inc = nextValue == 0 ? nextValue : nextValue - curValue;
+
+        return inc;
     }
 
     public override void UpdateController()
@@ -74,7 +98,7 @@ public class CreatureController : BaseController
         if (_curHp <= 0)
             return;
 
-        _curHp -= damage;
+        _curHp -= (int)damage;
 
         if(_curHp <= 0)
         {
@@ -85,4 +109,6 @@ public class CreatureController : BaseController
     }
 
     public virtual void OnDead() { }
+    public virtual void SkillUpgradeComplete() { }
+
 }

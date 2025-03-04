@@ -20,7 +20,7 @@ public class Mine : ActionSkill
 
             spawnPos.y = 0f;
             
-            HitDetection mine = Managers.Instance.ObjectManager.Spawn<HitDetection>(spawnPos, SkillData.skillId);
+            HitDetection mine = Managers.Instance.ObjectManager.Spawn<HitDetection>(spawnPos, SkillData.skillId, Vector3.forward);
 
             mine.SetData(SkillData, _owner, Define.MINE_DETECT_RADIUS, Define.eSkillType.Mine);
         }

@@ -45,6 +45,21 @@ public class UIPopup_SkillSelect : UI_Base
         _uiListRandomSkills.SetRandomSkills(GetRandomSkills());
     }
 
+#if UNITY_EDITOR
+    public void Refresh()
+    {
+        _uiListRandomSkills.SetRandomSkills(GetRandomSkills());
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            Refresh();
+        }
+    }
+#endif
+
 
     private List<SkillBase> GetRandomSkills()
     {
