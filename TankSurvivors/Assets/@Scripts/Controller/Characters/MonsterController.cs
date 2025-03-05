@@ -34,8 +34,6 @@ public class MonsterController : CreatureController
     PlayerController _target = null;
     Transform _targetTrans = null;
 
-    float _detectDistance = 1f;
-
     // Attack Idle
     float _lastAttackTime;
 
@@ -202,7 +200,7 @@ public class MonsterController : CreatureController
 
         if (skill == null)
         {
-            Debug.LogError("### Monster Skill is CoolTime !! ");
+            Debug.LogError("### Monster Skill is CoolTime");
             OutSkill();
             InAttackIdle();
             return;
@@ -239,13 +237,14 @@ public class MonsterController : CreatureController
         if (isNear) // 스킬 판정 성공
         {
             // 데미지
-            // TODO : 스킬 데미지 산정 방식 필요
             int stageLevel = GameManager.Instance.GameData.stageInfo.stageLevel;
-            float damage = (float)(stageLevel * 0.1) + _skillBook.PrevUseSkill.SkillData.damage;
+            float damageSkill = _skillBook.PrevUseSkill.SkillData.damage;
+            float damageSkillIncRate = _skillBook.PrevUseSkill.SkillData.damageIncRate;
+            float damageFinal = (float)(stageLevel * damageSkillIncRate) + damageSkill;
 
             // TODO : 사운드 추가
 
-            _target.OnDamaged(this ,damage);
+            _target.OnDamaged(this , damageFinal);
         }
     }
 
@@ -389,9 +388,10 @@ public class MonsterController : CreatureController
         int checkCount = 0;
         // 거리 체크
 
-        //Debug.DrawRay(_trans.position + Vector3.up, _trans.forward *_detectDistance, Color.red);
+        float detectRange = Define.ENEMY_DETECT_RANGE;
+        Debug.DrawRay(_trans.position + Vector3.up, _trans.forward * detectRange, Color.red);
         RaycastHit rayHit = new RaycastHit();
-        bool isNear = Physics.Raycast(_trans.position + Vector3.up, _trans.forward, out rayHit, _detectDistance, 1 << LayerMask.NameToLayer("Player"));
+        bool isNear = Physics.Raycast(_trans.position + Vector3.up, _trans.forward, out rayHit, detectRange, 1 << LayerMask.NameToLayer("Player"));
 
         if(isNear)
           checkCount++;

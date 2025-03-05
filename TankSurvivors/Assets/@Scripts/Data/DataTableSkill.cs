@@ -50,7 +50,7 @@ public class DataTableSkill
             skillData.prefabName = loader.GetString("PrefabName", i);
             skillData.coolTime = loader.GetFloat("CoolTime", i);
             skillData.damage = loader.GetFloat("Damage", i);
-            skillData.damageIncRate = loader.GetFloat("DamgaIncRate", i);
+            skillData.damageIncRate = loader.GetFloat("DamageIncRate", i);
             skillData.duration = loader.GetFloat("Duration", i);
             skillData.projectileSpeed = loader.GetFloat("ProjectileSpeed", i);
             skillData.scaleIncRate = loader.GetFloat("ScaleIncRate", i);

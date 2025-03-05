@@ -48,7 +48,7 @@ public class GameManager : FSM<eGameManagerState>
 
     private PlayerController _player;
     public PlayerController Player { get => _player; }
-   
+
     [SerializeField]
     private bool _bPause;
     public bool Pause { get => _bPause; }
@@ -83,17 +83,17 @@ public class GameManager : FSM<eGameManagerState>
         AddState(eGameManagerState.Pause, InPause, ModifyPause, OutPause);
         AddState(eGameManagerState.Result, InResult, ModifyResult, null);
 
-        string curSceneName = SceneManager.GetActiveScene().name; 
-        
-        if(curSceneName.Equals(eGameManagerState.Title.ToString()))
+        string curSceneName = SceneManager.GetActiveScene().name;
+
+        if (curSceneName.Equals(eGameManagerState.Title.ToString()))
         {
             MoveState(eGameManagerState.Title);
         }
-        else if(curSceneName.Equals(eGameManagerState.Lobby.ToString()))
+        else if (curSceneName.Equals(eGameManagerState.Lobby.ToString()))
         {
             MoveState(eGameManagerState.Lobby);
         }
-        else if(curSceneName.Equals(eGameManagerState.Game.ToString()))
+        else if (curSceneName.Equals(eGameManagerState.Game.ToString()))
         {
             MoveState(eGameManagerState.Game);
         }
@@ -150,14 +150,14 @@ public class GameManager : FSM<eGameManagerState>
     private void ModifyGame()
     {
         // 플레이어 사망시 Result 
-        if(CheckPlayerAlive() == false)
+        if (CheckPlayerAlive() == false)
         {
             MoveState(eGameManagerState.Result);
             return;
         }
 
         // Pause가 된 경우
-        if(_bPause == true)
+        if (_bPause == true)
         {
             MoveState(eGameManagerState.Pause);
             return;
@@ -177,64 +177,64 @@ public class GameManager : FSM<eGameManagerState>
     {
         DropItemData dropItemData = new DropItemData();
         WaveData wave = GameData.waveInfo;
-
-        float rand = Random.Range(0.0f, 1.0f);
-
-        // 아이템을 줄지 Gem을 줄 지 결정
-        if (rand <= wave.dropItemRate)
+   
+        switch (monsterGrade)
         {
-            // 아이템을 주는 경우
-            switch (monsterGrade)
-            {
-                case Define.eMonsterGrade.Normal:
+            case Define.eMonsterGrade.Normal:
+                
+                // 아이템을 줄지 Gem을 줄 지 결정
+                List<DropItemData> dropItemDataList = new List<DropItemData>();
+                int randIndex = 0;
+                float rand = Random.Range(0.0f, 1.0f);
+
+                // 아이템을 주는 경우
+                if (rand <= wave.dropItemRate)
+                {
                     // 드랍 아이템 목록 읽어오기
-                    List<DropItemData> dropItemDataList = new List<DropItemData>();
                     for (int i = 0; i < wave.normalDropId.Count; i++)
                     {
                         dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(wave.normalDropId[i]);
                         dropItemDataList.Add(dropItemData);
                     }
                     // 드랍 아이템 목록중 하나만 준다.
-                    int randIndex = Random.Range(0, dropItemDataList.Count);
-
+                    randIndex = Random.Range(0, dropItemDataList.Count);
                     return dropItemDataList[randIndex];
+                }
+                else
+                {
+                    // Gem 드랍
+                    float redGemRate = wave.redGemDropRate;
+                    float greenGemRate = redGemRate + wave.greenGemDropRate;
+                    float blueGemRate = greenGemRate + wave.blueGemDropRate;
+                    float purpleGemRate = blueGemRate + wave.purpleGemDropRate;
 
-                case Define.eMonsterGrade.Elite:
-                    // 엘리트 몬스터는 드랍 아이템이 하나뿐
-                    dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(wave.eliteDropId);
+                    rand = Random.Range(0.0f, 1.0f);
+
+                    if (rand <= redGemRate)
+                    {
+                        dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.RedGem);
+                    }
+                    else if (rand <= greenGemRate)
+                    {
+                        dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.GreenGem);
+                    }
+                    else if (rand <= blueGemRate)
+                    {
+                        dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.BlueGem);
+                    }
+                    else if (rand <= purpleGemRate)
+                    {
+                        dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.PurpleGem);
+                    }
+
                     return dropItemData;
-            }
+                }
+
+            case Define.eMonsterGrade.Elite:
+                // 엘리트 몬스터는 드랍 아이템이 하나뿐
+                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData(wave.eliteDropId);
+                return dropItemData;
         }
-        else
-        {
-            // Gem 드랍
-            float redGemRate = wave.redGemDropRate;
-            float greenGemRate = redGemRate + wave.greenGemDropRate;
-            float blueGemRate = greenGemRate + wave.blueGemDropRate;
-            float purpleGemRate = blueGemRate + wave.purpleGemDropRate;
-
-            rand = Random.Range(0.0f, 1.0f);
-
-            if (rand <= redGemRate)
-            {
-                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.RedGem);
-            }
-            else if (rand <= greenGemRate)
-            {
-                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.GreenGem);
-            }
-            else if (rand <= blueGemRate)
-            {
-                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.BlueGem);
-            }
-            else if (rand <= purpleGemRate)
-            {
-                dropItemData = Managers.Instance.DataTableManager.DataTableDropItem.GetDropItemData((int)Define.eGemType.PurpleGem);
-            }
-
-            return dropItemData;
-        }
-
         return null;
     }
     #endregion

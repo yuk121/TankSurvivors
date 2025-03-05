@@ -62,15 +62,17 @@ public class HitDetection : BaseController
                                 // ³Ë¹é
                                 KnockBack(mon);
 
-                                float damage = _skillData.damage;
+                                float damageBasic = _owner.CreatureData.atk;
+                                float damageSkill = _skillData.damage;
+                                float damageFinal = damageBasic + damageSkill;
 
                                 if (_owner is PlayerController)
                                 {
                                     PlayerController player = (PlayerController)_owner;
-                                    damage = damage * (1 + player.PlayerBonusStat._bonusAtkRate);
+                                    damageFinal = damageFinal * (1 + player.PlayerBonusStat._bonusAtkRate);
                                 }
 
-                                mon.OnDamaged(_owner, damage);
+                                mon.OnDamaged(_owner, damageFinal);
                             }
                         }
 
@@ -111,13 +113,15 @@ public class HitDetection : BaseController
         MonsterController mon = other.GetComponent<MonsterController>();
         if (mon == null || mon.IsAlive == false)
             return;
-       
-        float damage = _skillData.damage;
-        
+
+        float damageBasic = _owner.CreatureData.atk;
+        float damageSkill = _skillData.damage;
+        float damageFinal = damageBasic + damageSkill;
+
         if (_owner is PlayerController)
         {
             PlayerController player = (PlayerController)_owner;
-            damage = damage * (1 + player.PlayerBonusStat._bonusAtkRate);
+            damageFinal = damageFinal * (1 + player.PlayerBonusStat._bonusAtkRate);
         }
 
         switch (_skillType)
@@ -125,10 +129,10 @@ public class HitDetection : BaseController
             case Define.eSkillType.SubTank:
                 // ³Ë¹é
                 KnockBack(mon);
-                mon.OnDamaged(_owner, damage);
+                mon.OnDamaged(_owner, damageFinal);
                 break;
             case Define.eSkillType.Mine:   
-                mon.OnDamaged(_owner, damage);
+                mon.OnDamaged(_owner, damageFinal);
                 CreateHitEffect();
                 Managers.Instance.ObjectManager.Despawn(this);
                 break;

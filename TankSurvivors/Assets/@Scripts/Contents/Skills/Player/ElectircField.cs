@@ -23,7 +23,7 @@ public class ElectircField : ActionSkill
         // Ã¹ »ý¼º
         if (_electricField == null)
         {
-            _electricField = Managers.Instance.ObjectManager.Spawn<HitDetection>(_owner.transform.position, SkillData.skillId, bPooling : false);
+            _electricField = Managers.Instance.ObjectManager.Spawn<HitDetection>(_owner.transform.position, SkillData.skillId, Vector3.forward ,false);
 
             _electricField.SetData(SkillData, _owner, Define.ELECTRIC_FIELD_DETECT_RADIUS, Define.eSkillType.ElectircField);
 

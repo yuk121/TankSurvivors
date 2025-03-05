@@ -181,6 +181,7 @@ public class ObjectManager
 
             DropItemBox box = Utils.GetOrAddComponent<DropItemBox>(go);
             box.Init();
+            box.SetData(dropItemData);
             GridManager.Instance.Add(box);
         }
 

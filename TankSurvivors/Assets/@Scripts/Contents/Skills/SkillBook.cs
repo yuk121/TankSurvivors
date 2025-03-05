@@ -39,6 +39,10 @@ public class SkillBook : MonoBehaviour
 
                 _actionSkillList.Add(skill);
             }
+            else
+            {
+                Debug.LogError("### Monster Skill Script is Null");
+            }
         }
     }
 

@@ -6,7 +6,7 @@ public class SpawningPools : MonoBehaviour
 {
     private Coroutine _corSpawn = null;
 
-    public bool SpawnStop { get; set; } = false;
+    public bool _spawnStop = false;
     private float _gameTimeMin = 0f;
 
     public void StartSpawn()
@@ -19,6 +19,22 @@ public class SpawningPools : MonoBehaviour
         _corSpawn = StartCoroutine(SpawnCreatureCor());
     }
 
+#if UNITY_EDITOR
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            _spawnStop = !_spawnStop;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
+            Managers.Instance.ObjectManager.Spawn<MonsterController>(spawnPos, 20001);
+        }
+#endif
+    }
+#endif
 
     IEnumerator SpawnCreatureCor()
     {     
@@ -30,8 +46,9 @@ public class SpawningPools : MonoBehaviour
         
         int spawnMonsterId = -1;       
         int onceSpawnCount = waveInfo.onceSpawnCount;
+        int EliteSpawnIndex = 0;
 
-        while (true)
+        while (true && !_spawnStop)
         {
             _gameTimeMin = GameManager.Instance.GameData.curTime / 60f;
 
@@ -68,16 +85,16 @@ public class SpawningPools : MonoBehaviour
             else  // 보스 소환시 더 이상 소환하지 않는다.
             {
                 // 엘리트 소환
-                for (int i = 0; i < waveInfo.spawnEliteTime.Count; i++)
-                {
-                    // 특정 시간을 넘으면 엘리트 몬스터 소환
-                    if (_gameTimeMin >= waveInfo.spawnEliteTime[i])
-                    {
-                        Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
+                // 특정 시간을 넘으면 엘리트 몬스터 소환
 
-                        spawnMonsterId = waveInfo.spawnEliteId[i];
-                        Managers.Instance.ObjectManager.Spawn<MonsterController>(spawnPos, spawnMonsterId);
-                    }
+                if (EliteSpawnIndex < waveInfo.spawnEliteId.Count && _gameTimeMin >= waveInfo.spawnEliteTime[EliteSpawnIndex])
+                {
+                    Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
+
+                    spawnMonsterId = waveInfo.spawnEliteId[EliteSpawnIndex];
+                    Managers.Instance.ObjectManager.Spawn<MonsterController>(spawnPos, spawnMonsterId);
+
+                    EliteSpawnIndex++;
                 }
 
                 // 일반 몬스터를 주기적으로 소환

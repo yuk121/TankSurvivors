@@ -87,7 +87,7 @@ public class UIPopup_SkillSelect : UI_Base
             }
         }
 
-        int RandomSkillCount = Mathf.Min(skillList.Count, Define.MAX_SKILL_SELECT_COUNT);
+        int randomSkillCount = Mathf.Min(skillList.Count, Define.MAX_SKILL_SELECT_COUNT);
         
         if(GameManager.Instance.GameData != null && GameManager.Instance.GameData.firstLevelUp == false) 
         {
@@ -96,7 +96,7 @@ public class UIPopup_SkillSelect : UI_Base
             skillList.RemoveAt(0);
         }
 
-        while(skillRandomList.Count < RandomSkillCount)
+        while(skillRandomList.Count < randomSkillCount)
         {
             int rand = Random.Range(0, skillList.Count);
 

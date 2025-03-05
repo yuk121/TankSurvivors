@@ -39,6 +39,9 @@ public static class Define
 
     public const float KNOCKBACK_FORCE = 30f;
 
+    // Enemy
+    public const float ENEMY_DETECT_RANGE = 1.5f;
+
     public enum eSceneType
     {
         Cs,

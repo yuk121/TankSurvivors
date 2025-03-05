@@ -136,4 +136,9 @@ public class UIElement_RandomSkill : UI_Base
 
         Managers.Instance.UIMananger.ClosePopup();
     }
+
+    public void RemoveButtonEventAll()
+    {
+        _btnRandomSkill.onClick.RemoveAllListeners();
+    }
 }
