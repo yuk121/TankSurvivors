@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.VisualScripting;
+
 public class UIPopup_SkillGet : UI_Base
 {
     #region Enum_UI
     private enum eGameObject
     {
-        UIElement_RandomSkill
+        UIList_RandomSkills
     }
 
     private enum eButton
@@ -23,7 +25,7 @@ public class UIPopup_SkillGet : UI_Base
 
     #endregion
 
-    private GameObject _randomSkillPrefab = null;
+    private UIList_RandomSkills _uiListRandomSkills = null;
     private Button _btnTouchToClose = null;
     private Image _imgBackLight = null;
     private Transform _trans = null;
@@ -32,9 +34,9 @@ public class UIPopup_SkillGet : UI_Base
     private int _getSkillCountMax = 1;   // 필요 시 조절 가능하도록 할 것
     public override bool Init()
     {
-        if(_init == false)
+        if(base.Init() == false)
         {
-            base.Init();
+            return false;
         }
 
         _trans = transform;
@@ -45,12 +47,11 @@ public class UIPopup_SkillGet : UI_Base
         BindImage(typeof(eImage));
 
         // Get
-        _randomSkillPrefab = GetObject((int)eGameObject.UIElement_RandomSkill);
+        _uiListRandomSkills = GetObject((int)eGameObject.UIList_RandomSkills).GetComponent<UIList_RandomSkills>();
         _btnTouchToClose = GetButton((int)eButton.Button_TouchToClose);
         _imgBackLight = GetImage((int)eImage.Image_BackLight);
 
         //
-        _randomSkillPrefab.SetActive(false);
         _btnTouchToClose.onClick.AddListener(OnClick_TouchToClose);
         return true;
     }
@@ -67,12 +68,10 @@ public class UIPopup_SkillGet : UI_Base
         // 획득 스킬 이미지 보여주기
         List<SkillBase> _randomSkillList = GetRandomSkill();
 
-        for (int i = 0; i < _randomSkillList.Count; i++)
-        {
-            UIElement_RandomSkill skill = Managers.Instance.UIMananger.InstantiateUI<UIElement_RandomSkill>(_trans);
-            skill.SetRandomSkill(_randomSkillList[i]);
-            skill.RemoveButtonEventAll();
-        }
+        _uiListRandomSkills.SetRandomSkills(_randomSkillList);
+        
+        // 버튼 이벤트 제거
+        _uiListRandomSkills.RemoveButtonEvenetAllSkills();
 
         // 획득 스킬 업그레이드
         UpgradeSkill(_randomSkillList);
@@ -159,5 +158,11 @@ public class UIPopup_SkillGet : UI_Base
     private void OnClick_TouchToClose()
     {
         Managers.Instance.UIMananger.ClosePopup();
+    }
+
+    private void OnDisable()
+    {
+        if (_imgBackLight != null)
+            _imgBackLight.transform.DOKill();
     }
 }

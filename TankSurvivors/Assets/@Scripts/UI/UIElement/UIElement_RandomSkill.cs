@@ -139,6 +139,7 @@ public class UIElement_RandomSkill : UI_Base
 
     public void RemoveButtonEventAll()
     {
-        _btnRandomSkill.onClick.RemoveAllListeners();
+        if (_btnRandomSkill != null)
+            _btnRandomSkill.onClick.RemoveAllListeners();
     }
 }

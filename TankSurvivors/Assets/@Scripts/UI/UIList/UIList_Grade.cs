@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening; 
 
 public class UIList_Grade : UI_Base
 {
     #region Enum_UI
-    enum eGameObject
+    enum eImage
     {
         Image_Grade1,
         Image_Grade2,
@@ -16,7 +17,9 @@ public class UIList_Grade : UI_Base
     }
     #endregion
 
-    List<GameObject> _objectGradeList = new List<GameObject>();
+    private int _skillLevel = 0;
+
+    List<Image> _objectGradeList = new List<Image>();
     public override bool Init()
     {
         if (base.Init() == false)
@@ -25,18 +28,18 @@ public class UIList_Grade : UI_Base
         }
 
         // Bind
-        BindOjbect(typeof(eGameObject));
+        BindImage(typeof(eImage));
 
         // Get
         for(int i =0; i < Define.MAX_SKILL_LEVEL; i++)
         {
-            eGameObject gradeEnum = (eGameObject)(i);
-            _objectGradeList.Add(GetObject((int)gradeEnum));
+            eImage gradeEnum = (eImage)(i);
+            _objectGradeList.Add(GetImage((int)gradeEnum));
         }
 
         for(int i =0; i < _objectGradeList.Count; i++)
         {
-            _objectGradeList[i].SetActive(false);
+            _objectGradeList[i].gameObject.SetActive(false);
         }
 
         return true;
@@ -49,9 +52,24 @@ public class UIList_Grade : UI_Base
             Init();
         }
 
-        for(int i = 0; i < skillLevel; i++)
+        _skillLevel = skillLevel;
+
+        for (int i = 0; i < _skillLevel; i++)
         {
-            _objectGradeList[i].SetActive(true);
+            _objectGradeList[i].gameObject.SetActive(true);
         }
+
+        // 다음 레벨 보여줌
+        if (skillLevel < Define.MAX_SKILL_LEVEL)
+        {
+            _objectGradeList[_skillLevel].gameObject.SetActive(true);
+            _objectGradeList[_skillLevel].GetComponent<Image>().DOFade(0f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_objectGradeList.Count > 0)
+            _objectGradeList[_skillLevel].DOKill();
     }
 }

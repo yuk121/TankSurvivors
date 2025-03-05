@@ -68,4 +68,12 @@ public class UIList_RandomSkills : UI_Base
             _randomSkillList[i].SetRandomSkill(skillList[i]);
         }
     }
+
+    public void RemoveButtonEvenetAllSkills()
+    {
+        for (int i = 0; i < _randomSkillList.Count; i++)
+        {
+            _randomSkillList[i].RemoveButtonEventAll();
+        }
+    }
 }
