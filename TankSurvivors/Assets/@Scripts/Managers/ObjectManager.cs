@@ -267,7 +267,20 @@ public class ObjectManager
     {
         foreach (MonsterController monster in Monsters.ToList())
         {
+            // ¿¤¸®Æ®³ª º¸½º´Â ÆøÅº¿¡¼­ Á¦¿Ü
+            if (monster.Grade == Define.eMonsterGrade.Normal)
+            { 
+                monster.OnDead();
+            }
+        }
+    }
+#if UNITY_EDITOR
+    public void CheatAllKillMonsters()
+    {
+        foreach (MonsterController monster in Monsters.ToList())
+        {
             monster.OnDead();
         }
     }
+#endif
 }

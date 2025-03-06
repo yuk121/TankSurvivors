@@ -37,7 +37,7 @@ public static class Define
 
     public const float MINE_DETECT_RADIUS = 1f;
 
-    public const float KNOCKBACK_FORCE = 30f;
+    public const float KNOCKBACK_FORCE = 3f;
 
     // Enemy
     public const float ENEMY_DETECT_RANGE = 1.5f;

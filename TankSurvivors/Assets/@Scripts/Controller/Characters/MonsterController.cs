@@ -19,6 +19,7 @@ public class MonsterController : CreatureController
     Define.eMonsterFSMState _prevState = Define.eMonsterFSMState.None;
 
     Define.eMonsterGrade _grade = Define.eMonsterGrade.Normal;
+    public Define.eMonsterGrade Grade { get => _grade; }
 
     Transform _trans = null;
     Rigidbody _rb = null;

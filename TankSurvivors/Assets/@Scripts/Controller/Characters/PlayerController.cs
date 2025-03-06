@@ -173,7 +173,7 @@ public class PlayerController : CreatureController
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Managers.Instance.ObjectManager.AllKillMonsters();
+            Managers.Instance.ObjectManager.CheatAllKillMonsters();
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
