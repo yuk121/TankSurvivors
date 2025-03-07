@@ -38,7 +38,7 @@ public class UIPopup_Pause : UI_Base
         }
 
         // Bind
-        BindOjbect(typeof(eGameObject));
+        BindObject(typeof(eGameObject));
         BindButton(typeof(eButton));    
         BindSlider(typeof(eSlider));
 

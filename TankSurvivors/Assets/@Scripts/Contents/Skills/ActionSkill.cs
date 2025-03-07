@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ActionSkill : MonoBehaviour, SkillBase
 {
+    // Creature
+    protected CreatureController _owner = null;
+
     // Skill
     private SkillData _skillData = new SkillData();
     public SkillData SkillData { get => _skillData; set => _skillData = value; }
@@ -14,6 +17,7 @@ public class ActionSkill : MonoBehaviour, SkillBase
     public float RemainCoolTime { get => _remainCoolTime; set => _remainCoolTime = value; }
     public int CurSkillLevel { get; set; } = 0;
     public int Index { get; set; } = 0;
+
 
     public void StartCoolTime()
     {
@@ -27,6 +31,7 @@ public class ActionSkill : MonoBehaviour, SkillBase
 
     public virtual void UseSkill(CreatureController owner)
     {
+        _owner = owner;
         // 스킬 사용했으니 쿨타임 적용
         StartCoolTime();
     }

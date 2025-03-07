@@ -25,9 +25,9 @@ public class UIList_RandomSkills : UI_Base
         }
 
         _trans = transform;
-        
+
         // Bind
-        BindOjbect(typeof(eGameObject));
+        BindObject(typeof(eGameObject));
 
         // Get
         _uiElementRandomSkillPrefab = GetObject((int)eGameObject.UIElement_RandomSkill);

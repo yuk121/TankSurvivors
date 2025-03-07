@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ZombieAttack01 : ActionSkill
 {
+    public override void UseSkill(CreatureController owner)
+    {
+        base.UseSkill(owner);
+    }
+
     private void Update()
     {
         if (RemainCoolTime > 0)

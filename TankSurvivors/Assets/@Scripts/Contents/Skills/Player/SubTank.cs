@@ -6,7 +6,6 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class SubTank : ActionSkill
 {
     List<HitDetection> _subTankList = new List<HitDetection>();
-    CreatureController _owner = null;
     [SerializeField]
     float _rotationSpeed = 200f;
     float _angle = 0f;
@@ -14,7 +13,6 @@ public class SubTank : ActionSkill
     public override void UseSkill(CreatureController owner)
     {
         base.UseSkill(owner);
-        _owner = owner;
 
         UpdateSubTank();
     }
@@ -51,7 +49,7 @@ public class SubTank : ActionSkill
 
                 subTank.transform.SetParent(_owner.transform);
 
-                subTank.SetData(SkillData, _owner, Define.SUBTANK_DETECT_RADIUS, Define.eSkillType.SubTank);
+                subTank.SetData(SkillData, _owner, SkillData.attackRange, Define.eSkillType.SubTank);
 
                 _subTankList[i] = subTank;
             }

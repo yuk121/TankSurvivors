@@ -7,6 +7,11 @@ using TMPro;
 public class UI_GameScene : UI_Scene
 {
     #region UI Enum
+    enum eGameObject
+    {
+        UI_HpBoss
+    }
+
     enum eButton
     {
         Button_Puase
@@ -15,7 +20,8 @@ public class UI_GameScene : UI_Scene
     enum eImage
     {
         Image_Exp,
-        Image_Hp
+        Image_Hp,
+        Image_HpBoss
     }
 
     enum eText
@@ -28,11 +34,14 @@ public class UI_GameScene : UI_Scene
     }
     #endregion
 
+    // GameObject
+    private GameObject _uiHpBoss;
     // Button
     private Button _btnPause;
     // Image
     private Image _imgExp;
     private Image _imgHp;
+    private Image _imgHpBoss;
     // Text Mesh Pro
     private TMP_Text _txtHp;
     private TMP_Text _txtExp;
@@ -58,15 +67,19 @@ public class UI_GameScene : UI_Scene
         Managers.Instance.UIMananger.SetSceneInfo(this);
 
         // Bind
+        BindObject(typeof(eGameObject));
         BindButton(typeof(eButton));
         BindText(typeof(eText));    
         BindImage(typeof(eImage));
 
         // Get
+        _uiHpBoss = GetObject((int)eGameObject.UI_HpBoss);
+
         _btnPause = GetButton((int)eButton.Button_Puase);
 
         _imgExp = GetImage((int)eImage.Image_Exp);
         _imgHp = GetImage((int)eImage.Image_Hp);
+        _imgHpBoss = GetImage((int)eImage.Image_HpBoss);
 
         _txtHp = GetText((int)eText.Text_Hp);
         _txtExp = GetText((int)eText.Text_Exp);
@@ -76,7 +89,9 @@ public class UI_GameScene : UI_Scene
 
         // Event
         _btnPause.onClick.AddListener(OnClick_Pause);
-       
+
+        //
+        _uiHpBoss.SetActive(false);
         return true;
     }
 
@@ -128,6 +143,18 @@ public class UI_GameScene : UI_Scene
        UIPopup_Pause popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_Pause>(true);
     }
 
+    private void SetHpBossUI()
+    {
+        MonsterController boss = Managers.Instance.ObjectManager.GetBoss();
+
+        if (boss == null)
+            return;
+
+        _uiHpBoss.SetActive(true);
+        _imgHpBoss.fillAmount = (float)boss.CurHp / boss.CreatureData.maxHp;
+    }
+
+
     private void Update()
     {
         if(GameManager.Instance != null)
@@ -136,6 +163,7 @@ public class UI_GameScene : UI_Scene
             SetKillCount();
             SetLevel();
             SetHp();
+            SetHpBossUI();
         }
     }
 }

@@ -47,7 +47,7 @@ public class ObjectManager
             string monsterPrefabPath = $"EnemyPrefab/{creatrueData.prefabName}.prefab";
 
             GameObject go = Managers.Instance.ResourceManager.Instantiate(monsterPrefabPath, pooling: bPooling);
-            go.transform.position = spawnPos;
+            go.transform.position = new Vector3(spawnPos.x, go.transform.position.y, spawnPos.z);
             go.transform.rotation = Quaternion.identity;
 
             MonsterController mon = Utils.GetOrAddComponent<MonsterController>(go);
@@ -261,6 +261,18 @@ public class ObjectManager
             Managers.Instance.ResourceManager.Destroy(box.gameObject);
             return;
         }
+    }
+
+    public MonsterController GetBoss()
+    {
+        foreach(var mon in Monsters)
+        {
+            if(mon.Grade == Define.eMonsterGrade.Boss)
+            {
+                return mon;
+            }
+        }
+        return null;
     }
 
     public void AllKillMonsters()

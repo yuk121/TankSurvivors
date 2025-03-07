@@ -25,7 +25,7 @@ public class UIElement_SkillSlot : UI_Base
         }
 
         //Bind
-        BindOjbect(typeof(eGameObject));
+        BindObject(typeof(eGameObject));
         BindImage(typeof(eImage));  
 
         // Get

@@ -90,8 +90,6 @@ public class PlayerController : CreatureController
         }
     }
 
-    public float CurHp { get { return _curHp; } }
-
     public int CurExp { get; set; } = 0;
     public int CurLevel { get; set; } = 1;
 

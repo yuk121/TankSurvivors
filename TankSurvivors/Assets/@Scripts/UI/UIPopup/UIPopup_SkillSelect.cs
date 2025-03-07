@@ -23,7 +23,7 @@ public class UIPopup_SkillSelect : UI_Base
             return false;
         }
         // Bind
-        BindOjbect(typeof(eGameObject));
+        BindObject(typeof(eGameObject));
 
         // Get
         _uiListOwnedSkills = GetObject((int)eGameObject.UIList_OwnedSkills).GetComponent<UIList_OwnedSkills>();

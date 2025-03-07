@@ -50,7 +50,7 @@ public class UIElement_RandomSkill : UI_Base
         }
 
         // Bind 
-        BindOjbect(typeof(eGameObject));
+        BindObject(typeof(eGameObject));
         BindButton(typeof(eButton));
         BindText(typeof(eText));
         BindImage(typeof(eImage));

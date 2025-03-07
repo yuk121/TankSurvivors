@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ElectircField : ActionSkill
 {
-    private CreatureController _owner = null;
     private HitDetection _electricField = null;
     private float _value = 0f;
     private float _duration = 0f;
@@ -13,7 +12,6 @@ public class ElectircField : ActionSkill
     public override void UseSkill(CreatureController owner)
     {
         base.UseSkill(owner);
-        _owner = owner;
         
         UpdateElectricField();
     }
@@ -25,7 +23,7 @@ public class ElectircField : ActionSkill
         {
             _electricField = Managers.Instance.ObjectManager.Spawn<HitDetection>(_owner.transform.position, SkillData.skillId, Vector3.forward ,false);
 
-            _electricField.SetData(SkillData, _owner, Define.ELECTRIC_FIELD_DETECT_RADIUS, Define.eSkillType.ElectircField);
+            _electricField.SetData(SkillData, _owner, SkillData.attackRange, Define.eSkillType.ElectircField);
 
             _electricField.transform.SetParent(_owner.transform);
             _electricField.transform.position += Vector3.up * -0.8f;
@@ -41,7 +39,7 @@ public class ElectircField : ActionSkill
 
                 _electricField.transform.localScale = new Vector3(1f + _value, 0f, 1f + _value);
 
-                float incRadius = Define.ELECTRIC_FIELD_DETECT_RADIUS + (Define.ELECTRIC_FIELD_RADIUS_INC_RATE * (CurSkillLevel-1));
+                float incRadius = SkillData.attackRange + (Define.ELECTRIC_FIELD_RADIUS_INC_RATE * (CurSkillLevel-1));
                 
                 _electricField.OnUpdateRadius(incRadius);
             }

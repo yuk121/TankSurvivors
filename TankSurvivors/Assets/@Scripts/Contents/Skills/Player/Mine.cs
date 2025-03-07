@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Mine : ActionSkill
 {
-    private CreatureController _owner = null;
-
     public override void UseSkill(CreatureController owner)
     {
         base.UseSkill(owner);
-        _owner = owner;
 
         int createCount = SkillData.startCreateCount;
        
@@ -22,7 +19,7 @@ public class Mine : ActionSkill
             
             HitDetection mine = Managers.Instance.ObjectManager.Spawn<HitDetection>(spawnPos, SkillData.skillId, Vector3.forward);
 
-            mine.SetData(SkillData, _owner, Define.MINE_DETECT_RADIUS, Define.eSkillType.Mine);
+            mine.SetData(SkillData, _owner, SkillData.attackRange, Define.eSkillType.Mine);
         }
     }
 

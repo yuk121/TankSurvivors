@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ZombieAttack02 : ActionSkill
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void UseSkill(CreatureController owner)
     {
-
+        base.UseSkill(owner);
     }
 
     // Update is called once per frame

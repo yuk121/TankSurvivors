@@ -11,6 +11,8 @@ public class SkillData
     public float coolTime;                  // 스킬 쿨타임
     public float damage;                    // 데미지  
     public float damageIncRate;          // 데미지 증가량
+    public float detectRange;              // 스킬 발동 탐지 범위
+    public float attackRange;               // 스킬 공격 범위
     public float duration;                   // 지속 시간
     public float projectileSpeed;           // 발사체 속도
     public float scaleIncRate;              // 크기 증가량
@@ -51,6 +53,8 @@ public class DataTableSkill
             skillData.coolTime = loader.GetFloat("CoolTime", i);
             skillData.damage = loader.GetFloat("Damage", i);
             skillData.damageIncRate = loader.GetFloat("DamageIncRate", i);
+            skillData.detectRange = loader.GetFloat("DetectRange", i);
+            skillData.attackRange = loader.GetFloat("AttackRange", i);
             skillData.duration = loader.GetFloat("Duration", i);
             skillData.projectileSpeed = loader.GetFloat("ProjectileSpeed", i);
             skillData.scaleIncRate = loader.GetFloat("ScaleIncRate", i);

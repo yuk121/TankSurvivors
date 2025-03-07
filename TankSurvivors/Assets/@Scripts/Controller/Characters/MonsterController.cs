@@ -28,7 +28,6 @@ public class MonsterController : CreatureController
     // Monster Info
     readonly float CHECK_DELAY = 0.5f;
     float _checkTime = 0f;
-    float _viewAngle = 60;
     bool _isChaseInit = true;
 
     // Player Info
@@ -144,10 +143,7 @@ public class MonsterController : CreatureController
             return;
 
         if (_target == null || _target.CheckAlive() == false)
-        {
-            // TODO : Puase 상태로 보내기
             return;
-        }
 
         // 첫 추적인 경우 또는 일정 시간마다 타겟이 근처에 있는지 확인
         if (_isChaseInit == true || Time.time > _checkTime)
@@ -155,13 +151,17 @@ public class MonsterController : CreatureController
             if(_isChaseInit == true)
             {
                 _isChaseInit = false;
-            }    
-         
-            _isTargetNear = CheckPlayerNear();
+            }
+
+            // 쿨타임이 끝난 스킬의 발동 범위 안에 존재하는지 확인
+            ActionSkill skill = _skillBook.GetCoolTimeEndSkill();
+
+            // 스킬 발동 거리 체크
+            _isTargetNear = CheckSkillRangePlayer(skill.SkillData.detectRange);
             _checkTime = Time.time + CHECK_DELAY;
         }
 
-        // 타겟이 근처에 있는 경우
+        // 스킬 발동 범위에 플레이어가 있는 경우
         if (_isTargetNear)
         {
             // 스킬 사용
@@ -207,11 +207,10 @@ public class MonsterController : CreatureController
             return;
         }
 
+        skill.UseSkill(this);
         string skillAnimState = $"Skill{skill.Index}"; 
         _animController.Play(skillAnimState);
 
-        // 스킬 쿨타임 설정
-        skill.StartCoolTime();
         _skillBook.PrevUseSkill = skill;
     }
 
@@ -233,7 +232,8 @@ public class MonsterController : CreatureController
 
     public void AnimEvent_SkillDamage()
     {
-        bool isNear = CheckPlayerNear();
+        // 스킬 끝날 때 스킬 공격 범위 안에 있는지 확인
+        bool isNear = CheckSkillRangePlayer(_skillBook.PrevUseSkill.SkillData.attackRange);
 
         if (isNear) // 스킬 판정 성공
         {
@@ -251,6 +251,7 @@ public class MonsterController : CreatureController
 
     public void AnimEvent_SkillEnd()
     {
+        _skillBook.PrevUseSkill.StopAllCoroutines();
         _skillWait = false;
     }
     #endregion
@@ -359,6 +360,9 @@ public class MonsterController : CreatureController
         // 경험치 젬 또는 아이템을 떨궈준다.
         DropItemData dropItemData = GameManager.Instance.GetRandomDropItem(_grade);
 
+        if (dropItemData == null)
+            return;
+
         switch(dropItemData.dropItemType)
         {
             case Define.eObjectType.Gem:
@@ -383,33 +387,28 @@ public class MonsterController : CreatureController
         }
     }
 
-    // 플레이어가 주위에 있는지 탐색하는 메소드
-    private bool CheckPlayerNear()
+    // 스킬 범위 안에 플레이어가 존재하는지 확인하기
+    private bool CheckSkillRangePlayer(float range)
     {
-        int checkCount = 0;
-        // 거리 체크
-
-        float detectRange = Define.ENEMY_DETECT_RANGE;
-        Debug.DrawRay(_trans.position + Vector3.up, _trans.forward * detectRange, Color.red);
+        Debug.DrawRay(_trans.position + (Vector3.up * 0.5f), _trans.forward * range, Color.red);
         RaycastHit rayHit = new RaycastHit();
-        bool isNear = Physics.Raycast(_trans.position + Vector3.up, _trans.forward, out rayHit, detectRange, 1 << LayerMask.NameToLayer("Player"));
+        bool isNear = Physics.Raycast(_trans.position + (Vector3.up * 0.5f), _trans.forward, out rayHit, range, 1 << LayerMask.NameToLayer("Player"));
 
-        if(isNear)
-          checkCount++;
-
-        isNear = false;
+        if (isNear == false)
+            return false;
 
         // 각도 체크
         Vector3 targetDir = (_targetTrans.position - _trans.position).normalized;
         Vector3 nowViewAngle = _trans.forward;
         float detectAngle = Vector3.Angle(nowViewAngle, targetDir);
 
-        if (detectAngle <= _viewAngle)
-            checkCount++;
+        // 감지범위 각도를 벗어난 각도에 존재하는 경우
+        if (detectAngle > Define.ENEMY_VIEW_ANGLE)
+            return false;
 
         // 필요시 장애물 체크
-      
-        return checkCount > 1;
+        
+        return true;
     }
 
     void SetDamagedColor()

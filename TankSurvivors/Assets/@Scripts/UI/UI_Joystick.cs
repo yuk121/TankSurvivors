@@ -25,7 +25,7 @@ public class UI_Joystick : UI_Base
             return false;
         }
 
-        BindOjbect(typeof(eGameObject));
+        BindObject(typeof(eGameObject));
         _handler = GetObject((int)eGameObject.Handler);
         _joystickBG = GetObject((int)eGameObject.JoystickBG);
 

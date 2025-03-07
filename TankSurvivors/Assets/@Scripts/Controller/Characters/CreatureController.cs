@@ -17,6 +17,8 @@ public class CreatureController : BaseController
   
     [SerializeField]
     protected float _curHp;
+    public float CurHp { get { return _curHp; } }
+    
     protected bool _isAlive = true;
     public bool IsAlive { get => _isAlive; }
 

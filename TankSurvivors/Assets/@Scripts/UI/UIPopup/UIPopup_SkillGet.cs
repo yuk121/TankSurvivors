@@ -42,7 +42,7 @@ public class UIPopup_SkillGet : UI_Base
         _trans = transform;
 
         // Bind
-        BindOjbect(typeof(eGameObject));
+        BindObject(typeof(eGameObject));
         BindButton(typeof(eButton));
         BindImage(typeof(eImage));
 

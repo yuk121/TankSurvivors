@@ -29,6 +29,9 @@ public class SpawningPools : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
+            if (Managers.Instance.ObjectManager.GetBoss() != null)
+                return;
+
             Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
             Managers.Instance.ObjectManager.Spawn<MonsterController>(spawnPos, 30001);
         }

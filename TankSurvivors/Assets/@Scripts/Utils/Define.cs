@@ -30,17 +30,14 @@ public static class Define
     public const int MAX_SUPPORT_SKILL_COUNT = 5;
 
     public const float SUBTANK_SPAWN_RADIUS = 3f;
-    public const float SUBTANK_DETECT_RADIUS = 1f;
 
-    public const float ELECTRIC_FIELD_DETECT_RADIUS = 3f;
     public const float ELECTRIC_FIELD_RADIUS_INC_RATE = 0.6f;
-
-    public const float MINE_DETECT_RADIUS = 1f;
 
     public const float KNOCKBACK_FORCE = 3f;
 
     // Enemy
-    public const float ENEMY_DETECT_RANGE = 1.5f;
+    public const float ENEMY_VIEW_ANGLE = 60f;
+    
 
     public enum eSceneType
     {
