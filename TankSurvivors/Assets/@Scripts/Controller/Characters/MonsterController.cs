@@ -87,6 +87,9 @@ public class MonsterController : CreatureController
 
     public override void FixedUpdateController()
     {
+        if (GameManager.Instance.GameData.isGameEnd == true)
+            return;
+
         base.FixedUpdateController();
 
         if (_isAlive == false)
@@ -103,6 +106,9 @@ public class MonsterController : CreatureController
     // 몬스터 상태에 맞춰서 메소드 실행
     public override void UpdateController()
     {
+        if (GameManager.Instance.GameData.isGameEnd == true)
+            return;
+
         base.UpdateController();
 
         if (_isAlive == false)

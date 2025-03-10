@@ -85,7 +85,7 @@ public class PlayerController : CreatureController
     {
         get
         {
-            float curMaxHp = _creatureData.maxHp * (1 +_playerBonusStat._bonusMaxHpRate);
+            float curMaxHp = _creatureData.maxHp * (1 + _playerBonusStat._bonusMaxHpRate);
             return curMaxHp;
         }
     }
@@ -102,7 +102,7 @@ public class PlayerController : CreatureController
 
     public override bool Init()
     {
-        if(base.Init() == false)
+        if (base.Init() == false)
             return false;
 
         ObjectType = Define.eObjectType.Player;
@@ -117,16 +117,16 @@ public class PlayerController : CreatureController
 
         // 기본 공격은 미리 1레벨로 설정
         _skillBook.UpgradeSkill(_skillBook.ActionSkillList[0].SkillData.skillId);
-        
+
         // Stat 초기화
         CurExp = 0;
         CurLevel = 1;
 
-        if(_playerBonusStat == null)
+        if (_playerBonusStat == null)
         {
-            _playerBonusStat= new PlayerBonusStat();
+            _playerBonusStat = new PlayerBonusStat();
             _playerBonusStat.Clear();
-        }    
+        }
         else
         {
             _playerBonusStat.Clear();
@@ -139,12 +139,13 @@ public class PlayerController : CreatureController
     {
         base.SkillUpgradeComplete();
 
-        _playerBonusStat.Set(GetSupportSkillList());    
+        _playerBonusStat.Set(GetSupportSkillList());
     }
 
     public override void FixedUpdateController()
     {
-        if (GameManager.Instance.Pause == true)
+        if (GameManager.Instance.Pause == true ||
+            GameManager.Instance.GameData.isGameEnd == true)
             return;
 
         base.FixedUpdateController();
@@ -153,7 +154,7 @@ public class PlayerController : CreatureController
 
     public override void UpdateController()
     {
-        if (GameManager.Instance.Pause == true )
+        if (GameManager.Instance.Pause == true || GameManager.Instance.GameData.isGameEnd == true)
             return;
 
         base.UpdateController();
@@ -161,11 +162,11 @@ public class PlayerController : CreatureController
         CollectEnv();
 
 #if UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             GetExp(Managers.Instance.DataTableManager.DataTableInGameLevel.GetNextLevelRequiredExp(CurLevel));
         }
-        if(Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             _skillAllStop = (!_skillAllStop);
         }

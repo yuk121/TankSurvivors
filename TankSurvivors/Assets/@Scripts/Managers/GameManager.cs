@@ -10,6 +10,7 @@ public class GameData
     public float curTime = 0f;
     public int killCount = 0;
     public bool firstLevelUp = false;
+    public bool isGameEnd = false;
 
     public void Clear()
     {
@@ -19,6 +20,7 @@ public class GameData
         curTime = 0f;
         killCount = 0;
         firstLevelUp = false;
+        isGameEnd = false;
     }
 }
 
@@ -298,12 +300,18 @@ public class GameManager : FSM<eGameManagerState>
         if(CheckPlayerAlive() == false)
         {
             // 게임 오버 
+            GameData.isGameEnd = true;
+           
+            // 패배 팝업창
             UIPopup_GameResult_Defeat popup =  Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Defeat>();
             popup.Set();
         }
-        else if(CheckEnemyBossAlive() == false)
+        else if(IsBossSpawned == true && CheckEnemyBossAlive() == false)
         {
             // 스테이지 클리어
+            GameData.isGameEnd = true;
+
+            // 승리 팝업창
             UIPopup_GameResult_Victory popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Victory>();
             popup.Set();
         }

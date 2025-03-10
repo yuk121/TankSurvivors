@@ -34,6 +34,8 @@ public class SpawningPools : MonoBehaviour
 
             Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
             Managers.Instance.ObjectManager.Spawn<MonsterController>(spawnPos, 30001);
+
+            GameManager.Instance.IsBossSpawned = true;
         }
 #endif
     }

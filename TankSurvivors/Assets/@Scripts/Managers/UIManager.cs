@@ -72,17 +72,27 @@ public class UIManager
     /// <param name="ease"> 트윈 효과</param>
     /// <param name="bPause">팝업창 오픈시 일시정지 여부 확인</param>
     /// <returns></returns>
-    public T OpenPopupWithTween<T>(Ease ease = Ease.OutBack, bool bPause = false) where T : UI_Base
+    public T OpenPopupWithTween<T>(bool bPause = false, Ease ease = Ease.OutBack) where T : UI_Base
     {
         T popup = OpenPopup<T>(bPause);
 
-        Transform popupTransform = popup.GetComponent<Transform>();
+        Transform popupTrans = null;
+        GameObject root = Utils.FindChild(popup.gameObject, "Root");
+       
+        if (root == null)
+        {
+            popupTrans = popup.gameObject.GetComponent<Transform>();
+        }
+        else
+        {
+            popupTrans = root.GetComponent<Transform>();
+        }
 
-        popupTransform.DOScale(1.2f, 0.2f) // 1.2배 커짐 (0.2초 동안)
+        popupTrans.DOScale(1.2f, 0.2f) // 1.2배 커짐 (0.2초 동안)
             .SetEase(ease) // 효과
             .OnComplete(() =>
             {
-                popupTransform.DOScale(1f, 0.1f) // 원래 크기(1배)로 돌아옴 (0.1초 동안)
+                popupTrans.DOScale(1f, 0.1f) // 원래 크기(1배)로 돌아옴 (0.1초 동안)
                     .SetEase(Ease.InOutQuad);
             });
 
