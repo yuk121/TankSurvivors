@@ -79,6 +79,8 @@ public class SpawningPools : MonoBehaviour
             // 보스 소환
             if (_gameTimeMin >= waveInfo.spawnBossTime)
             {
+                GameManager.Instance.IsBossSpawned = true;
+
                 Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);
 
                 spawnMonsterId = waveInfo.spawnBossId;

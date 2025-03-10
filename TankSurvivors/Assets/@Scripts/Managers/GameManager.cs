@@ -49,9 +49,14 @@ public class GameManager : FSM<eGameManagerState>
     private PlayerController _player;
     public PlayerController Player { get => _player; }
 
-    [SerializeField]
+    private bool _isBossSpawned = false;
+    public bool IsBossSpawned { get => _isBossSpawned; set => _isBossSpawned = value; }
+
     private bool _bPause;
     public bool Pause { get => _bPause; }
+
+    private bool _bGoLobby;
+    private bool _bRetryStage;
 
     // Start is called before the first frame update
     private void Awake()
@@ -114,7 +119,7 @@ public class GameManager : FSM<eGameManagerState>
     #region Lobby
     private void InLobby()
     {
-
+        _bGoLobby = false;
     }
 
     private void ModifyLobby()
@@ -143,6 +148,10 @@ public class GameManager : FSM<eGameManagerState>
         // GridManager
         GridManager.Instance.Init();
 
+        // Init
+        _isBossSpawned = false;
+        _bRetryStage = false;
+
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
         _spawnPools.StartSpawn();
     }
@@ -163,6 +172,13 @@ public class GameManager : FSM<eGameManagerState>
             return;
         }
 
+        // 보스를 잡은 경우
+        if(_isBossSpawned == true && CheckEnemyBossAlive() == false)
+        {
+            MoveState(eGameManagerState.Result);
+            return;
+        }
+
         _gameData.curTime += Time.deltaTime;
     }
 
@@ -172,6 +188,14 @@ public class GameManager : FSM<eGameManagerState>
 
         return isAlive;
     }
+
+    private bool CheckEnemyBossAlive()
+    {
+        bool isAlive = Managers.Instance.ObjectManager.GetBoss().IsAlive;
+
+        return isAlive;
+    }
+   
 
     public DropItemData GetRandomDropItem(Define.eMonsterGrade monsterGrade)
     {
@@ -271,12 +295,47 @@ public class GameManager : FSM<eGameManagerState>
     #region Result
     private void InResult()
     {
-
+        if(CheckPlayerAlive() == false)
+        {
+            // 게임 오버 
+            UIPopup_GameResult_Defeat popup =  Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Defeat>();
+            popup.Set();
+        }
+        else if(CheckEnemyBossAlive() == false)
+        {
+            // 스테이지 클리어
+            UIPopup_GameResult_Victory popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Victory>();
+            popup.Set();
+        }
     }
 
     private void ModifyResult()
     {
+        if(_bGoLobby == true)   // 로비로 나가는 경우
+        {
+            MoveState(eGameManagerState.Lobby);
+            
+            // TODO : 씬 이동 Game -> Loading -> Lobby
+            
+            return;
+        }
+        else if(_bRetryStage == true)   // 재도전 하는 경우
+        {
+            MoveState(eGameManagerState.Game);
 
+            // TODO : Game -> Loading -> Game
+            return;
+        }
+    }
+
+    public void GoLobby()
+    {
+        _bGoLobby = true;
+    }
+
+    public void RetryStage()
+    {
+        _bRetryStage = true;
     }
     #endregion
 }
