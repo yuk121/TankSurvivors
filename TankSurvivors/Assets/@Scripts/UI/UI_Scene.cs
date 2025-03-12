@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UI_Scene : UI_Base
 {
-    protected Define.eSceneType _sceneType;
-    public Define.eSceneType SceneType { get => _sceneType; }
+    protected eGameManagerState _sceneState;
+
     public override bool Init()
     {
         if (base.Init() == false)

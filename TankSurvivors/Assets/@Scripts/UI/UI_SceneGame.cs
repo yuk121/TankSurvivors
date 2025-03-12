@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UI_GameScene : UI_Scene
+public class UI_SceneGame : UI_Scene
 {
     #region UI Enum
     enum eGameObject
@@ -63,7 +63,7 @@ public class UI_GameScene : UI_Scene
             return false;
         }
 
-        _sceneType = Define.eSceneType.Game;
+        _sceneState = GameManager.Instance.GetSceneState();
         Managers.Instance.UIMananger.SetSceneInfo(this);
 
         // Bind

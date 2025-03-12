@@ -40,10 +40,14 @@ public class GameManager : FSM<eGameManagerState>
     public static GameManager Instance;
     #endregion
 
+    // Title
+    private bool _bTouchToStart = false;
+
+    // Game
+
     private GameData _gameData = new GameData();
     public GameData GameData { get => _gameData; set => _gameData = value; }
 
-    // In Game
     public CameraController CameraController { get; set; }
 
     private SpawningPools _spawnPools;
@@ -90,7 +94,7 @@ public class GameManager : FSM<eGameManagerState>
         AddState(eGameManagerState.Pause, InPause, ModifyPause, OutPause);
         AddState(eGameManagerState.Result, InResult, ModifyResult, null);
 
-        string curSceneName = SceneManager.GetActiveScene().name;
+        string curSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
         if (curSceneName.Equals(eGameManagerState.Title.ToString()))
         {
@@ -106,15 +110,34 @@ public class GameManager : FSM<eGameManagerState>
         }
     }
 
+    public eGameManagerState GetSceneState()
+    {
+        return curState;
+    }
+
     #region Title
     private void InTitle()
     {
-
+        _bTouchToStart = false;
     }
 
     private void ModifyTitle()
     {
+        if (_bTouchToStart == true)
+        {
+            _bTouchToStart = false;
 
+            Managers.Instance.SceneManager.LoadScene(eGameManagerState.Lobby.ToString(), () =>
+            {
+                MoveState(eGameManagerState.Lobby);
+                return;
+            });
+        }
+    }
+
+    public void StartGame()
+    {
+        _bTouchToStart = true;
     }
     #endregion
 
