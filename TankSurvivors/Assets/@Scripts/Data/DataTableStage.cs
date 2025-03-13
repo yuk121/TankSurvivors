@@ -59,4 +59,20 @@ public class DataTableStage
 
         loader.Clear();
     }
+
+    public StageData GetStageInfo(int stageIndex)
+    {
+        StageData stageData = null;
+
+        foreach(var data in _dataList)
+        {
+            if(data.stageIndex == stageIndex)
+            {
+                stageData = data;
+                break;
+            }
+        }
+
+        return stageData;
+    }
 }

@@ -179,7 +179,7 @@ public static class Utils
         Vector3 outPos = Vector3.zero;
 
         // 카메라 꼭짓점 좌표 구하기
-        Vector3 nearBottomLeft = camera.ViewportToWorldPoint(new Vector3(0, 0, camNear)); // 좌하단 (Near)
+        Vector3 nearBottomLeft = camera.ViewportToWorldPoint(new Vector3(0, 0, camNear)); // 좌하e단 (Near)
         Vector3 nearBottomRight = camera.ViewportToWorldPoint(new Vector3(1, 0, camNear)); // 우하단 (Near)
         Vector3 nearTopLeft = camera.ViewportToWorldPoint(new Vector3(0, 1, camNear)); // 좌상단 (Near)
         Vector3 nearTopRight = camera.ViewportToWorldPoint(new Vector3(1, 1, camNear)); // 우상단 (Near)
@@ -234,6 +234,10 @@ public static class Utils
                 outPos = RandomRangeVector(nearTopRight, nearBottomRight);
                 break;
         }
+
+        if(outPos.y < 0f ||  outPos.y >0f)
+            outPos.y = 0f;
+
         return outPos;
     }
 

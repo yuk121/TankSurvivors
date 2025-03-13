@@ -9,6 +9,7 @@ TagManager:
   - ViewArea
   - Ground
   - UICanvas
+  - Map
   layers:
   - Default
   - TransparentFX

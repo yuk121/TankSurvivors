@@ -3,17 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPopup_StageSelect : MonoBehaviour
+public class UIPopup_StageSelect : UI_Base
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Enum UI
+    private enum eGameObject
     {
-        
+
+    }
+    private enum eButton
+    {
+
+    }
+    private enum eImage
+    {
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private enum eText
     {
-        
+
+    }
+    #endregion
+    public override bool Init()
+    {
+        if (base.Init() == false)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void Set()
+    {
+        if (_init == false)
+            Init();
+
+
     }
 }

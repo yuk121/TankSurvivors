@@ -32,22 +32,20 @@ public class SceneManager : MonoBehaviour
         {
             if (asyncLoad.progress >= 0.9f) // 90% 로딩 완료
             {
+                yield return new WaitForSeconds(1f);
+             
                 if (loadingScene != null)
                 {
                     yield return loadingScene.HideTitleLogo();
                 }
-                else
-                {
-                    yield return new WaitForSeconds(1f);
-                }
-          
+
                 asyncLoad.allowSceneActivation = true; // 씬 전환 실행
             }
             yield return null;
         }
 
         // 콜백 존재시 실행
-        if(pCallback != null)
+        if (pCallback != null)
             pCallback.Invoke();
     }
 }

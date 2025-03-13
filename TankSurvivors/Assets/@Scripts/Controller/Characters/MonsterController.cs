@@ -396,7 +396,7 @@ public class MonsterController : CreatureController
     // 스킬 범위 안에 플레이어가 존재하는지 확인하기
     private bool CheckSkillRangePlayer(float range)
     {
-        Debug.DrawRay(_trans.position + (Vector3.up * 0.5f), _trans.forward * range, Color.red);
+       // Debug.DrawRay(_trans.position + (Vector3.up * 0.5f), _trans.forward * range, Color.red);
         RaycastHit rayHit = new RaycastHit();
         bool isNear = Physics.Raycast(_trans.position + (Vector3.up * 0.5f), _trans.forward, out rayHit, range, 1 << LayerMask.NameToLayer("Player"));
 

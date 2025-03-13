@@ -43,6 +43,10 @@ public class GameManager : FSM<eGameManagerState>
     // Title
     private bool _bTouchToStart = false;
 
+    // Lobby
+    private bool _bStageStart = false;
+    private int _selectStage = 1;
+
     // Game
 
     private GameData _gameData = new GameData();
@@ -145,11 +149,27 @@ public class GameManager : FSM<eGameManagerState>
     private void InLobby()
     {
         _bGoLobby = false;
+        _bStageStart = false;
     }
 
     private void ModifyLobby()
     {
+        if(_bStageStart == true)
+        {
+            _bStageStart = false;
 
+            Managers.Instance.SceneManager.LoadScene(eGameManagerState.Game.ToString(), () =>
+            {
+                MoveState(eGameManagerState.Game);
+                return;
+            });
+        }
+    }
+
+    public void StageStart(int selectStage)
+    {
+        _selectStage = selectStage;
+        _bStageStart=true;
     }
     #endregion
 
@@ -162,13 +182,17 @@ public class GameManager : FSM<eGameManagerState>
         // 플레이어 소환
         _player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
 
-        // 임시
-        StageData stageInfo = Managers.Instance.DataTableManager.DataTableStage.DataList[0];
+        // 정보
+        StageData stageInfo = Managers.Instance.DataTableManager.DataTableStage.GetStageInfo(_selectStage);
         GameData.stageInfo = stageInfo;
-        int stageIndex = GameData.stageInfo.stageIndex;
 
-        WaveData waveInfo = Managers.Instance.DataTableManager.DataTableWave.GetWaveData(stageIndex);
+        WaveData waveInfo = Managers.Instance.DataTableManager.DataTableWave.GetWaveData(_selectStage);
         GameData.waveInfo = waveInfo;
+        
+        // 맵
+        string mapPrefab = $"MapPrefab/{stageInfo.stagePrefab}.prefab";
+        GameObject map = Managers.Instance.ResourceManager.Instantiate(mapPrefab);
+        map.transform.parent = GameObject.FindGameObjectWithTag("Map").transform;
 
         // GridManager
         GridManager.Instance.Init();
