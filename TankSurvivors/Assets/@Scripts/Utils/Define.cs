@@ -38,7 +38,19 @@ public static class Define
     // Enemy
     public const float ENEMY_VIEW_ANGLE = 60f;
     
+    public enum eLoginPlatform
+    {
+        None,
 
+        // PC
+        Editor,
+        Engine,
+
+        // Mobile
+        Google,
+        Apple,
+        OneStore,
+    }
     public enum eSceneType
     {
         Cs,

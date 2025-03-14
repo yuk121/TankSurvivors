@@ -62,6 +62,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
+  - m_GUID: d8bd19244b96256499bbfb2989ea64ec
+    m_Address: Icon_Stage1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 2f9a27bfab1e2a64297e0eb411571302
+    m_Address: Icon_Stage2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
   m_SchemaSet:

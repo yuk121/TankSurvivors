@@ -6,6 +6,7 @@ public class StageData
     public int stageIndex;
     public int stageLevel;
     public string stagePrefab;
+    public string stageIcon;
     public string stageLocalizeName;
     public int firstClearRewardGold;
     public int firstClearRewardExp;
@@ -45,6 +46,7 @@ public class DataTableStage
             stageData.stageIndex = loader.GetInt("Stageindex", i);
             stageData.stageLevel = loader.GetInt("StageLevel", i);
             stageData.stagePrefab = loader.GetString("StagePrefab", i);
+            stageData.stageIcon = loader.GetString("StageIcon", i);
             stageData.stageLocalizeName = loader.GetString("StageLocalizeName", i);
             stageData.firstClearRewardGold = loader.GetInt("FirstClearRewardGold", i);
             stageData.firstClearRewardExp = loader.GetInt("FirstClearRewardExp", i);

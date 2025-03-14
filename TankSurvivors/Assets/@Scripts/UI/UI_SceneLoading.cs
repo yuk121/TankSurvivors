@@ -54,7 +54,7 @@ public class UI_SceneLoading : UI_Scene
 
     public IEnumerator HideTitleLogo()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         _rectTrans.DOAnchorPos(_startPos, 1f).SetEase(Ease.InQuad);
         yield return _imgTitleLogo.DOFade(0f, 0.5f).SetEase(Ease.InQuad).WaitForCompletion();
 
