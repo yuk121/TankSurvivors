@@ -35,12 +35,12 @@ public class UI_SceneLobby : UI_Scene
     private Button _btnStageSelect;
     private Button _btnStageStart;
 
-    private TMP_Text m_txtStamina;
-    private TMP_Text m_txtGold;
-    private TMP_Text m_txtCash;
-    private TMP_Text m_txtUserLevel;
-    private TMP_Text m_txtStage;
-    private TMP_Text m_txtRequiredStamina;
+    private TMP_Text _txtStamina;
+    private TMP_Text _txtGold;
+    private TMP_Text _txtCash;
+    private TMP_Text _txtUserLevel;
+    private TMP_Text _txtStage;
+    private TMP_Text _txtRequiredStamina;
 
     public override bool Init()
     {
@@ -58,23 +58,41 @@ public class UI_SceneLobby : UI_Scene
         _btnStageSelect = GetButton((int)eButton.Button_StageSelect);
         _btnStageStart = GetButton((int)eButton.Button_StageStart);
 
-        m_txtStamina = GetText((int)eText.Text_Stamina);
-        m_txtGold = GetText((int)eText.Text_Gold);
-        m_txtCash = GetText((int)eText.Text_Cash);
-        m_txtUserLevel = GetText((int)eText.Text_UserLevel);
-        m_txtStage = GetText((int)eText.Text_Stage);
-        m_txtRequiredStamina = GetText((int)eText.Text_RequiredStamina);
+        _txtStamina = GetText((int)eText.Text_Stamina);
+        _txtGold = GetText((int)eText.Text_Gold);
+        _txtCash = GetText((int)eText.Text_Cash);
+        _txtUserLevel = GetText((int)eText.Text_UserLevel);
+        _txtStage = GetText((int)eText.Text_Stage);
+        _txtRequiredStamina = GetText((int)eText.Text_RequiredStamina);
 
         // 
         _btnStageSelect.onClick.AddListener(OnClick_StageSelect);
         _btnStageStart.onClick.AddListener(OnClick_StageStart);
-        
+
+        SetUserInfo();
+        SetStage();
+
         return true;
     }
 
-    public void Set()
+    public void SetUserInfo()
     {
-            
+        UserData userData = Managers.Instance.UserDataManager.UserData;
+
+        _txtStamina.text = $"{userData._userStaminaCurrent}/{userData._userStaminaMax}";
+        _txtGold.text = $"{userData._userCurrency.gold}";
+        _txtCash.text = $"{userData._userCurrency.GetCash()}";
+        _txtUserLevel.text = $"{Managers.Instance.UserDataManager.GetUserLevel()}";
+    }
+
+    public void SetStage()
+    {
+        int stage = Managers.Instance.UserDataManager.GetLastSelectStage();
+        StageData stageData = Managers.Instance.DataTableManager.DataTableStage.GetStageInfo(stage);
+        string stageName = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(stageData.stageLocalizeName);
+       
+        _txtStage.text = $"{stageName}";
+        _txtRequiredStamina.text = $" X {Define.STAGE_ENTER_STAMINA}";
     }
 
     private void OnClick_StageSelect()
@@ -84,23 +102,19 @@ public class UI_SceneLobby : UI_Scene
     }
     private void OnClick_StageStart()
     {
-        bool checkStamina = CheckStamina();
+        int requiredStamina = Define.STAGE_ENTER_STAMINA;
+        bool checkStamina = Managers.Instance.UserDataManager.CheckStamina(requiredStamina);
+    
+        // 스태미나 부족 팝업창 띄우기
         if (checkStamina == false)
         {
-            // 스태미나 부족 팝업창 띄우기
+            UIPopup_NotificationBar popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_NotificationBar>();
+            popup.SetMessage("스테미나 부족");
+            return;
         }
 
-        // 스태미나 차감 
-
         // 현재 선택된 스테이지 값 건네주기
-        int stageIndex = 1; // 임시
+        int stageIndex = Managers.Instance.UserDataManager.GetLastSelectStage();
         GameManager.Instance.StageStart(stageIndex);
-    }
-
-    private bool CheckStamina()
-    {
-        bool pass = false;
-
-        return pass; 
     }
 }

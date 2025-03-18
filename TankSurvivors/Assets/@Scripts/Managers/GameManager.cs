@@ -1,4 +1,6 @@
+using System;
 using Common;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -42,6 +44,7 @@ public class GameManager : FSM<eGameManagerState>
 
     // Title
     private bool _bTouchToStart = false;
+    private bool _bWait = false;
 
     // Lobby
     private bool _bStageStart = false;
@@ -78,19 +81,49 @@ public class GameManager : FSM<eGameManagerState>
     }
     void Start()
     {
-        Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<Object>("preload", (key, count, totlaCount) =>
+        StartCoroutine(CorStartProcess());
+    }
+
+    private IEnumerator CorStartProcess()
+    {
+        _bWait = true;
+
+        // 어드레서블 리소스 불러오기
+        Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<UnityEngine.Object>("preload", (key, count, totlaCount) =>
         {
             if (count == totlaCount)
             {
-                Managers.Instance.DataTableManager.LoadData(() =>
-                {
-                    StartLoaded();
-                });
+                _bWait = false;
             }
         });
+
+        while (_bWait)
+            yield return null;
+
+
+        // 유저 데이터 정보 불러오고 확인하기
+        UserData user = Managers.Instance.UserDataManager.LoadUserData();
+
+        if(user == null)
+        {
+            Managers.Instance.UserDataManager.NewStartUser();
+            Managers.Instance.UserDataManager.SaveUserData();
+        }
+
+        _bWait = true;
+        // 데이터 테이블 불러오기
+        Managers.Instance.DataTableManager.LoadData(() =>
+        {
+            _bWait = false;
+        });
+
+        while (_bWait)
+            yield return null;
+
+        StartProcessEnd();
     }
 
-    private void StartLoaded()
+    private void StartProcessEnd()
     {
         AddState(eGameManagerState.Title, InTitle, ModifyTitle, null);
         AddState(eGameManagerState.Lobby, InLobby, ModifyLobby, null);
@@ -129,6 +162,8 @@ public class GameManager : FSM<eGameManagerState>
     {
         if (_bTouchToStart == true)
         {
+            Managers.Instance.UIMananger.CloseAllPopup();
+
             _bTouchToStart = false;
 
             Managers.Instance.SceneManager.LoadScene(eGameManagerState.Lobby.ToString(), () =>
@@ -258,7 +293,7 @@ public class GameManager : FSM<eGameManagerState>
                 // 아이템을 줄지 Gem을 줄 지 결정
                 List<DropItemData> dropItemDataList = new List<DropItemData>();
                 int randIndex = 0;
-                float rand = Random.Range(0.0f, 1.0f);
+                float rand = UnityEngine.Random.Range(0.0f, 1.0f);
 
                 // 아이템을 주는 경우
                 if (rand <= wave.dropItemRate)
@@ -270,7 +305,7 @@ public class GameManager : FSM<eGameManagerState>
                         dropItemDataList.Add(dropItemData);
                     }
                     // 드랍 아이템 목록중 하나만 준다.
-                    randIndex = Random.Range(0, dropItemDataList.Count);
+                    randIndex = UnityEngine.Random.Range(0, dropItemDataList.Count);
                     return dropItemDataList[randIndex];
                 }
                 else
@@ -281,7 +316,7 @@ public class GameManager : FSM<eGameManagerState>
                     float blueGemRate = greenGemRate + wave.blueGemDropRate;
                     float purpleGemRate = blueGemRate + wave.purpleGemDropRate;
 
-                    rand = Random.Range(0.0f, 1.0f);
+                    rand = UnityEngine.Random.Range(0.0f, 1.0f);
 
                     if (rand <= redGemRate)
                     {
@@ -344,42 +379,62 @@ public class GameManager : FSM<eGameManagerState>
     #region Result
     private void InResult()
     {
-        if(CheckPlayerAlive() == false)
+        if (CheckPlayerAlive() == false)
         {
             // 게임 오버 
             GameData.isGameEnd = true;
-           
+
             // 패배 팝업창
-            UIPopup_GameResult_Defeat popup =  Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Defeat>();
+            UIPopup_GameResult_Defeat popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Defeat>();
             popup.Set();
         }
-        else if(IsBossSpawned == true && CheckEnemyBossAlive() == false)
+        else if (IsBossSpawned == true && CheckEnemyBossAlive() == false)
         {
             // 스테이지 클리어
             GameData.isGameEnd = true;
 
-            // 승리 팝업창
-            UIPopup_GameResult_Victory popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Victory>();
-            popup.Set();
+            // 클리어 이후 보상 처리
+            StageClearProcess(() =>
+           {
+               // 승리 팝업창
+               UIPopup_GameResult_Victory popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Victory>();
+               popup.Set();
+           });
         }
+    }
+
+    private void StageClearProcess(Action pCallback)
+    {
+        // 유저 데이터 처리
+        Managers.Instance.UserDataManager.UseStamina(_gameData.stageInfo);
+
+        // 유저 재화 획득
+        Managers.Instance.UserDataManager.GetReward(_gameData.stageInfo);
+
+        // 저장
+        Managers.Instance.UserDataManager.SaveUserData();
+        
+        if (pCallback != null)
+            pCallback.Invoke();
     }
 
     private void ModifyResult()
     {
-        if(_bGoLobby == true)   // 로비로 나가는 경우
+        if (_bGoLobby == true)   // 로비로 나가는 경우
         {
-            MoveState(eGameManagerState.Lobby);
-            
-            // TODO : 씬 이동 Game -> Loading -> Lobby
-            
-            return;
+            Managers.Instance.SceneManager.LoadScene(eGameManagerState.Lobby.ToString(), () =>
+            {
+                MoveState(eGameManagerState.Lobby);
+                return;
+            });
         }
-        else if(_bRetryStage == true)   // 재도전 하는 경우
+        else if (_bRetryStage == true)   // 재도전 하는 경우
         {
-            MoveState(eGameManagerState.Game);
-
-            // TODO : Game -> Loading -> Game
-            return;
+            Managers.Instance.SceneManager.LoadScene(eGameManagerState.Game.ToString(), () =>
+            {
+                MoveState(eGameManagerState.Game);
+                return;
+            });
         }
     }
 

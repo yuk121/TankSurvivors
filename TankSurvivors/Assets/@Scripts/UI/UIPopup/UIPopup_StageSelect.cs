@@ -22,9 +22,11 @@ public class UIPopup_StageSelect : UI_Base
     }
     #endregion
 
+    private List<UIElement_Stage> _stageList = new List<UIElement_Stage>();
     private UI_ContentSwipe _uiContentSwipe = null;
     private Button _btnRight;
     private Button _btnLeft;
+    private bool _bWait = false;
 
     public override bool Init()
     {
@@ -50,6 +52,9 @@ public class UIPopup_StageSelect : UI_Base
         //
         _btnRight.onClick.AddListener(OnClick_StageRight);
         _btnLeft.onClick.AddListener(OnClick_StageLeft);
+        
+        _stageList.Clear();
+        
         return true;
     }
 
@@ -58,24 +63,43 @@ public class UIPopup_StageSelect : UI_Base
         if (_init == false)
             Init();
 
+        _bWait = false;
+
+        _stageList.Clear();
         List<StageData> stageDataList = Managers.Instance.DataTableManager.DataTableStage.DataList;
 
-        // 스테이지 데이터 수 만큼 생성
-        for(int i =0; i < stageDataList.Count; i++)
+        if (_stageList.Count == 0)
         {
-            UIElement_Stage stage = Managers.Instance.UIMananger.InstantiateUI<UIElement_Stage>(GetObject((int)eGameObject.Content_StageList).transform);
-            stage.Set(stageDataList[i]);
+            // 스테이지 데이터 수 만큼 생성
+            for (int i = 0; i < stageDataList.Count; i++)
+            {
+                UIElement_Stage stage = Managers.Instance.UIMananger.InstantiateUI<UIElement_Stage>(GetObject((int)eGameObject.Content_StageList).transform);
+                stage.Set(stageDataList[i]);
+
+                _stageList.Add(stage);
+            }
         }
+        else
+        {
+            // 스테이지 현황 반영
+            for (int i = 0; i < _stageList.Count; i++)
+            {
+                _stageList[i].Set(stageDataList[i]);
+            }
+        }
+        
 
         // 현재 내가 깨야할 스테이지가 나오도록
+        int pageIndex = Managers.Instance.UserDataManager.GetLastSelectStage() -1;
+
         _uiContentSwipe.Set(stageDataList.Count, CheckButtonActive);
-        _uiContentSwipe.SetScrollPage(0);
+        _uiContentSwipe.SetScrollPage(pageIndex);
 
         CheckButtonActive();
     }
 
     private void OnClick_StageRight()
-    {
+    {       
         _uiContentSwipe.SwipeRight();
         CheckButtonActive();
     }
@@ -87,7 +111,32 @@ public class UIPopup_StageSelect : UI_Base
 
     private void OnClick_StageSelect()
     {
-        Managers.Instance.UIMananger.ClosePopup();
+        if (_bWait == true)
+            return;
+
+        _bWait = true;
+
+        int currentStageIndex = _uiContentSwipe.GetCurrentPageIndex();
+
+        // 스테이지 선택 가능한지 확인       
+        bool canAccess = _stageList[currentStageIndex].CanAccess();
+
+        if(canAccess == false)
+        {
+            // 선택 불가능하다고 팝업창 띄어주기
+            UIPopup_NotificationBar popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_NotificationBar>();
+            popup.SetMessage("선택 불가", () => 
+            {
+                _bWait = false; 
+            });
+        }
+        else
+        {
+            Managers.Instance.UserDataManager.UserData._lastSelectStageLevel = currentStageIndex + 1;
+            Managers.Instance.UserDataManager.SaveUserData();
+
+            Managers.Instance.UIMananger.ClosePopup();
+        }
     }
 
     private void CheckButtonActive()

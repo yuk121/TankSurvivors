@@ -7,6 +7,9 @@ using UnityEngine;
 
 public static class Define
 {
+    // Lobby Info
+    public const int STAGE_ENTER_STAMINA = 10;
+
     // Drop Item
     public const float ITEM_MOVE_SPEED = 15f;
     public const float HEART_RECOVERY_RATE = 0.15f;
@@ -38,6 +41,7 @@ public static class Define
     // Enemy
     public const float ENEMY_VIEW_ANGLE = 60f;
     
+    [System.Serializable]
     public enum eLoginPlatform
     {
         None,

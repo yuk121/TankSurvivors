@@ -20,6 +20,9 @@ public class UIElement_Stage : UI_Base
         Text_Stage
     }
     #endregion
+    private StageData _stageData = null;
+    private Image _imgStage = null;
+    private bool _canAccess = false;
 
     public override bool Init()
     {
@@ -29,7 +32,10 @@ public class UIElement_Stage : UI_Base
         // Bind
         BindImage(typeof(eImage));
         BindText(typeof(eText));
-      
+
+        // Get
+        _imgStage = GetImage((int)eImage.Image_Stage);
+
         return true;
     }
 
@@ -38,7 +44,34 @@ public class UIElement_Stage : UI_Base
         if (_init == false)
             Init();
 
-        GetImage((int)eImage.Image_Stage).sprite = Managers.Instance.ResourceManager.Load<Sprite>(stageData.stageIcon);
+        _imgStage.sprite = Managers.Instance.ResourceManager.Load<Sprite>(stageData.stageIcon);
         GetText((int)eText.Text_Stage).text = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(stageData.stageLocalizeName);
+
+        _stageData = stageData;
+
+        CheckAccessStage();
+    }
+
+    // 해당 스테이지에 들어갈 수 있는지 확인하는 메소드
+    private void CheckAccessStage()
+    {
+        int stageIndex = _stageData.stageIndex;
+        List<bool> stageClearList = Managers.Instance.UserDataManager.UserData._stageClearList;
+        
+        // 깨야할 스테이지까지 포함
+        if(stageClearList.Count +1 >= stageIndex)
+        {
+            _canAccess = true;
+            _imgStage.color = Color.white;
+        }
+        else
+        {
+            _canAccess = false;
+            _imgStage.color = Color.gray;
+        }
+    }
+    public bool CanAccess()
+    {
+        return _canAccess;
     }
 }

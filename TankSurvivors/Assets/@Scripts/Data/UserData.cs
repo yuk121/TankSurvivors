@@ -7,6 +7,7 @@ using UnityEngine;
 public class UserData
 {
     #region UserData Class List
+    [System.Serializable]
     public class UserCurrency
     {
         public int gold;
@@ -16,6 +17,11 @@ public class UserData
         public int GetGold()
         {
             return gold;
+        }
+
+        public void AddGold(int gold)
+        {
+            this.gold += gold;
         }
 
         public int GetCash()
@@ -31,6 +37,7 @@ public class UserData
         }
     }
 
+    [System.Serializable]
     public class UserOption
     {
         public int soundMaster;
@@ -46,15 +53,16 @@ public class UserData
     }
     #endregion
 
-    private string _uid;
-    private int _userExp;
-    private int _userStaminaMax;
-    private int _userStaminaCurrent;
+    public string _uid;
+    public int _userExp;
+    public int _userStaminaMax;
+    public int _userStaminaCurrent;
     public UserCurrency _userCurrency = new UserCurrency();
-    public string _lastPlatform;
+    public Define.eLoginPlatform _lastPlatform;
     public string _lastAccessDate;
     public UserOption _userOption = new UserOption();
-    public List<bool> _stageClearList = new List<bool>();
+    public List<bool> _stageClearList = new List<bool>();       // 클리어 할 때마다 true값이 추가됨 (가변형)
+    public int _lastSelectStageLevel;
 
     public void ClearUserData()
     {
@@ -63,9 +71,16 @@ public class UserData
         _userStaminaMax = 100;
         _userStaminaCurrent = 100;
         _userCurrency.Clear();
-        _lastPlatform = Define.eLoginPlatform.None.ToString();
+        _lastPlatform = Define.eLoginPlatform.None;
         _lastAccessDate = DateTime.Now.ToString();
         _userOption.Clear();
         _stageClearList.Clear();
+        _lastSelectStageLevel = 1;
+    }
+
+    // 0 일 경우 선택한 스테이지없음 , 새로운 스테이지 클리어시 초기화 해줌
+    public void ClearStageSelect()
+    {
+        _lastSelectStageLevel = 0;
     }
 }

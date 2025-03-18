@@ -16,8 +16,8 @@ public class UI_ContentSwipe : MonoBehaviour
 
     private float[] _scrollPageValue;             // page의 위치값
     private float _valuePageDis;                  // 각 page 사이의 거리
-    private int _currentPageIndex = 0;       // 현재 page index
-    private int _maxPageIndex = 0;           // 마지막 page index
+    private int _currentPageIndex = 0;         // 현재 page index
+    private int _maxPageIndex = 0;              // 마지막 page index
     private float _startPosX = 0;                  // 터치 시작 x 위치
     private float _endPosX = 0;                  // 터치 끝 x 위치
     private bool _isSwiping = false;             // swipe 진행 체크 bool 값
@@ -49,6 +49,12 @@ public class UI_ContentSwipe : MonoBehaviour
         _currentPageIndex = index;
         _scrollBar.value = _scrollPageValue[index];
     }
+
+    public int GetCurrentPageIndex()
+    {
+        return _currentPageIndex;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -104,6 +110,9 @@ public class UI_ContentSwipe : MonoBehaviour
 
     public void SwipeRight()
     {
+        if (_isSwiping == true)
+            return;
+
         if (_currentPageIndex == _maxPageIndex)
             return;
 
@@ -114,6 +123,9 @@ public class UI_ContentSwipe : MonoBehaviour
 
     public void SwipeLeft()
     {
+        if (_isSwiping == true)
+            return;
+
         // 첫번째 페이지인 경우
         if (_currentPageIndex == 0)
             return;
