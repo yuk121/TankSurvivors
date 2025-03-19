@@ -9,6 +9,9 @@ public class DropItemBox : DropItemController
         if (_init == false)
             base.Init();
 
+        // »ç¿îµå 
+        SoundManager.Instance.Play("SFX_DropBox", Define.eSoundType.SFX, -15f);
+
         return true;
     }
 

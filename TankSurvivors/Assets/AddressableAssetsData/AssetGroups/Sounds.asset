@@ -17,8 +17,58 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d408d9b736ba06f4f866517ec86534b3
   m_SerializeEntries:
-  - m_GUID: 7ce4b67f7049a894a95fa6582a66e1ea
-    m_Address: Assets/@Resources/Sounds/Tank
+  - m_GUID: e721f595be939c44a988ac6d970325d6
+    m_Address: BGM_Game
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 2f55b5aa4405b5a4e97346a846394450
+    m_Address: BGM_Lobby
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 52e83d45073a26b4e8488d26baa0508f
+    m_Address: BGM_Title
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 5a761236cc43ac048a5d84cc2ac59818
+    m_Address: TankCannonExplosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: f975a997f5af86e4ba3c2a3f60beff2e
+    m_Address: SFX_TankCannonShot
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 5ac8629c444779247b2c35f836d9280e
+    m_Address: TankDrive
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: da408890c7ed87340ae69ae5cb0266bf
+    m_Address: TankMachineGun
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 5aea01080cfc1854fa92e2111dcaed9f
+    m_Address: TankWeeeeee
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: e694e0b5123c4ac46b30c97e8351224d
+    m_Address: TankWoosh
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 1faa69f183581b24bb9f27d1430afd1e
+    m_Address: SFX_DropBox
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: fe60319cf80ae884391ef2f7ff26c49b
+    m_Address: SFX_Levelup
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload

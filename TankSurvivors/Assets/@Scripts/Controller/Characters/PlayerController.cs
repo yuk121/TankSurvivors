@@ -313,6 +313,9 @@ public class PlayerController : CreatureController
         // 레벨업이 가능한 경험치
         if (CurExp >= nextRequiredExp)
         {
+             // 사운드 
+            SoundManager.Instance.Play("SFX_Levelup", Define.eSoundType.SFX, -15f);
+
             CurExp -= nextRequiredExp;
 
             CurLevel++;

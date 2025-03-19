@@ -156,6 +156,8 @@ public class GameManager : FSM<eGameManagerState>
     private void InTitle()
     {
         _bTouchToStart = false;
+
+        SoundManager.Instance.Play("BGM_Title", Define.eSoundType.BGM, -10);
     }
 
     private void ModifyTitle()
@@ -185,6 +187,7 @@ public class GameManager : FSM<eGameManagerState>
     {
         _bGoLobby = false;
         _bStageStart = false;
+        SoundManager.Instance.Play("BGM_Lobby", Define.eSoundType.BGM, -10);
     }
 
     private void ModifyLobby()
@@ -238,6 +241,8 @@ public class GameManager : FSM<eGameManagerState>
 
         _spawnPools = Utils.GetOrAddComponent<SpawningPools>(gameObject);
         _spawnPools.StartSpawn();
+
+        SoundManager.Instance.Play("BGM_Game", Define.eSoundType.BGM, -20);
     }
 
     private void ModifyGame()
@@ -364,6 +369,15 @@ public class GameManager : FSM<eGameManagerState>
         if(_bPause == false)
         {
             UndoState();
+        }
+
+        if(_bGoLobby == true)
+        {
+            Managers.Instance.SceneManager.LoadScene(eGameManagerState.Lobby.ToString(), () =>
+            {
+                MoveState(eGameManagerState.Lobby);
+                return;
+            });
         }
     }
 

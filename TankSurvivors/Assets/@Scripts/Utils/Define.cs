@@ -55,6 +55,14 @@ public static class Define
         Apple,
         OneStore,
     }
+
+    public enum eSoundType
+    {
+        BGM,
+        SUB_BGM,
+        SFX,
+        PLAYER
+    }
     public enum eSceneType
     {
         Cs,

@@ -11,7 +11,9 @@ public class TankShell : ActionSkill
     {
         base.UseSkill(owner);
 
-        // TODO : 사운드 추가
+        // 사운드 
+        SoundManager.Instance.Play(SkillData.castSound, Define.eSoundType.SFX, -15f);
+
         Transform spawnTrans = GameManager.Instance.Player.DummyFirePos;
 
         // 포구 화염 

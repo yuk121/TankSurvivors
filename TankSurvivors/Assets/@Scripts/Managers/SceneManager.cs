@@ -13,6 +13,10 @@ public class SceneManager : MonoBehaviour
 
     private IEnumerator LoadSceneRoutine(string sceneName, Action pCallback)
     {
+        // 로딩시 소리 끄기
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.StopAllSound();
+
         // 로딩 씬 먼저 로드
         yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Loading");
 
