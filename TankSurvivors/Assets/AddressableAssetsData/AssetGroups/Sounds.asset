@@ -72,6 +72,66 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
+  - m_GUID: 8b7144438a9b3c44eac4afcdd74a15f1
+    m_Address: SFX_BossJump
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 4301649e90574934a9fd09ca2c275500
+    m_Address: SFX_BossJumpAttack
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: bcdaf40ff97efdc44afa86b7e1ae9a1c
+    m_Address: SFX_CollectGem
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: ee68e85097a55264e92e72a178670e6d
+    m_Address: SFX_Defeat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 70f017223057a2348a07f2c9aefed347
+    m_Address: SFX_EnemyDie
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: c9f1b842f60195e4caa09ea21ab9d404
+    m_Address: SFX_ElectircField
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 015d52a64f21e9d448624c995ed8ff0d
+    m_Address: SFX_EnemyHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 1a8bb8b4723ae574fb9afc8e4eeee950
+    m_Address: SFX_MineExplosion
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 5456db97bc73c904892b144e068a5d0e
+    m_Address: SFX_OpenPopup
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: e2e3f7e37943d1942885f17494a9a995
+    m_Address: SFX_TankHit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 7d5fe9ae34466764fbfbb33a5dc3544a
+    m_Address: SFX_Touch
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: e968c1b37eab0b04797f78257a33c733
+    m_Address: SFX_WarningBoss
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
   m_SchemaSet:

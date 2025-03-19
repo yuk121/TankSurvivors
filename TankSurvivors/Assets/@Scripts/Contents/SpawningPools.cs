@@ -19,6 +19,11 @@ public class SpawningPools : MonoBehaviour
         _corSpawn = StartCoroutine(SpawnCreatureCor());
     }
 
+    public void StopSpawn()
+    {
+        StopAllCoroutines();
+    }
+
 #if UNITY_EDITOR
     private void Update()
     {
@@ -81,6 +86,9 @@ public class SpawningPools : MonoBehaviour
             // 보스 소환
             if (_gameTimeMin >= waveInfo.spawnBossTime)
             {
+                // 사운드
+                SoundManager.Instance.Play("SFX_WarningBoss", Define.eSoundType.SFX);
+
                 GameManager.Instance.IsBossSpawned = true;
 
                 Vector3 spawnPos = Utils.GetRotatedCamOutRandPos3D(Camera.main);

@@ -131,7 +131,11 @@ public class HitDetection : BaseController
                 KnockBack(mon);
                 mon.OnDamaged(_owner, damageFinal);
                 break;
-            case Define.eSkillType.Mine:   
+            case Define.eSkillType.Mine:
+
+                // »ç¿îµå
+                SoundManager.Instance.Play(_skillData.hitSound, Define.eSoundType.SFX);
+
                 mon.OnDamaged(_owner, damageFinal);
                 CreateHitEffect();
                 Managers.Instance.ObjectManager.Despawn(this);

@@ -49,6 +49,9 @@ public class DropItemGem : DropItemController
 
     public override void GetItemCompleted()
     {
+        // »ç¿îµå
+        SoundManager.Instance.Play("SFX_CollectGem", Define.eSoundType.SFX);
+
         _player.GetExp(expAmount);
         Managers.Instance.ObjectManager.Despawn(this);
     }

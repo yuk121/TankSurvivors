@@ -18,6 +18,9 @@ public class ElectircField : ActionSkill
 
     public void UpdateElectricField()
     {
+        // 사운드
+        SoundManager.Instance.Play(SkillData.castSound, Define.eSoundType.SFX);
+
         // 첫 생성
         if (_electricField == null)
         {

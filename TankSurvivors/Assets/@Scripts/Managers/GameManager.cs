@@ -250,6 +250,7 @@ public class GameManager : FSM<eGameManagerState>
         // 플레이어 사망시 Result 
         if (CheckPlayerAlive() == false)
         {
+            _spawnPools.StopSpawn();
             MoveState(eGameManagerState.Result);
             return;
         }
@@ -264,6 +265,7 @@ public class GameManager : FSM<eGameManagerState>
         // 보스를 잡은 경우
         if(_isBossSpawned == true && CheckEnemyBossAlive() == false)
         {
+            _spawnPools.StopSpawn();
             MoveState(eGameManagerState.Result);
             return;
         }
@@ -373,6 +375,8 @@ public class GameManager : FSM<eGameManagerState>
 
         if(_bGoLobby == true)
         {
+            _spawnPools.StopSpawn();
+
             Managers.Instance.SceneManager.LoadScene(eGameManagerState.Lobby.ToString(), () =>
             {
                 MoveState(eGameManagerState.Lobby);
@@ -393,10 +397,15 @@ public class GameManager : FSM<eGameManagerState>
     #region Result
     private void InResult()
     {
+        SoundManager.Instance.StopAllSound();
+
         if (CheckPlayerAlive() == false)
         {
             // 게임 오버 
             GameData.isGameEnd = true;
+
+            // 사운드
+            SoundManager.Instance.Play("SFX_Defeat", Define.eSoundType.SFX);
 
             // 패배 팝업창
             UIPopup_GameResult_Defeat popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Defeat>();
@@ -410,6 +419,9 @@ public class GameManager : FSM<eGameManagerState>
             // 클리어 이후 보상 처리
             StageClearProcess(() =>
            {
+               // 사운드
+               SoundManager.Instance.Play("BGM_Victory", Define.eSoundType.BGM);
+
                // 승리 팝업창
                UIPopup_GameResult_Victory popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_GameResult_Victory>();
                popup.Set();

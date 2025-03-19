@@ -238,6 +238,9 @@ public class MonsterController : CreatureController
 
     public void AnimEvent_SkillDamage()
     {
+        // 사운드
+        SoundManager.Instance.Play(_skillBook.PrevUseSkill.SkillData.hitSound, Define.eSoundType.SFX);
+
         // 스킬 끝날 때 스킬 공격 범위 안에 있는지 확인
         bool isNear = CheckSkillRangePlayer(_skillBook.PrevUseSkill.SkillData.attackRange);
 
@@ -248,9 +251,7 @@ public class MonsterController : CreatureController
             float damageSkill = _skillBook.PrevUseSkill.SkillData.damage;
             float damageSkillIncRate = _skillBook.PrevUseSkill.SkillData.damageIncRate;
             float damageFinal = (float)(stageLevel * damageSkillIncRate) + damageSkill;
-
-            // TODO : 사운드 추가
-
+        
             _target.OnDamaged(this , damageFinal);
         }
     }
@@ -336,6 +337,9 @@ public class MonsterController : CreatureController
     {
         base.OnDamaged(attacker, damage);
 
+        // 사운드
+        SoundManager.Instance.Play("SFX_EnemyHit", Define.eSoundType.SFX);
+
         // Render
         SetDamagedColor();
         Invoke("SetDefaultColor", 0.2f);
@@ -343,7 +347,6 @@ public class MonsterController : CreatureController
 
     public override void OnDead()
     {
-        // TODO : 죽는 소리 추가
         GetComponent<Collider>().enabled = false;
         _isAlive = false;
         // 죽는 애니메이션 재생 
@@ -353,6 +356,9 @@ public class MonsterController : CreatureController
     public void AnimeEvent_DeadEnd()
     {
         DropItem();
+
+        // 사운드
+        SoundManager.Instance.Play("SFX_EnemyDie", Define.eSoundType.SFX);
 
         // 죽은 개체 카운트 증가
         GameManager.Instance.GameData.killCount++;

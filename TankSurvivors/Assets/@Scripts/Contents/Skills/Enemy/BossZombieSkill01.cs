@@ -12,6 +12,9 @@ public class BossZombieSkill01 : ActionSkill
     {
         base.UseSkill(owner);
 
+        // »ç¿îµå
+        SoundManager.Instance.Play(SkillData.castSound, Define.eSoundType.SFX);
+
         _playerPos = GameManager.Instance.Player.transform.position;
 
         if (_corMoveToPlayer != null)

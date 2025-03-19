@@ -314,7 +314,7 @@ public class PlayerController : CreatureController
         if (CurExp >= nextRequiredExp)
         {
              // 사운드 
-            SoundManager.Instance.Play("SFX_Levelup", Define.eSoundType.SFX, -15f);
+            SoundManager.Instance.Play("SFX_Levelup", Define.eSoundType.SFX);
 
             CurExp -= nextRequiredExp;
 
@@ -333,7 +333,8 @@ public class PlayerController : CreatureController
 
     public override void OnDamaged(BaseController attacker, float damage)
     {
-        // TODO : 맞는 소리 추가
+        // 사운드
+        SoundManager.Instance.Play("SFX_TankHit", Define.eSoundType.SFX);
 
         base.OnDamaged(attacker, damage);
 

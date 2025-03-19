@@ -36,7 +36,10 @@ public class UIManager
     /// <returns></returns>
     public T OpenPopup<T>(bool bPause = false) where T : UI_Base
     {
-        if(bPause == true)
+        // »ç¿îµå
+        SoundManager.Instance.Play("SFX_OpenPopup", Define.eSoundType.SFX);
+
+        if (bPause == true)
         {
             GameManager.Instance.SetPause(true);
         }

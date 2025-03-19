@@ -12,7 +12,7 @@ public class TankShell : ActionSkill
         base.UseSkill(owner);
 
         // »ç¿îµå 
-        SoundManager.Instance.Play(SkillData.castSound, Define.eSoundType.SFX, -15f);
+        SoundManager.Instance.Play(SkillData.castSound, Define.eSoundType.SFX, -25f);
 
         Transform spawnTrans = GameManager.Instance.Player.DummyFirePos;
 

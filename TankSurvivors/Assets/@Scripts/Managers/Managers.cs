@@ -74,4 +74,22 @@ public class Managers : MonoBehaviour
     {
         _instance._sceneManager = Instance.gameObject.AddComponent<SceneManager>();
     }
+
+    public void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 사운드
+            SoundManager.Instance.Play("SFX_Touch", Define.eSoundType.SFX);
+        }
+#elif UNITY_ANDROID
+
+        if (Input.touchCount == 1)
+        {
+            // 사운드
+            SoundManager.Instance.Play("SFX_Touch", Define.eSoundType.SFX);
+        }
+#endif
+    }
 }

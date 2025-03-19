@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using static Unity.VisualScripting.Member;
 
 public class SoundManager : MonoBehaviour
 {
@@ -82,6 +83,10 @@ public class SoundManager : MonoBehaviour
     public void Play(string key, Define.eSoundType type, float volume_db = 0)
     {
         AudioClip clip = LoadClips(key, type);
+
+        if (clip == null)
+            return;
+
         List<AudioSource> sourceList = new List<AudioSource>();
 
         volume_db = Mathf.Clamp(volume_db, -80f, 20f);
@@ -90,7 +95,11 @@ public class SoundManager : MonoBehaviour
         {
             if(_soundData[i].type == type)
             {
-                _soundData[i].mixerGroup.audioMixer.SetFloat($"{type}", volume_db);
+                if (_soundData[i].mixerGroup != null)
+                {
+                    _soundData[i].mixerGroup.audioMixer.SetFloat($"{type}{i}", volume_db);
+                }
+
                 sourceList = _soundData[i].sourceList;
                 break;
             }
@@ -102,30 +111,34 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        // 모든 audioSource가 플레이 중인지 확인
-        bool allSourcePlaying = true;
-
-        for(int i =0; i < sourceList.Count; i++)
-        { 
-            if(sourceList[i].isPlaying == false)
+        // 사용 가능한 오디오 소스를 찾아 재생
+        foreach (var source in sourceList)
+        {
+            if (source.isPlaying == false)
             {
-                allSourcePlaying = false;
-            
-                // 소리재생
-                sourceList[i].clip = clip;
-                sourceList[0].Play();
-              
-                break;
+                if (type == Define.eSoundType.SFX)
+                {
+                    source.PlayOneShot(clip);
+                }
+                else
+                {
+                    source.clip = clip;
+                    source.Play();
+                }
+                return;
             }
         }
 
-        // 모든 소스가 사운드가 플레이중이라면 강제적으로 첫번째 소스를 사용
-        if(allSourcePlaying == true)
+        // 모든 소스가 재생 중이라면 첫 번째 소스를 강제로 사용
+        if (type == Define.eSoundType.SFX)
+        {
+            sourceList[0].PlayOneShot(clip);
+        }
+        else
         {
             sourceList[0].clip = clip;
             sourceList[0].Play();
         }
-
     }
 
     public void StopAllSound()
@@ -156,11 +169,8 @@ public class SoundManager : MonoBehaviour
                 {                
                     clip = Managers.Instance.ResourceManager.Load<AudioClip>(key);
 
-                    if(clip == null)
-                    {
-                        Debug.LogError($"clip {key} is not found");
+                    if (clip == null)
                         break;
-                    }
 
                     _soundData[i].clipList.Add(clip);
                 }
