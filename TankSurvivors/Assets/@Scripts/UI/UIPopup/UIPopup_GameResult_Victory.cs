@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIPopup_GameResult_Victory : UI_Base
+public class UIPopup_GameResult_Victory : UI_Popup
 {
     #region Enum_UI
 
@@ -35,6 +35,8 @@ public class UIPopup_GameResult_Victory : UI_Base
         {
             return false;
         }
+
+        _bAllowEscapeKey = false;
 
         //Bind
         BindButton(typeof(eButton));

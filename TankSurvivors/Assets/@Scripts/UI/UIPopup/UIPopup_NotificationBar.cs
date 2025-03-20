@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-public class UIPopup_NotificationBar : UI_Base
+public class UIPopup_NotificationBar : UI_Popup
 {
     #region Enum UI
     private enum eText
@@ -30,6 +30,8 @@ public class UIPopup_NotificationBar : UI_Base
     {
         if (base.Init() == false)
             return false;
+
+        _bAllowEscapeKey = false;
 
         // Bind
         BindImage(typeof(eImage));

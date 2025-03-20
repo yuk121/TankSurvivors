@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPopup_SkillSelect : UI_Base
+public class UIPopup_SkillSelect : UI_Popup
 {
     #region Enum_UI
     enum eGameObject
@@ -22,6 +22,9 @@ public class UIPopup_SkillSelect : UI_Base
         {
             return false;
         }
+
+        _bAllowEscapeKey = false;
+
         // Bind
         BindObject(typeof(eGameObject));
 

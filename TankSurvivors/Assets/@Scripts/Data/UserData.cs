@@ -54,12 +54,13 @@ public class UserData
     #endregion
 
     public string _uid;
+    public int _userChaterId = 0;
     public int _userExp;
     public int _userStaminaMax;
     public int _userStaminaCurrent;
     public UserCurrency _userCurrency = new UserCurrency();
     public Define.eLoginPlatform _lastPlatform;
-    public string _lastAccessDate;
+    public long _lastAccessTimestamp;
     public UserOption _userOption = new UserOption();
     public List<bool> _stageClearList = new List<bool>();       // 클리어 할 때마다 true값이 추가됨 (가변형)
     public int _lastSelectStageLevel;
@@ -67,12 +68,13 @@ public class UserData
     public void ClearUserData()
     {
         _uid = "-1";
+        _userChaterId = 10001;
         _userExp = 0;
         _userStaminaMax = 100;
         _userStaminaCurrent = 100;
         _userCurrency.Clear();
         _lastPlatform = Define.eLoginPlatform.None;
-        _lastAccessDate = DateTime.Now.ToString();
+        _lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         _userOption.Clear();
         _stageClearList.Clear();
         _lastSelectStageLevel = 1;

@@ -1,4 +1,4 @@
-using System.Linq;
+ï»¿using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +23,7 @@ public class SoundManager : MonoBehaviour
         [Header("Audio Clip")]
         public List<AudioClip> clipList = new List<AudioClip>();
 
-        [Header("Audio Source\n ---- Count ÀÔ·Â½Ã Source ÀÚµ¿ »ı¼º----")]
+        [Header("Audio Source\n ---- Count ì…ë ¥ì‹œ Source ìë™ ìƒì„±----")]
         public int sourceCount;
         public List<AudioSource> sourceList = new List<AudioSource>();
     }
@@ -44,7 +44,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        // »ç¿îµå ¸Å´ÏÀú ¼¼ÆÃ
+        // ì‚¬ìš´ë“œ ë§¤ë‹ˆì € ì„¸íŒ…
         for (int i = 0; i < _soundData.Count; i++)
         {
             int index = 0;
@@ -53,7 +53,7 @@ public class SoundManager : MonoBehaviour
                 GameObject obj = new GameObject();
                 AudioSource source = obj.AddComponent<AudioSource>();
                
-                // °¢ Å¸ÀÔ¿¡ ¸Â´Â ÀÌ¸§À¸·Î º¯°æ
+                // ê° íƒ€ì…ì— ë§ëŠ” ì´ë¦„ìœ¼ë¡œ ë³€ê²½
                 switch (_soundData[i].type)
                 {
                     case Define.eSoundType.BGM:
@@ -111,7 +111,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        // »ç¿ë °¡´ÉÇÑ ¿Àµğ¿À ¼Ò½º¸¦ Ã£¾Æ Àç»ı
+        // ì‚¬ìš© ê°€ëŠ¥í•œ ì˜¤ë””ì˜¤ ì†ŒìŠ¤ë¥¼ ì°¾ì•„ ì¬ìƒ
         foreach (var source in sourceList)
         {
             if (source.isPlaying == false)
@@ -129,7 +129,7 @@ public class SoundManager : MonoBehaviour
             }
         }
 
-        // ¸ğµç ¼Ò½º°¡ Àç»ı ÁßÀÌ¶ó¸é Ã¹ ¹øÂ° ¼Ò½º¸¦ °­Á¦·Î »ç¿ë
+        // ëª¨ë“  ì†ŒìŠ¤ê°€ ì¬ìƒ ì¤‘ì´ë¼ë©´ ì²« ë²ˆì§¸ ì†ŒìŠ¤ë¥¼ ê°•ì œë¡œ ì‚¬ìš©
         if (type == Define.eSoundType.SFX)
         {
             sourceList[0].PlayOneShot(clip);
@@ -163,13 +163,13 @@ public class SoundManager : MonoBehaviour
 
         for (int i = 0; i < _soundData.Count; i++)
         {
-            // »ç¿îµå Å¸ÀÔ È®ÀÎ
+            // ì‚¬ìš´ë“œ íƒ€ì… í™•ì¸
             if (_soundData[i].type == type)
             {
-                // ºÒ·¯¿À°íÀÚ ÇÏ´Â clipÀÌ Æ÷ÇÔµÇ¾îÀÖ´ÂÁö È®ÀÎ
+                // ë¶ˆëŸ¬ì˜¤ê³ ì í•˜ëŠ” clipì´ í¬í•¨ë˜ì–´ìˆëŠ”ì§€ í™•ì¸
                 clip = _soundData[i].clipList.Find(clip => clip.name == key);
                 
-                // clipÀÌ ¾ø´Ù¸é Sound Data¿¡ Å¬¸³ Ãß°¡
+                // clipì´ ì—†ë‹¤ë©´ Sound Dataì— í´ë¦½ ì¶”ê°€
                 if (clip == null)
                 {                
                     clip = Managers.Instance.ResourceManager.Load<AudioClip>(key);
@@ -185,5 +185,65 @@ public class SoundManager : MonoBehaviour
         }
 
         return clip;
+    }
+
+    public void SetVolume_MasterSound(float value)
+    {
+        int volume = (int)value;
+        Managers.Instance.UserDataManager.UserData._userOption.soundMaster = volume;
+
+        ApplyAllVolumes();
+    }
+
+    public void SetVolume_BGM(float value)
+    {
+        int volume = (int)value;
+        Managers.Instance.UserDataManager.UserData._userOption.soundBackground = volume;
+
+        ApplyAllVolumes();
+    }
+
+    public void SetVolume_SFX(float value)
+    {
+        int volume = (int)value;
+        Managers.Instance.UserDataManager.UserData._userOption.soundEffect = volume;
+
+        ApplyAllVolumes();
+    }
+
+    public void ApplyAllVolumes()
+    {
+        float masterVolume = Managers.Instance.UserDataManager.UserData._userOption.soundMaster / 100f;
+        float bgmVolume = Managers.Instance.UserDataManager.UserData._userOption.soundBackground / 100f;
+        float sfxVolume = Managers.Instance.UserDataManager.UserData._userOption.soundEffect / 100f;
+
+        ChageVolume(masterVolume * bgmVolume, Define.eSoundType.BGM);
+        ChageVolume(masterVolume * bgmVolume, Define.eSoundType.SUB_BGM);
+        ChageVolume(masterVolume * sfxVolume, Define.eSoundType.SFX);
+        ChageVolume(masterVolume * sfxVolume, Define.eSoundType.PLAYER);
+    }
+
+    private void ChageVolume(float volume, Define.eSoundType type)
+    {
+        List<AudioSource> sourceList = new List<AudioSource>();
+
+        for (int i = 0; i < _soundData.Count; i++)
+        {
+            if (_soundData[i].type == type)
+            {
+                sourceList = _soundData[i].sourceList;
+                break;
+            }
+        }
+
+        foreach (var source in sourceList)
+        {
+            source.volume = volume;
+        }
+    }
+
+    public void SaveSoundSetting()
+    {
+        Managers.Instance.UserDataManager.SaveUserData();
     }
 }

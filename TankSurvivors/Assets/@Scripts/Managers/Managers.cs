@@ -59,10 +59,13 @@ public class Managers : MonoBehaviour
     // UI
     private UIManager _uiManager = new UIManager();
     public UIManager UIMananger { get { return Instance?._uiManager; } }
- 
+
     //Scene
-    private SceneManager _sceneManager = new SceneManager();
-    public SceneManager SceneManager { get { return Instance?._sceneManager; } }   
+    private SceneManager _sceneManager;
+    public SceneManager SceneManager { get { return Instance?._sceneManager; } }
+
+    private OptionManager _optionManager = new OptionManager();
+    public OptionManager OptionManager { get { return Instance?._optionManager; } }
 
     // Core
 
@@ -78,19 +81,57 @@ public class Managers : MonoBehaviour
     public void Update()
     {
 #if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
+
+        if (GameManager.Instance != null && GameManager.Instance.GetSceneState() != eGameManagerState.Game)
         {
-            // 사운드
-            SoundManager.Instance.Play("SFX_Touch", Define.eSoundType.SFX);
+            if (Input.GetMouseButtonDown(0))
+            {
+                // 사운드
+                SoundManager.Instance.Play("SFX_Touch", Define.eSoundType.SFX);
+            }
         }
 #elif UNITY_ANDROID
-
-        if (Input.touchCount == 1)
+        if (GameManager.Instance != null && GameManager.Instance.GetSceneState() != eGameManagerState.Game)
         {
-            // 사운드
-            SoundManager.Instance.Play("SFX_Touch", Define.eSoundType.SFX);
+            if (Input.touchCount == 1)
+            {
+                // 사운드
+                SoundManager.Instance.Play("SFX_Touch", Define.eSoundType.SFX);
+            }
         }
 #endif
+
+        // 타이틀과 로비에서만 적용 , 팝업창이 없는 경우에만 뒤로가기 게임 종료 알림
+        if ((GameManager.Instance != null && _uiManager.GetPopupCount() == 0 &&
+            GameManager.Instance.GetSceneState() == eGameManagerState.Lobby) ||
+             GameManager.Instance.GetSceneState() == eGameManagerState.Title) 
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UIPopup_Notification popup = _uiManager.OpenPopupWithTween<UIPopup_Notification>();
+                popup.SetMessage("게임을 종료하시겠습니까?", () =>
+                {
+                    GameQuit();
+                }, null);
+            }
+        }
+    }
+
+    private void GameQuit()
+    {
+        _userDataManager.LogOutUser();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.ExitPlaymode();
+#else
+            Application.Quit(); 
+#endif
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (_userDataManager != null)
+            _userDataManager.SaveUserData();
     }
 
     public void Clear()

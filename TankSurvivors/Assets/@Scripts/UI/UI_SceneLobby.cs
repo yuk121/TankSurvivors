@@ -14,7 +14,8 @@ public class UI_SceneLobby : UI_Scene
     private enum eButton
     {
         Button_StageSelect,
-        Button_StageStart
+        Button_StageStart,
+        Button_Setting,
     }
     private enum eImage
     {
@@ -34,6 +35,7 @@ public class UI_SceneLobby : UI_Scene
 
     private Button _btnStageSelect;
     private Button _btnStageStart;
+    private Button _btnSetting;
 
     private TMP_Text _txtStamina;
     private TMP_Text _txtGold;
@@ -57,6 +59,7 @@ public class UI_SceneLobby : UI_Scene
         // Get
         _btnStageSelect = GetButton((int)eButton.Button_StageSelect);
         _btnStageStart = GetButton((int)eButton.Button_StageStart);
+        _btnSetting = GetButton((int)eButton.Button_Setting);
 
         _txtStamina = GetText((int)eText.Text_Stamina);
         _txtGold = GetText((int)eText.Text_Gold);
@@ -68,6 +71,7 @@ public class UI_SceneLobby : UI_Scene
         // 
         _btnStageSelect.onClick.AddListener(OnClick_StageSelect);
         _btnStageStart.onClick.AddListener(OnClick_StageStart);
+        _btnSetting.onClick.AddListener(OnClick_Setting);
 
         SetUserInfo();
         SetStage();
@@ -90,6 +94,9 @@ public class UI_SceneLobby : UI_Scene
         int stage = Managers.Instance.UserDataManager.GetLastSelectStage();
         StageData stageData = Managers.Instance.DataTableManager.DataTableStage.GetStageInfo(stage);
         string stageName = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(stageData.stageLocalizeName);
+
+        Image stageIcon = _btnStageSelect.GetComponent<Image>();
+        stageIcon.sprite = Managers.Instance.ResourceManager.Load<Sprite>(stageData.stageIcon);
        
         _txtStage.text = $"{stageName}";
         _txtRequiredStamina.text = $" X {Define.STAGE_ENTER_STAMINA}";
@@ -102,6 +109,12 @@ public class UI_SceneLobby : UI_Scene
         UIPopup_StageSelect popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_StageSelect>();
         popup.Set();
     }
+
+    private void Update_LobbyUI()
+    {
+        SetStage();
+    }
+
     private void OnClick_StageStart()
     {
         SoundManager.Instance.PlayButtonSound();
@@ -120,5 +133,25 @@ public class UI_SceneLobby : UI_Scene
         // 현재 선택된 스테이지 값 건네주기
         int stageIndex = Managers.Instance.UserDataManager.GetLastSelectStage();
         GameManager.Instance.StageStart(stageIndex);
+    }
+
+    private void OnClick_Setting()
+    {
+        SoundManager.Instance.PlayButtonSound();
+
+        UIPopup_Setting popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_Setting>();
+        popup.Set();
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.Update_LobbyUI += Update_LobbyUI;
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.Update_LobbyUI -= Update_LobbyUI;
     }
 }

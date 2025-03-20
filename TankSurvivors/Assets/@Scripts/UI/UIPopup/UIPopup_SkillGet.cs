@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Unity.VisualScripting;
 
-public class UIPopup_SkillGet : UI_Base
+public class UIPopup_SkillGet : UI_Popup
 {
     #region Enum_UI
     private enum eGameObject
@@ -38,6 +38,8 @@ public class UIPopup_SkillGet : UI_Base
         {
             return false;
         }
+        
+        _bAllowEscapeKey = false;
 
         _trans = transform;
 

@@ -47,6 +47,7 @@ public class GameManager : FSM<eGameManagerState>
     private bool _bWait = false;
 
     // Lobby
+    public event Action Update_LobbyUI;
     private bool _bStageStart = false;
     private int _selectStage = 1;
 
@@ -104,11 +105,14 @@ public class GameManager : FSM<eGameManagerState>
         // 유저 데이터 정보 불러오고 확인하기
         UserData user = Managers.Instance.UserDataManager.LoadUserData();
 
-        if(user == null)
+        if (user == null)
         {
             Managers.Instance.UserDataManager.NewStartUser();
             Managers.Instance.UserDataManager.SaveUserData();
         }
+
+        // 사운드 설정값 불러오기
+        SoundManager.Instance.ApplyAllVolumes();
 
         _bWait = true;
         // 데이터 테이블 불러오기
@@ -116,6 +120,7 @@ public class GameManager : FSM<eGameManagerState>
         {
             _bWait = false;
         });
+
 
         while (_bWait)
             yield return null;
@@ -186,10 +191,10 @@ public class GameManager : FSM<eGameManagerState>
     private void InLobby()
     {
         Managers.Instance.Clear();
-       
+
         _bGoLobby = false;
         _bStageStart = false;
-        
+
         // 사운드
         SoundManager.Instance.Play("BGM_Lobby", Define.eSoundType.BGM, -10);
 
@@ -197,7 +202,7 @@ public class GameManager : FSM<eGameManagerState>
 
     private void ModifyLobby()
     {
-        if(_bStageStart == true)
+        if (_bStageStart == true)
         {
             _bStageStart = false;
 
@@ -212,7 +217,13 @@ public class GameManager : FSM<eGameManagerState>
     public void StageStart(int selectStage)
     {
         _selectStage = selectStage;
-        _bStageStart=true;
+        _bStageStart = true;
+    }
+
+    public void UpdateLobby()
+    {
+        if (Update_LobbyUI != null)
+            Update_LobbyUI.Invoke();
     }
     #endregion
 
@@ -223,7 +234,7 @@ public class GameManager : FSM<eGameManagerState>
 
         _gameData.Clear();
 
-        int userCharId = 10001;
+        int userCharId = Managers.Instance.UserDataManager.UserData._userChaterId;
         // 플레이어 소환
         _player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
 
@@ -233,7 +244,7 @@ public class GameManager : FSM<eGameManagerState>
 
         WaveData waveInfo = Managers.Instance.DataTableManager.DataTableWave.GetWaveData(_selectStage);
         GameData.waveInfo = waveInfo;
-        
+
         // 맵
         string mapPrefab = $"MapPrefab/{stageInfo.stagePrefab}.prefab";
         GameObject map = Managers.Instance.ResourceManager.Instantiate(mapPrefab);
@@ -270,7 +281,7 @@ public class GameManager : FSM<eGameManagerState>
         }
 
         // 보스를 잡은 경우
-        if(_isBossSpawned == true && CheckEnemyBossAlive() == false)
+        if (_isBossSpawned == true && CheckEnemyBossAlive() == false)
         {
             _spawnPools.StopSpawn();
             MoveState(eGameManagerState.Result);
@@ -284,9 +295,14 @@ public class GameManager : FSM<eGameManagerState>
         }
 
 #endif
+        // 뒤로가기 버튼 누를시 pause 창 띄우기
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIPopup_Pause popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_Pause>(true);
+        }
 
-            _gameData.curTime += Time.deltaTime;
-    }
+        _gameData.curTime += Time.deltaTime;
+    } 
 
     public bool CheckPlayerAlive()
     {
@@ -446,11 +462,15 @@ public class GameManager : FSM<eGameManagerState>
 
     private void StageClearProcess(Action pCallback)
     {
+        StageData stageData = _gameData.stageInfo;
         // 유저 데이터 처리
-        Managers.Instance.UserDataManager.UseStamina(_gameData.stageInfo);
+        Managers.Instance.UserDataManager.UseStamina(stageData);
 
         // 유저 재화 획득
-        Managers.Instance.UserDataManager.GetReward(_gameData.stageInfo);
+        Managers.Instance.UserDataManager.GetReward(stageData);
+
+        // 스테이지 클리어 처리
+        Managers.Instance.UserDataManager.StageClear(stageData);
 
         // 저장
         Managers.Instance.UserDataManager.SaveUserData();

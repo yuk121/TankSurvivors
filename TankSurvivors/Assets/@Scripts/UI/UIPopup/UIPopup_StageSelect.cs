@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPopup_StageSelect : UI_Base
+public class UIPopup_StageSelect : UI_Popup
 {
     #region Enum UI
 
@@ -136,8 +136,15 @@ public class UIPopup_StageSelect : UI_Base
         }
         else
         {
+
             Managers.Instance.UserDataManager.UserData._lastSelectStageLevel = currentStageIndex + 1;
             Managers.Instance.UserDataManager.SaveUserData();
+           
+            // 로비에 반영
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.UpdateLobby();
+            }
 
             Managers.Instance.UIMananger.ClosePopup();
         }

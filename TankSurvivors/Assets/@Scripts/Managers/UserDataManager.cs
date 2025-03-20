@@ -13,6 +13,9 @@ public class UserDataManager
     {
         _userData = new UserData();
         _userData.ClearUserData();
+
+        // UID 생성
+        _userData._uid = Managers.Instance.OptionManager.CreateUID();
     }
 
     public int GetUserLevel()
@@ -88,6 +91,21 @@ public class UserDataManager
         }
     }
 
+    // 현재 깬 스테이지에 스테이지 클리어 이력이 있는지 확인하는 메소드
+    public void StageClear(StageData stage)
+    {
+        // 클리어 한 경우
+        if(_userData._stageClearList.Count >= stage.stageIndex && _userData._stageClearList[stage.stageIndex-1] == true)
+        {
+            return;
+        }
+        else
+        {
+            _userData._stageClearList.Add(true);
+            SaveUserData();
+        }
+    }
+
     private bool CheckFirstStageClear(StageData stageData)
     {
         // _stageClearList.Count는 깬 스테이지 수의 값을 가지고 있으며 stageIndex는 1부터 시작함
@@ -97,6 +115,11 @@ public class UserDataManager
         }
 
         return true;
+    }
+
+    public void LogOutUser()
+    {
+        _userData._lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
 
     public UserData LoadUserData()

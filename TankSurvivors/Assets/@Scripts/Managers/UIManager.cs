@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class UIManager
 {
-    private Stack<UI_Base> _uiPopupStack = new Stack<UI_Base>();
+    private Stack<UI_Popup> _uiPopupStack = new Stack<UI_Popup>();
     private UI_Scene _curScene = null;
 
     public Transform UICanvas
@@ -34,7 +34,7 @@ public class UIManager
     /// <typeparam name="T"></typeparam>
     /// <param name="bPause"> </param> 팝업창 오픈시 일시정지 여부 확인
     /// <returns></returns>
-    public T OpenPopup<T>(bool bPause = false) where T : UI_Base
+    public T OpenPopup<T>(bool bPause = false) where T : UI_Popup
     {
         // 사운드
         SoundManager.Instance.Play("SFX_OpenPopup", Define.eSoundType.SFX);
@@ -75,7 +75,7 @@ public class UIManager
     /// <param name="ease"> 트윈 효과</param>
     /// <param name="bPause">팝업창 오픈시 일시정지 여부 확인</param>
     /// <returns></returns>
-    public T OpenPopupWithTween<T>(bool bPause = false, Ease ease = Ease.OutBack) where T : UI_Base
+    public T OpenPopupWithTween<T>(bool bPause = false, Ease ease = Ease.OutBack) where T : UI_Popup
     {
         T popup = OpenPopup<T>(bPause);
 
@@ -98,6 +98,8 @@ public class UIManager
                 popupTrans.DOScale(1f, 0.1f) // 원래 크기(1배)로 돌아옴 (0.1초 동안)
                     .SetEase(Ease.InOutQuad);
             });
+
+        popupTrans.DOKill();
 
         return popup;
     }
@@ -125,7 +127,7 @@ public class UIManager
             GameManager.Instance.SetPause(false);
         }
 
-        UI_Base popup = _uiPopupStack.Pop();
+        UI_Popup popup = _uiPopupStack.Pop();
         Managers.Instance.ResourceManager.Destroy(popup.gameObject);
         popup = null;
     }
@@ -157,5 +159,10 @@ public class UIManager
         T ui = Utils.GetOrAddComponent<T>(go);
 
         return ui;
+    }
+
+    public int GetPopupCount()
+    {
+        return _uiPopupStack.Count;
     }
 }
