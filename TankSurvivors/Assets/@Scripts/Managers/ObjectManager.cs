@@ -286,6 +286,14 @@ public class ObjectManager
             }
         }
     }
+
+    public void Clear()
+    {
+        Player = null;
+        Monsters.Clear();
+        Projectiles.Clear();
+        Gems.Clear();
+    }
 #if UNITY_EDITOR
     public void CheatAllKillMonsters()
     {

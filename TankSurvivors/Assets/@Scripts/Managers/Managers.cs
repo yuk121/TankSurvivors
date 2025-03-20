@@ -92,4 +92,10 @@ public class Managers : MonoBehaviour
         }
 #endif
     }
+
+    public void Clear()
+    {
+        ObjectManager.Clear();
+        PoolManager.Clear();
+    }
 }

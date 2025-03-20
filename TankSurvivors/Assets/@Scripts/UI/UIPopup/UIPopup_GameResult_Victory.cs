@@ -51,6 +51,9 @@ public class UIPopup_GameResult_Victory : UI_Base
         if (_init == false)
             Init();
 
+        // ¼Ò¸®
+        SoundManager.Instance.Play("BGM_Victory", Define.eSoundType.BGM);
+
         GameData gameData = GameManager.Instance.GameData;
 
         // Stage
@@ -81,6 +84,7 @@ public class UIPopup_GameResult_Victory : UI_Base
 
     private void OnClick_OK()
     {
+        SoundManager.Instance.PlayButtonSound();
         GameManager.Instance.GoLobby();
         Managers.Instance.UIMananger.ClosePopup();
     }

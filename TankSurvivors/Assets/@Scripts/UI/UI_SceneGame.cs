@@ -140,7 +140,9 @@ public class UI_SceneGame : UI_Scene
 
     private void OnClick_Pause()
     {
-       UIPopup_Pause popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_Pause>(true);
+        SoundManager.Instance.PlayButtonSound();
+
+        UIPopup_Pause popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_Pause>(true);
     }
 
     private void SetHpBossUI()

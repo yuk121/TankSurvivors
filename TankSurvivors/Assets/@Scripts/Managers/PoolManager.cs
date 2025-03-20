@@ -109,4 +109,9 @@ public class PoolManager
 
         return false;
     }
+
+    public void Clear()
+    {
+        _pools.Clear();
+    }
 }

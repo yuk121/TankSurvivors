@@ -97,11 +97,15 @@ public class UI_SceneLobby : UI_Scene
 
     private void OnClick_StageSelect()
     {
+        SoundManager.Instance.PlayButtonSound();
+
         UIPopup_StageSelect popup = Managers.Instance.UIMananger.OpenPopup<UIPopup_StageSelect>();
         popup.Set();
     }
     private void OnClick_StageStart()
     {
+        SoundManager.Instance.PlayButtonSound();
+
         int requiredStamina = Define.STAGE_ENTER_STAMINA;
         bool checkStamina = Managers.Instance.UserDataManager.CheckStamina(requiredStamina);
     

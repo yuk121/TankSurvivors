@@ -67,12 +67,14 @@ public class UIPopup_GameResult_Defeat : UI_Base
 
     private void OnClick_OK()
     {
+        SoundManager.Instance.PlayButtonSound();
         GameManager.Instance.GoLobby();
         Managers.Instance.UIMananger.ClosePopup();
     }
 
     private void OnClick_Retry()
     {
+        SoundManager.Instance.PlayButtonSound();
         GameManager.Instance.RetryStage();
         Managers.Instance.UIMananger.ClosePopup();
     }

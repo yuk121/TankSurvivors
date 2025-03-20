@@ -86,12 +86,14 @@ public class UIPopup_Pause : UI_Base
 
     private void OnClick_Lobby()
     {
+        SoundManager.Instance.PlayButtonSound();
         GameManager.Instance.GoLobby();
         Managers.Instance.UIMananger.ClosePopup();
     }
 
     private void OnClick_Continue()
     {
+        SoundManager.Instance.PlayButtonSound();
         Managers.Instance.UIMananger.ClosePopup();
     }
 }

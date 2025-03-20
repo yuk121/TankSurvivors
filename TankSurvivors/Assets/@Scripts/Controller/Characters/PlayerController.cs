@@ -258,6 +258,9 @@ public class PlayerController : CreatureController
 
         foreach(MonsterController mc in Managers.Instance.ObjectManager.Monsters)
         {
+            if(mc == null)
+                continue;
+
             curDis = Vector3.Distance(_tankBody.position, mc.transform.position);
             
             if(curDis < minDis)

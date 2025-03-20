@@ -358,7 +358,7 @@ public class MonsterController : CreatureController
         DropItem();
 
         // 사운드
-        SoundManager.Instance.Play("SFX_EnemyDie", Define.eSoundType.SFX);
+        //SoundManager.Instance.Play("SFX_EnemyDie", Define.eSoundType.SFX);
 
         // 죽은 개체 카운트 증가
         GameManager.Instance.GameData.killCount++;

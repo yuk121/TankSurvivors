@@ -132,6 +132,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - preload
+  - m_GUID: 4b1905b9e7832ee4c87b220ab7767fc2
+    m_Address: SFX_Button
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 3c989b56458e11045932d2af15e72986
+    m_Address: SFX_CollectHeart
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: ec6f48a9321b0fc4986dc3d277e3bdcc
+    m_Address: SFX_CollectBomb
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
+  - m_GUID: 7d6cc821898d41b47b6b5f2b3db97bd3
+    m_Address: BGM_Victory
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - preload
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8ce04d6eb91df454f806b356cc565478, type: 2}
   m_SchemaSet:

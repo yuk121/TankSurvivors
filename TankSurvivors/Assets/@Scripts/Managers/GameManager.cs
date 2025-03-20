@@ -185,9 +185,14 @@ public class GameManager : FSM<eGameManagerState>
     #region Lobby
     private void InLobby()
     {
+        Managers.Instance.Clear();
+       
         _bGoLobby = false;
         _bStageStart = false;
+        
+        // 사운드
         SoundManager.Instance.Play("BGM_Lobby", Define.eSoundType.BGM, -10);
+
     }
 
     private void ModifyLobby()
@@ -214,6 +219,8 @@ public class GameManager : FSM<eGameManagerState>
     #region Game
     private void InGame()
     {
+        Managers.Instance.Clear();
+
         _gameData.Clear();
 
         int userCharId = 10001;
@@ -270,7 +277,15 @@ public class GameManager : FSM<eGameManagerState>
             return;
         }
 
-        _gameData.curTime += Time.deltaTime;
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            _gameData.curTime += 60;
+        }
+
+#endif
+
+            _gameData.curTime += Time.deltaTime;
     }
 
     public bool CheckPlayerAlive()
@@ -448,6 +463,8 @@ public class GameManager : FSM<eGameManagerState>
     {
         if (_bGoLobby == true)   // 로비로 나가는 경우
         {
+            _bGoLobby = false;
+
             Managers.Instance.SceneManager.LoadScene(eGameManagerState.Lobby.ToString(), () =>
             {
                 MoveState(eGameManagerState.Lobby);
@@ -456,6 +473,8 @@ public class GameManager : FSM<eGameManagerState>
         }
         else if (_bRetryStage == true)   // 재도전 하는 경우
         {
+            _bRetryStage = false;
+
             Managers.Instance.SceneManager.LoadScene(eGameManagerState.Game.ToString(), () =>
             {
                 MoveState(eGameManagerState.Game);

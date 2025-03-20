@@ -99,18 +99,22 @@ public class UIPopup_StageSelect : UI_Base
     }
 
     private void OnClick_StageRight()
-    {       
+    {
+        SoundManager.Instance.PlayButtonSound();
         _uiContentSwipe.SwipeRight();
         CheckButtonActive();
     }
     private void OnClick_StageLeft()
     {
+        SoundManager.Instance.PlayButtonSound();
         _uiContentSwipe.SwipeLeft();
         CheckButtonActive();
     }
 
     private void OnClick_StageSelect()
     {
+        SoundManager.Instance.PlayButtonSound();
+
         if (_bWait == true)
             return;
 
@@ -165,6 +169,7 @@ public class UIPopup_StageSelect : UI_Base
 
     private void OnClick_Back()
     {
+        SoundManager.Instance.PlayButtonSound();
         Managers.Instance.UIMananger.ClosePopup();
     }
 }

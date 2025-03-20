@@ -152,6 +152,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void PlayButtonSound()
+    {
+        Play("SFX_Button", Define.eSoundType.SFX);
+    }
+
     public AudioClip LoadClips(string key, Define.eSoundType type)
     {
         AudioClip clip = null;
