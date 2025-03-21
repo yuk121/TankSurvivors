@@ -105,7 +105,8 @@ public class GameManager : FSM<eGameManagerState>
         // 유저 데이터 정보 불러오고 확인하기
         UserData user = Managers.Instance.UserDataManager.LoadUserData();
 
-        if (user == null)
+        // uid가 없는경우 신규 유저
+        if (user._uid == null)
         {
             Managers.Instance.UserDataManager.NewStartUser();
             Managers.Instance.UserDataManager.SaveUserData();

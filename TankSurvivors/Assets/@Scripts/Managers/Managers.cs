@@ -134,6 +134,15 @@ public class Managers : MonoBehaviour
             _userDataManager.SaveUserData();
     }
 
+    private void OnApplicationPause(bool pause)
+    {
+        if(pause == true)
+        {
+            if (_userDataManager != null)
+                _userDataManager.SaveUserData();
+        }
+    }
+
     public void Clear()
     {
         ObjectManager.Clear();

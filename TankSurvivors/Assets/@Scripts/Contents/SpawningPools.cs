@@ -49,9 +49,7 @@ public class SpawningPools : MonoBehaviour
     IEnumerator SpawnCreatureCor()
     {     
         yield return null;
-
-        // 임시
-        int curStageId = GameManager.Instance.GameData.stageInfo.stageIndex;
+      
         WaveData waveInfo = GameManager.Instance.GameData.waveInfo;
         
         int spawnMonsterId = -1;       
@@ -127,7 +125,7 @@ public class SpawningPools : MonoBehaviour
                 }
                 else // 몬스터 종류가 여러 마리인 경우
                 {
-                    float totalRate = -1;
+                    float totalRate = 0;
 
                     for (int i = 0; i < waveInfo.monsterSpawnRate.Count; i++)
                     {

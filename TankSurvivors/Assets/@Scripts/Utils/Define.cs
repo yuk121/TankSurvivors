@@ -9,6 +9,7 @@ public static class Define
 {
     // Lobby Info
     public const int STAGE_ENTER_STAMINA = 10;
+    public const float STAMINA_RECOVERY_TIME = 180f;    // √ ¥‹¿ß
 
     // Drop Item
     public const float ITEM_MOVE_SPEED = 15f;

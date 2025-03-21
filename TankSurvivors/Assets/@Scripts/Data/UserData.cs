@@ -61,6 +61,7 @@ public class UserData
     public UserCurrency _userCurrency = new UserCurrency();
     public Define.eLoginPlatform _lastPlatform;
     public long _lastAccessTimestamp;
+    public long _lastStaminaChageTimestamp;
     public UserOption _userOption = new UserOption();
     public List<bool> _stageClearList = new List<bool>();       // 클리어 할 때마다 true값이 추가됨 (가변형)
     public int _lastSelectStageLevel;
@@ -75,14 +76,9 @@ public class UserData
         _userCurrency.Clear();
         _lastPlatform = Define.eLoginPlatform.None;
         _lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        _lastStaminaChageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         _userOption.Clear();
         _stageClearList.Clear();
         _lastSelectStageLevel = 1;
-    }
-
-    // 0 일 경우 선택한 스테이지없음 , 새로운 스테이지 클리어시 초기화 해줌
-    public void ClearStageSelect()
-    {
-        _lastSelectStageLevel = 0;
     }
 }

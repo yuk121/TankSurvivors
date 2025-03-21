@@ -72,6 +72,13 @@ public class UserDataManager
         int requiredStamina = Define.STAGE_ENTER_STAMINA; // * ( 스테이지 난이도?) 
 
         _userData._userStaminaCurrent -= requiredStamina;
+        _userData._lastStaminaChageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
+
+    public void RecoveryStamina(int value)
+    {
+        _userData._userStaminaCurrent += value;
+        _userData._lastStaminaChageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
 
     public void GetReward(StageData stageData)
@@ -124,7 +131,7 @@ public class UserDataManager
 
     public UserData LoadUserData()
     {
-        UserData userData = null;
+        UserData userData = new UserData();
         // 서버 확인
 
         // 로컬 확인
@@ -133,7 +140,7 @@ public class UserDataManager
         if (System.IO.File.Exists(path))
         {
             string json = System.IO.File.ReadAllText(path);
-            userData = JsonConvert.DeserializeObject<UserData>(json);
+            JsonConvert.PopulateObject(json, userData);
 
             // 불러온 유저 정보
             _userData = userData;
