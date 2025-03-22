@@ -93,7 +93,7 @@ public class Managers : MonoBehaviour
 #elif UNITY_ANDROID
         if (GameManager.Instance != null && GameManager.Instance.GetSceneState() != eGameManagerState.Game)
         {
-            if (Input.touchCount == 1)
+            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 // 사운드
                 SoundManager.Instance.Play("SFX_Touch", Define.eSoundType.SFX);
@@ -109,7 +109,7 @@ public class Managers : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 UIPopup_Notification popup = _uiManager.OpenPopupWithTween<UIPopup_Notification>();
-                popup.SetMessage("게임을 종료하시겠습니까?", () =>
+                popup.SetMessageOKCancel("게임을 종료하시겠습니까?", () =>
                 {
                     GameQuit();
                 }, null);

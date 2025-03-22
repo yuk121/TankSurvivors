@@ -3,3 +3,6 @@ TankSurvivors/obj
 TankSurvivors/Library
 TankSurvivors/UserSettings/Layouts/default-2021.dwlt
 TankSurvivors/*Assembly-CSharp*
+TankSurvivors/*.apk
+TankSurvivors/Tank.apk
+TankSurvivors/Assets/Firebase

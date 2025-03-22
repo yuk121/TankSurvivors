@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175692319321",
+    "project_id": "tanksurvivors-359e9",
+    "storage_bucket": "tanksurvivors-359e9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175692319321:android:8f84fdd5f2046fca7c7f48",
+        "android_client_info": {
+          "package_name": "com.duddnr.TankSurvivors"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC94rJho1QLb3sUPJ0-tl0fpzi7yfOgg2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

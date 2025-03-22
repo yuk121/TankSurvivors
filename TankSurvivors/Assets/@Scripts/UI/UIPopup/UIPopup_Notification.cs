@@ -55,7 +55,7 @@ public class UIPopup_Notification : UI_Popup
         return true;
     }
 
-    public void SetMessage(string message, Action pOKCallback = null, Action pCanceCallback = null)
+    public void SetMessageOKCancel(string message, Action pOKCallback = null, Action pCancelCallback = null)
     {
         if (_init == false)
             Init();
@@ -68,8 +68,28 @@ public class UIPopup_Notification : UI_Popup
         if (pOKCallback != null)
             _callBackOK = pOKCallback;
 
-        if (pCanceCallback != null)
-            _callBackCancel = pCanceCallback;
+        if (pCancelCallback != null)
+            _callBackCancel = pCancelCallback;
+
+        _btnOK.gameObject.SetActive(true);
+        _btnCancel.gameObject.SetActive(true);
+    }
+
+    public void SetMessageOK(string message, Action pOKCallback = null)
+    {
+        if (_init == false)
+            Init();
+
+        string localization = Managers.Instance.DataTableManager.DataTableLocalization.GetLocalString(message);
+        string noti = string.IsNullOrEmpty(localization) == true ? message : localization;
+
+        _txtBody.text = $"{noti}";
+
+        if (pOKCallback != null)
+            _callBackOK = pOKCallback;
+
+        _btnOK.gameObject.SetActive(true);
+        _btnCancel.gameObject.SetActive(false);
     }
 
     private void OnClick_OK()

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class GameData
 {
@@ -45,7 +46,10 @@ public class GameManager : FSM<eGameManagerState>
     // Title
     private bool _bTouchToStart = false;
     private bool _bWait = false;
-
+    private bool _isStartProcessEnd = false;
+    public bool IsStartProcessEnd { get => _isStartProcessEnd; }
+    private string _processState = string.Empty;
+    public string ProcessState { get=> _processState; }
     // Lobby
     public event Action Update_LobbyUI;
     private bool _bStageStart = false;
@@ -82,13 +86,22 @@ public class GameManager : FSM<eGameManagerState>
     }
     void Start()
     {
+        _isStartProcessEnd = false;
+
         StartCoroutine(CorStartProcess());
     }
 
     private IEnumerator CorStartProcess()
     {
+#if UNITY_ANDROID && ! UNITY_EDITOR 
+        _processState = "리소스 확인중";
+        Task checkTask = APIManager.Instance.CheckCatalog();
+        yield return new WaitUntil(() => checkTask.IsCompleted);
+#endif
+
         _bWait = true;
 
+        _processState = "리소스 불러오기";
         // 어드레서블 리소스 불러오기
         Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<UnityEngine.Object>("preload", (key, count, totlaCount) =>
         {
@@ -101,7 +114,7 @@ public class GameManager : FSM<eGameManagerState>
         while (_bWait)
             yield return null;
 
-
+        _processState = "유저 정보 확인";
         // 유저 데이터 정보 불러오고 확인하기
         UserData user = Managers.Instance.UserDataManager.LoadUserData();
 
@@ -111,6 +124,8 @@ public class GameManager : FSM<eGameManagerState>
             Managers.Instance.UserDataManager.NewStartUser();
             Managers.Instance.UserDataManager.SaveUserData();
         }
+
+        yield return new WaitForSeconds(0.5f);
 
         // 사운드 설정값 불러오기
         SoundManager.Instance.ApplyAllVolumes();
@@ -122,15 +137,18 @@ public class GameManager : FSM<eGameManagerState>
             _bWait = false;
         });
 
-
         while (_bWait)
             yield return null;
+
+        _processState = string.Empty;
 
         StartProcessEnd();
     }
 
     private void StartProcessEnd()
     {
+        _isStartProcessEnd = true;
+
         AddState(eGameManagerState.Title, InTitle, ModifyTitle, null);
         AddState(eGameManagerState.Lobby, InLobby, ModifyLobby, null);
         AddState(eGameManagerState.Game, InGame, ModifyGame, null);
