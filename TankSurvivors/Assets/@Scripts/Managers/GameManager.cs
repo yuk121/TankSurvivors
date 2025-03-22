@@ -93,15 +93,22 @@ public class GameManager : FSM<eGameManagerState>
 
     private IEnumerator CorStartProcess()
     {
+        _bWait = true;
+
 #if UNITY_ANDROID && ! UNITY_EDITOR 
         _processState = "리소스 확인중";
-        Task checkTask = APIManager.Instance.CheckCatalog();
-        yield return new WaitUntil(() => checkTask.IsCompleted);
+        Task checkTask = APIManager.Instance.CheckCatalog(() => 
+        {
+            _bWait = false;
+        });
 #endif
+
+        while (_bWait)
+            yield return null;
 
         _bWait = true;
 
-        _processState = "리소스 불러오기";
+        _processState = "리소스 불러오는 중";
         // 어드레서블 리소스 불러오기
         Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<UnityEngine.Object>("preload", (key, count, totlaCount) =>
         {

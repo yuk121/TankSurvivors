@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.unity3d.player" xmlns:tools="http://schemas.android.com/tools">
-  <application>
+  
+  <!-- 외부 저장소 읽기/쓰기 권한 -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+  <!-- Android 11 이상에서 파일 접근이 필요한 경우 -->
+  <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+
+  <application android:requestLegacyExternalStorage="true">
     <activity android:name="com.unity3d.player.UnityPlayerActivity" android:theme="@style/UnityThemeSelector">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

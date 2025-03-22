@@ -7,9 +7,6 @@ using UnityEngine;
 
 public static class Define
 {
-    // Title
-    public const string FIREBASE_STORAGE_URL = "gs://tanksurvivors-359e9.firebasestorage.app";
-
     // Lobby Info
     public const int STAGE_ENTER_STAMINA = 10;
     public const float STAMINA_RECOVERY_TIME = 180f;    // √ ¥‹¿ß

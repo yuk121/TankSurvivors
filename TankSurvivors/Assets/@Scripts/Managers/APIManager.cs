@@ -8,6 +8,8 @@ using UnityEngine.Networking;
 using Firebase.Extensions;
 using Firebase.Storage;
 using Newtonsoft.Json;
+using UnityEngine.SocialPlatforms;
+using System.Security.Cryptography;
 
 public class APIManager : MonoBehaviour
 {
@@ -23,7 +25,6 @@ public class APIManager : MonoBehaviour
 
     #region Firebase Stroage
     FirebaseStorage _storage = null;
-    StorageReference _gsReference = null;
     #endregion
 
     private void Awake()
@@ -50,21 +51,20 @@ public class APIManager : MonoBehaviour
     }
 
     // 파일 유효성 확인
-    public async Task CheckCatalog()
+    public async Task CheckCatalog(Action pCallback)
     {
-        _gsReference = _storage.GetReferenceFromUrl(Define.FIREBASE_STORAGE_URL);
+        string localPath = Path.Combine(Application.persistentDataPath, "catalog.json");
+        string tempPath = Path.Combine(Application.persistentDataPath, "catalog_temp.json");
 
-        // 로컬 카탈로그 확인 
-        string localCatalog = GetLocalCatalog();
-        // firebase 카탈로그 확인
-        string firebastCatalog = await GetFirebaseCatalog();
-
-        if (string.IsNullOrEmpty(firebastCatalog))
+        // firebase 카탈로그 다운로드
+        bool catalogDownloadSuccess = await GetFirebaseCatalog(tempPath);
+  
+        // 다운로드 파일이 없다면 오류창 띄우고 종료
+        if (catalogDownloadSuccess == false)
         {
             // 파일 다운로드
             UIPopup_Notification popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_Notification>();
 
-            // 다운로드 파일이 없다면 오류창 띄우고 종료
             popup.SetMessageOK("501 Error", () =>
             {
                 Application.Quit();
@@ -73,17 +73,25 @@ public class APIManager : MonoBehaviour
             return;
         }
 
-        string localHash = localCatalog.GetHashCode().ToString();
-        string firebaseHash = firebastCatalog.GetHashCode().ToString();
+        string localHash = GetFileHash(localPath);
+        string firebaseHash = GetFileHash(tempPath);
 
         // 카탈로그가 로컬에 없거나 서로 다른 경우 파일 다운로드 진행
         if (string.IsNullOrEmpty(localHash) || string.Equals(localHash, firebaseHash) == false)
         {
+            Debug.Log("APIManager: 새 catalog.json으로 교체");
+
+            if (File.Exists(localPath) == true)
+            {
+                File.Delete(localPath);
+            }
+            File.Move(tempPath, localPath);
+
             UIPopup_Notification popup = Managers.Instance.UIMananger.OpenPopupWithTween<UIPopup_Notification>();
 
             popup.SetMessageOKCancel("추가 파일 다운로드가 존재합니다.", async () =>
             {
-                await DownloadAllAddressableFiles(firebastCatalog);
+                 await DownloadAllAddressableFiles(localPath, pCallback);
             }, () =>
             {
                 // 안받는 경우 종료
@@ -91,12 +99,14 @@ public class APIManager : MonoBehaviour
             });
             return;
         }
+        else
+        {
+            File.Delete(tempPath);
+        }
     }
 
-    private string GetLocalCatalog()
+    private string GetLocalCatalog(string path)
     {
-        string path = Path.Combine(Application.persistentDataPath, "catalog.json");
-
         if (File.Exists(path))
         {
             return File.ReadAllText(path);
@@ -105,12 +115,14 @@ public class APIManager : MonoBehaviour
         return null;
     }
 
-    async Task<string> GetFirebaseCatalog()
+    async Task<bool> GetFirebaseCatalog(string savePath)
     {
+        // firebase에서 catalog.json 을 가져오고 파일 이름 변경 후 저장
         try
         {
-            string path = Path.Combine(Application.persistentDataPath, "catalog.json");
-            await _gsReference.GetFileAsync(path).ContinueWithOnMainThread(task =>
+            StorageReference _gsReference = _storage.GetReference("catalog.json");
+
+            await _gsReference.GetFileAsync(savePath).ContinueWithOnMainThread(task =>
             {
                 if (task.IsFaulted || task.IsCanceled)
                 {
@@ -119,22 +131,23 @@ public class APIManager : MonoBehaviour
                 }
             });
 
-            return File.ReadAllText(path);
+            return File.Exists(savePath); 
         }
         catch (Exception e)
         {
             Debug.LogError($"APIManager : Firebase 'catalog.json' 다운로드 실패 {e.Message}");
-            return null;
+            return false;
         }
     }
 
     //catalog.json과 함께 필요한 AssetBundle 파일까지 다운로드
-    private async Task DownloadAllAddressableFiles(string firebaseCatalog)
+    private async Task DownloadAllAddressableFiles(string localPath, Action pCallback)
     {
         try
         {
+            string catalog = GetLocalCatalog(localPath);
             // catalog.json을 파싱하여 필요한 AssetBundle 목록 가져오기
-            List<string> assetBundleFiles = ParseCatalogForBundles(firebaseCatalog);
+            List<string> assetBundleFiles = ParseCatalogForBundles(catalog);
 
             // AssetBundle 파일들 다운로드
             foreach (string bundleFile in assetBundleFiles)
@@ -143,6 +156,9 @@ public class APIManager : MonoBehaviour
             }
 
             Debug.Log("모든 Addressables 파일 다운로드 완료!");
+
+            if (pCallback != null)
+                pCallback.Invoke();
         }
         catch (Exception e)
         {
@@ -180,8 +196,8 @@ public class APIManager : MonoBehaviour
     {
         try
         {
-            string bundlePath = Path.Combine(Application.persistentDataPath, bundleFile);
-            StorageReference bundleRef = _storage.GetReferenceFromUrl($"{Define.FIREBASE_STORAGE_URL}/{bundleFile}");
+            string bundlePath = $"Android/{bundleFile}";
+            StorageReference bundleRef = _storage.GetReference(bundlePath);
 
             await bundleRef.GetFileAsync(bundlePath).ContinueWithOnMainThread(task =>
             {
@@ -199,6 +215,23 @@ public class APIManager : MonoBehaviour
             Debug.LogError($"APIManager: {bundleFile} 다운로드 실패 - {e.Message}");
         }
     }
+
+    // MD5 해시 값 계산
+    private string GetFileHash(string filePath)
+    {
+        if (!File.Exists(filePath))
+            return null;
+       
+        using (var md5 = MD5.Create())
+        {
+            using (var stream = File.OpenRead(filePath))
+            {
+                byte[] hashBytes = md5.ComputeHash(stream);
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+            }
+        }
+    }
+
 
     #endregion
 }
