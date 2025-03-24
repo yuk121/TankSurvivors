@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using UnityEngine.AddressableAssets.Initialization;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class GameData
 {
@@ -94,21 +97,8 @@ public class GameManager : FSM<eGameManagerState>
     private IEnumerator CorStartProcess()
     {
         _bWait = true;
-
-#if UNITY_ANDROID && ! UNITY_EDITOR 
-        _processState = "리소스 확인중";
-        Task checkTask = APIManager.Instance.CheckCatalog(() => 
-        {
-            _bWait = false;
-        });
-#endif
-
-        while (_bWait)
-            yield return null;
-
-        _bWait = true;
-
         _processState = "리소스 불러오는 중";
+
         // 어드레서블 리소스 불러오기
         Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<UnityEngine.Object>("preload", (key, count, totlaCount) =>
         {
@@ -121,12 +111,12 @@ public class GameManager : FSM<eGameManagerState>
         while (_bWait)
             yield return null;
 
-        _processState = "유저 정보 확인";
+        _processState = "유저 정보 확인 중";
         // 유저 데이터 정보 불러오고 확인하기
         UserData user = Managers.Instance.UserDataManager.LoadUserData();
 
         // uid가 없는경우 신규 유저
-        if (user._uid == null)
+        if (user == null || user._uid == null)
         {
             Managers.Instance.UserDataManager.NewStartUser();
             Managers.Instance.UserDataManager.SaveUserData();

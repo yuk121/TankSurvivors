@@ -39,6 +39,8 @@ public class DataTableCreature
         loader.LoadTable(dataText);
         CreatureData creatureData;
 
+        
+
         for (int i = 0; i < loader.GetLength(); i++)
         {
             creatureData = new CreatureData();

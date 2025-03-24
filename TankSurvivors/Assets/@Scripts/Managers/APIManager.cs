@@ -10,6 +10,9 @@ using Firebase.Storage;
 using Newtonsoft.Json;
 using UnityEngine.SocialPlatforms;
 using System.Security.Cryptography;
+using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.Initialization;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class APIManager : MonoBehaviour
 {
@@ -40,7 +43,10 @@ public class APIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Init_FirebaseStorage();
+#if UNITY_ANDROID && !UNITY_EDITOR
+        //Init_FirebaseStorage();
+        //Init_Addressable();#endif
+#endif
     }
 
     #region Firebase Storage
@@ -53,10 +59,13 @@ public class APIManager : MonoBehaviour
     // 파일 유효성 확인
     public async Task CheckCatalog(Action pCallback)
     {
+        Debug.Log("카탈로그 비교 중");
+
         string localPath = Path.Combine(Application.persistentDataPath, "catalog.json");
         string tempPath = Path.Combine(Application.persistentDataPath, "catalog_temp.json");
 
         // firebase 카탈로그 다운로드
+        Debug.Log("Firebase 카탈로그 다운로드 시작");
         bool catalogDownloadSuccess = await GetFirebaseCatalog(tempPath);
   
         // 다운로드 파일이 없다면 오류창 띄우고 종료
@@ -73,11 +82,15 @@ public class APIManager : MonoBehaviour
             return;
         }
 
+        Debug.Log("Hash 비교");
         string localHash = GetFileHash(localPath);
+        Debug.Log($"Local Hash Bytes : {localHash}");
+
         string firebaseHash = GetFileHash(tempPath);
+        Debug.Log($"Firebase Hash Bytes : {firebaseHash}");
 
         // 카탈로그가 로컬에 없거나 서로 다른 경우 파일 다운로드 진행
-        if (string.IsNullOrEmpty(localHash) || string.Equals(localHash, firebaseHash) == false)
+        if (string.IsNullOrEmpty(localHash) || localHash.Equals(firebaseHash) == false)
         {
             Debug.Log("APIManager: 새 catalog.json으로 교체");
 
@@ -102,6 +115,9 @@ public class APIManager : MonoBehaviour
         else
         {
             File.Delete(tempPath);
+
+            if (pCallback != null)
+                pCallback.Invoke();
         }
     }
 
@@ -219,6 +235,8 @@ public class APIManager : MonoBehaviour
     // MD5 해시 값 계산
     private string GetFileHash(string filePath)
     {
+        Debug.Log($"Hash : {filePath}");
+
         if (!File.Exists(filePath))
             return null;
        
@@ -226,7 +244,7 @@ public class APIManager : MonoBehaviour
         {
             using (var stream = File.OpenRead(filePath))
             {
-                byte[] hashBytes = md5.ComputeHash(stream);
+                byte[] hashBytes = md5.ComputeHash(stream);            
                 return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }

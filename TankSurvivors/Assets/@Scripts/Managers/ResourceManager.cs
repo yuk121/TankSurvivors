@@ -82,8 +82,18 @@ public class ResourceManager
         var asyncOperation = Addressables.LoadAssetAsync<T>(loadKey);
         asyncOperation.Completed += (op) =>
         {
-            _resources.Add(key, op.Result);
-            callback?.Invoke(op.Result);
+            if (op.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+            {
+                if (!_resources.ContainsKey(key)) // 중복 추가 방지
+                {
+                    _resources.Add(key, op.Result);
+                }
+                callback?.Invoke(op.Result);
+            }
+            else
+            {
+                Debug.LogError($"Failed to load asset: {key}");
+            }
         };
     }
 

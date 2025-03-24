@@ -140,7 +140,12 @@ public class UserDataManager
         if (System.IO.File.Exists(path))
         {
             string json = System.IO.File.ReadAllText(path);
-            JsonConvert.PopulateObject(json, userData);
+            userData = JsonConvert.DeserializeObject<UserData>(json);
+
+            if(userData == null)
+            {
+                return null;
+            }
 
             // 불러온 유저 정보
             _userData = userData;
