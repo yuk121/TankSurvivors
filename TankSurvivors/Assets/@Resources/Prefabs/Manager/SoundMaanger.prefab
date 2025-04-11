@@ -63,3 +63,9 @@ MonoBehaviour:
     clipList: []
     sourceCount: 3
     sourceList: []
+  - type: 3
+    mixerGroup: {fileID: -3739432223636724384, guid: a863c18645a8af34cb51154234657f55,
+      type: 2}
+    clipList: []
+    sourceCount: 1
+    sourceList: []

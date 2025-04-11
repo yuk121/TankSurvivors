@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
-using System.Text;
-using Unity.VisualScripting;
 using System;
+using System.Linq;
 
 public class TableLoader  : Singleton<TableLoader> 
 {
@@ -24,13 +22,18 @@ public class TableLoader  : Singleton<TableLoader>
         // 분리된 CellData
         string[] stringData = br.ReadString().Split('\t');
 
+        if (stringData.Length > 0 && stringData[0] == "")
+        {
+            stringData = stringData.Skip(1).ToArray(); // 진짜 빈 값이면 스킵
+        }
+
         // 키 = 칼럼명
         List<string> listKey = new List<string>();
 
         // 이전 테이블 값이 남아있다면 삭제 , 다른 파일도 읽어올때 쓰는 리스트 변수 이므로
         m_table.Clear();
 
-        int offset = 1; // 첫 row는 설명란 따라서 1칸 띄어서 검사
+        int offset = 0; // 첫 row는 설명란 따라서 1칸 띄어서 검사
 
         for (int i = 0; i < rowCount; i++)
         {
@@ -40,10 +43,10 @@ public class TableLoader  : Singleton<TableLoader>
             //칼럼의 행
             if (i == 0)
             {
-                for (int j = 0; j < colCount - 1; j++)  // colCount - 1 인 이유 : 마지막은 줄바꿈(null)이기 때문에 불러올 필요가 없다.
+                for (int j = 0; j < colCount -1; j++)  // colCount - 1 인 이유 : 마지막은 줄바꿈(null)이기 때문에 불러올 필요가 없다.
                 {
                     string data = stringData[offset].Replace("\\t", "\t");
-                    data = data.Replace(Environment.NewLine, "");
+                    data = data.Replace("\r", "").Replace("\n", "");
 
                     listKey.Add(data);
                     offset++;
@@ -57,7 +60,7 @@ public class TableLoader  : Singleton<TableLoader>
                 for (int j = 0; j < colCount - 1; j++)
                 {
                     string data = stringData[offset].Replace("\\t", "\t");   // 만일 뉴라인이 들어있는 경우 간혹 \t로 저장되어있을 수도 있기에 바꾸는 과정, 체크 역할
-                    data = data.Replace(Environment.NewLine, "");
+                    data = data.Replace("\r", "").Replace("\n", "");
 
                     // 공백이 있더라도 다 때려넣어준다.
                     dicData.Add(listKey[j], data);
@@ -66,6 +69,7 @@ public class TableLoader  : Singleton<TableLoader>
                 m_table.Add(dicData);
             }
         }
+
         ms.Close();
         br.Close();
     }

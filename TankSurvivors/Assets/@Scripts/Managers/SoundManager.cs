@@ -31,6 +31,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private List<SoundData> _soundData = new List<SoundData>();
 
+    private AudioSource _playerAudioSource = null;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -69,6 +71,11 @@ public class SoundManager : MonoBehaviour
                         obj.name = $"{Define.eSoundType.SFX} {++index}";
                         source.playOnAwake = false;
                         break;
+
+                    case Define.eSoundType.PLAYER:
+                        obj.name = $"{Define.eSoundType.PLAYER} {++index}";
+                        source.playOnAwake = false;
+                        break;
                 }
                 obj.transform.parent = transform;
 
@@ -80,10 +87,21 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void RegistPlayerSound(AudioSource source)
+    {
+        _playerAudioSource = source;
+    }
+
+
     public void Play(string key, Define.eSoundType type, float volume_db = 0)
     {
         AudioClip clip = LoadClips(key, type);
 
+        Play(clip, type, volume_db);
+    }
+
+    public void Play(AudioClip clip, Define.eSoundType type, float volume_db = 0)
+    {
         if (clip == null)
             return;
 
@@ -91,9 +109,9 @@ public class SoundManager : MonoBehaviour
 
         volume_db = Mathf.Clamp(volume_db, -80f, 20f);
 
-        for(int i =0; i < _soundData.Count; i++)
+        for (int i = 0; i < _soundData.Count; i++)
         {
-            if(_soundData[i].type == type)
+            if (_soundData[i].type == type)
             {
                 if (_soundData[i].mixerGroup != null)
                 {
@@ -105,7 +123,7 @@ public class SoundManager : MonoBehaviour
             }
         }
 
-        if(sourceList.Count < 1)
+        if (sourceList.Count < 1)
         {
             Debug.LogError("Audio Source is missing !!!");
             return;
@@ -239,6 +257,11 @@ public class SoundManager : MonoBehaviour
         foreach (var source in sourceList)
         {
             source.volume = volume;
+        }
+
+        if(_playerAudioSource != null && type == Define.eSoundType.SFX)
+        {
+            _playerAudioSource.volume = volume;
         }
     }
 

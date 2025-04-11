@@ -277,4 +277,9 @@ public static class Utils
         }
         return default(T);
     }
+
+    public static void DebugLog(string message)
+    {
+        Debug.Log(message);
+    }
 }

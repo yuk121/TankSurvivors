@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static Define;
 
 public class CreatureData
@@ -37,9 +39,8 @@ public class DataTableCreature
       
         TableLoader loader = TableLoader.Instance;
         loader.LoadTable(dataText);
-        CreatureData creatureData;
 
-        
+        CreatureData creatureData;
 
         for (int i = 0; i < loader.GetLength(); i++)
         {

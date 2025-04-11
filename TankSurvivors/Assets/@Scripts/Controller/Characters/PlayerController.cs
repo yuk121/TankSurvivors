@@ -69,6 +69,10 @@ public class PlayerController : CreatureController
     [SerializeField]
     private UI_PlayerHpBar _playerHpBar = null;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AudioClip _playerAudioClip = null;
+
     private Vector2 _moveDir = Vector2.zero;
     public Vector2 MoveDir { get { return _moveDir; } set { _moveDir = value; } }
     private Rigidbody _tankRigid = null;
@@ -131,6 +135,9 @@ public class PlayerController : CreatureController
         {
             _playerBonusStat.Clear();
         }
+
+        // Etc
+        SoundManager.Instance.Play(_playerAudioClip, Define.eSoundType.PLAYER);
 
         return true;
     }

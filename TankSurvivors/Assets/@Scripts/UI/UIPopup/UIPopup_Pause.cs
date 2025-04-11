@@ -72,9 +72,18 @@ public class UIPopup_Pause : UI_Popup
         _sliderSFX.onValueChanged.AddListener(SetVolume_SFX);
 
         // 
+        SetSound();
         SetOwnedSkillList();
 
         return true;
+    }
+
+    private void SetSound()
+    {
+        // 유저 사운드 정보 불러오기
+        _sliderMasterSound.value = Managers.Instance.UserDataManager.UserData._userOption.soundMaster;
+        _sliderBGM.value = Managers.Instance.UserDataManager.UserData._userOption.soundBackground;
+        _sliderSFX.value = Managers.Instance.UserDataManager.UserData._userOption.soundEffect;
     }
 
     private void SetOwnedSkillList()
