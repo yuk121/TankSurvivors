@@ -155,6 +155,7 @@ public class UIManager
         
         GameObject go = Managers.Instance.ResourceManager.Instantiate(name);
         go.transform.SetParent(parent);
+        go.transform.localScale = Vector3.one;
 
         T ui = Utils.GetOrAddComponent<T>(go);
 

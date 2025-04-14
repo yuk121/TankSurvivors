@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using Firebase.Extensions;
-using Firebase.Storage;
+//using Firebase.Extensions;
+//using Firebase.Storage;
 using Newtonsoft.Json;
 using UnityEngine.SocialPlatforms;
 using System.Security.Cryptography;
@@ -27,7 +27,7 @@ public class APIManager : MonoBehaviour
     #endregion
 
     #region Firebase Stroage
-    FirebaseStorage _storage = null;
+    //FirebaseStorage _storage = null;
     #endregion
 
     private void Awake()
@@ -51,9 +51,10 @@ public class APIManager : MonoBehaviour
 
     #region Firebase Storage
 
+    /*
     private void Init_FirebaseStorage()
     {
-        _storage = FirebaseStorage.DefaultInstance;
+       _storage = FirebaseStorage.DefaultInstance;
     }
 
     // 파일 유효성 확인
@@ -66,7 +67,7 @@ public class APIManager : MonoBehaviour
 
         // firebase 카탈로그 다운로드
         Debug.Log("Firebase 카탈로그 다운로드 시작");
-        bool catalogDownloadSuccess = await GetFirebaseCatalog(tempPath);
+        //bool catalogDownloadSuccess = await GetFirebaseCatalog(tempPath);
   
         // 다운로드 파일이 없다면 오류창 띄우고 종료
         if (catalogDownloadSuccess == false)
@@ -131,6 +132,7 @@ public class APIManager : MonoBehaviour
         return null;
     }
 
+    
     async Task<bool> GetFirebaseCatalog(string savePath)
     {
         // firebase에서 catalog.json 을 가져오고 파일 이름 변경 후 저장
@@ -207,6 +209,7 @@ public class APIManager : MonoBehaviour
         return bundleFiles;
     }
 
+    
     //Firebase Storage에서 개별 AssetBundle 파일 다운로드
     private async Task DownloadBundle(string bundleFile)
     {
@@ -231,7 +234,7 @@ public class APIManager : MonoBehaviour
             Debug.LogError($"APIManager: {bundleFile} 다운로드 실패 - {e.Message}");
         }
     }
-
+    
     // MD5 해시 값 계산
     private string GetFileHash(string filePath)
     {
@@ -250,6 +253,6 @@ public class APIManager : MonoBehaviour
         }
     }
 
-
+    */
     #endregion
 }
