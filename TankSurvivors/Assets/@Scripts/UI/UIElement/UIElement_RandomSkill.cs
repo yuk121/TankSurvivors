@@ -116,7 +116,7 @@ public class UIElement_RandomSkill : UI_Base
         }
 
         // 스킬 레벨에 맞게 별 갯수 보여주기
-        _uiListGrade.SetGrade(_skill.CurSkillLevel);
+        _uiListGrade.SetGrade(_skill.CurSkillLevel, true);
     }
 
     private void OnClick_RandomSkill()

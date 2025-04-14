@@ -72,15 +72,20 @@ public class UI_ContentSwipe : MonoBehaviour
             UpdateSwipe();
         }
 #elif UNITY_ANDROID
-       
-        if (Input.touchCount == 1)
+
+        if (Input.touchCount > 0)
         {
-            _startPosX = Input.mousePosition.x;
-        }
-        else if (Input.touchCount == 0)
-        {
-            _endPosX = Input.mousePosition.x;
-            UpdateSwipe();
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                _startPosX = touch.position.x;
+            }
+            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            {
+                _endPosX = touch.position.x;
+                UpdateSwipe();
+            }
         }
 
 #endif

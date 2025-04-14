@@ -29,7 +29,7 @@ public class ElectircField : ActionSkill
             _electricField.SetData(SkillData, _owner, SkillData.attackRange, Define.eSkillType.ElectircField);
 
             _electricField.transform.SetParent(_owner.transform);
-            _electricField.transform.position += Vector3.up * -0.8f;
+            _electricField.transform.position += Vector3.up * -0.75f;
 
             _electricField.transform.localScale = Vector3.one;
         }

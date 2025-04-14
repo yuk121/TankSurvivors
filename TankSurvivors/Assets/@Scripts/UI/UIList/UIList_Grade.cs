@@ -45,7 +45,7 @@ public class UIList_Grade : UI_Base
         return true;
     }
 
-    public void SetGrade(int skillLevel)
+    public void SetGrade(int skillLevel, bool showNextGrade = false)
     {
         if(_init == false)
         {
@@ -59,11 +59,14 @@ public class UIList_Grade : UI_Base
             _objectGradeList[i].gameObject.SetActive(true);
         }
 
-        // 다음 레벨 보여줌
-        if (skillLevel < Define.MAX_SKILL_LEVEL)
+        if (showNextGrade == true)
         {
-            _objectGradeList[_skillLevel].gameObject.SetActive(true);
-            _objectGradeList[_skillLevel].GetComponent<Image>().DOFade(0f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
+            // 다음 레벨 보여줌
+            if (skillLevel < Define.MAX_SKILL_LEVEL)
+            {
+                _objectGradeList[_skillLevel].gameObject.SetActive(true);
+                _objectGradeList[_skillLevel].GetComponent<Image>().DOFade(0f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
+            }
         }
     }
 
