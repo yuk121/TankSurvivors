@@ -119,25 +119,34 @@ public class GameManager : FSM<eGameManagerState>
                     // 유저 로그인 확인 후 안된 상태라면 재로그인 실행
                     if (userLogined == false)
                     {
-                        UIPopup_Login popup = Resources.Load<UIPopup_Login>("Login/UIPopup_Login");
+                        UIPopup_Login popup = Managers.Instance.UIMananger.OpenPopupWithResources<UIPopup_Login>();
                         popup.Set(() =>
                         {
+                            Managers.Instance.UIMananger.ClosePopup();
                             _bWait = false;
                         });
                     }
                     else
-                    {            
+                    {
                         _bWait = false;
                     }
                 }
                 break;
-             
+
             case Define.eLoginPlatform.None:
                 {
+                    Debug.Log("마지막 접속 플랫폼 존재하지않음");
                     // 플랫폼이 없다면 기기에 맞게 인증시작하기 (현재는 안드로이드만)
-                    UIPopup_Login popup = Resources.Load<UIPopup_Login>("Login/UIPopup_Login");
+                    UIPopup_Login popup = Managers.Instance.UIMananger.OpenPopupWithResources<UIPopup_Login>();
+
+                    if (popup == null)
+                    {
+                        Debug.Log("UIPopup_Login is Null");
+                    }
+
                     popup.Set(() =>
                     {
+                        Managers.Instance.UIMananger.ClosePopup();
                         _bWait = false;
                     });
                 }

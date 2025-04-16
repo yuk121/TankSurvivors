@@ -104,6 +104,19 @@ public class UIManager
         return popup;
     }
 
+    public T OpenPopupWithResources<T>() where T : UI_Popup
+    {
+        string name = typeof(T).Name;
+        string path = $"UIPopup/{name}";
+
+        GameObject go = Resources.Load<GameObject>(path);
+        GameObject prefab = UnityEngine.Object.Instantiate(go, UICanvas);
+
+        T popup = Utils.GetOrAddComponent<T>(prefab);
+
+        return popup;
+    }
+
     public void ClosePopup(UI_Base popup, bool bUnpause = true)
     {
         if (_uiPopupStack.Count < 1)

@@ -39,11 +39,11 @@ public class OptionManager
 
     public LocalData LoadLocalData()
     {
-        LocalData localData = new LocalData();
+        LocalData localData = null;
 
         // 로컬 확인
         string path = Application.persistentDataPath + "/localData.json";
-
+      
         if (System.IO.File.Exists(path))
         {
             string json = System.IO.File.ReadAllText(path);
@@ -59,7 +59,6 @@ public class OptionManager
 
             return localData;
         }
-
         return localData;
     }
 

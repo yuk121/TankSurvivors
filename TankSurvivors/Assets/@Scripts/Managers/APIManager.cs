@@ -4,14 +4,12 @@ using System.Collections;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using Firebase.Extensions;
 using Firebase.Auth;
 using Firebase.Firestore;
 using Newtonsoft.Json;
-using UnityEngine.SocialPlatforms;
-using System.Security.Cryptography;
 using Google;
+using Firebase;
 
 public class APIManager : MonoBehaviour
 {
@@ -29,11 +27,14 @@ public class APIManager : MonoBehaviour
     //FirebaseStorage _storage = null;
     #endregion
 
-    public string webClientId = "<your client id here>";
-
+    [SerializeField]
+    private string webClientId = "<your client id here>";
     private GoogleSignInConfiguration configuration;
-    private Action _callback = null;
 
+    private Action _callbackSuccess = null;
+    private Action _callbackFail = null;
+
+    private Firebase.DependencyStatus _dependencyStatus = Firebase.DependencyStatus.UnavailableOther;
     private void Awake()
     {
         if (Instance == null)
@@ -67,54 +68,95 @@ public class APIManager : MonoBehaviour
             WebClientId = webClientId,
             RequestIdToken = true
         };
-   }
+    }
 
-    public void OnGamesSignIn(Action pCallback)
+    public void OnSignIn(Action pCallbackSuccess = null, Action pCallbackFail = null)
     {
-        _callback = pCallback;
+        _callbackSuccess = pCallbackSuccess;
+        _callbackFail = pCallbackFail;  
 
         GoogleSignIn.Configuration = configuration;
-        GoogleSignIn.Configuration.UseGameSignIn = true;
-        GoogleSignIn.Configuration.RequestIdToken = false;
+        GoogleSignIn.Configuration.UseGameSignIn = false;
+        Debug.Log("Calling SignIn");
 
-        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
-          OnAuthenticationFinished);
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished, TaskScheduler.FromCurrentSynchronizationContext());
+    }
+
+    public void OnSignOut()
+    {
+        Debug.Log("Calling SignOut");
+        GoogleSignIn.DefaultInstance.SignOut();
+    }
+
+    public void OnDisconnect()
+    {
+        Debug.Log("Calling Disconnect");
+      GoogleSignIn.DefaultInstance.Disconnect();
     }
 
     internal void OnAuthenticationFinished(Task<GoogleSignInUser> task)
     {
         if (task.IsFaulted)
         {
-            using (IEnumerator<System.Exception> enumerator =
-                    task.Exception.InnerExceptions.GetEnumerator())
+            using (IEnumerator<System.Exception> enumerator = task.Exception.InnerExceptions.GetEnumerator())
             {
                 if (enumerator.MoveNext())
                 {
-                    GoogleSignIn.SignInException error =
-                            (GoogleSignIn.SignInException)enumerator.Current;
+                    GoogleSignIn.SignInException error = (GoogleSignIn.SignInException)enumerator.Current;
+                    Debug.Log("Got Error: " + error.Status + " " + error.Message);
                 }
                 else
                 {
                     Debug.Log("Got Unexpected Exception?!?" + task.Exception);
                 }
             }
+
+            if (_callbackFail != null)
+                _callbackFail.Invoke();
         }
         else if (task.IsCanceled)
         {
             Debug.Log("Canceled");
+
+            if (_callbackFail != null)
+                _callbackFail.Invoke();
         }
         else
         {
             Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+            Debug.Log($"ID Token : {task.Result.IdToken}");
 
-            // Firebase Auth 시작
+            // Firebase Auth 
             FirebaseAuth(task.Result.IdToken);
         }
     }
+
+    public void OnSignInSilently()
+    {
+      GoogleSignIn.Configuration = configuration;
+      GoogleSignIn.Configuration.UseGameSignIn = false;
+      GoogleSignIn.Configuration.RequestIdToken = true;
+        Debug.Log("Calling SignIn Silently");
+
+      GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(OnAuthenticationFinished,TaskScheduler.FromCurrentSynchronizationContext());
+    }
+
+
+    public void OnGamesSignIn()
+    {
+      GoogleSignIn.Configuration = configuration;
+      GoogleSignIn.Configuration.UseGameSignIn = true;
+      GoogleSignIn.Configuration.RequestIdToken = false;
+
+        Debug.Log("Calling Games SignIn");
+
+      GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished,TaskScheduler.FromCurrentSynchronizationContext());
+    }
+
+
     #endregion
 
     #region Firebase Auth
-
     public bool CheckFirebaseAuth()
     {
         FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
@@ -128,34 +170,46 @@ public class APIManager : MonoBehaviour
         return false;
     }
 
-    public void FirebaseAuth(string googleIdToken)
+    private void FirebaseAuth(string googleIdToken)
     {
+        Debug.Log("[APIManager] Firebase Auth 시작");
+
         FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         Credential credential = GoogleAuthProvider.GetCredential(googleIdToken, null);
 
-        auth.SignInAndRetrieveDataWithCredentialAsync(credential).ContinueWith(task =>
+        auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled)
             {
                 Debug.LogError("SignInAndRetrieveDataWithCredentialAsync was canceled.");
+                
+                //
+                if (_callbackFail != null)
+                    _callbackFail.Invoke();
+
                 return;
             }
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInAndRetrieveDataWithCredentialAsync encountered an error: " + task.Exception);
+
+                //
+                if (_callbackFail != null)
+                    _callbackFail.Invoke();
+
                 return;
             }
 
-            Firebase.Auth.AuthResult result = task.Result;
+            Firebase.Auth.FirebaseUser result = task.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})",
-                result.User.DisplayName, result.User.UserId);
+                result.DisplayName, result.UserId);
 
             // LocalData
             Managers.Instance.OptionManager.LocalData._lastPlatform = Define.eLoginPlatform.Google;
             Managers.Instance.OptionManager.SaveLocalData();
 
-            if (_callback != null)
-                _callback.Invoke();
+            if (_callbackSuccess != null)
+                _callbackSuccess.Invoke();
         });
     }
     #endregion
