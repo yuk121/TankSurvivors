@@ -132,8 +132,11 @@ public class UserDataManager
     public UserData LoadUserData()
     {
         UserData userData = new UserData();
+
+#if UNITY_ANDROID && !UNITY_EDITOR
         // 서버 확인
 
+#elif UNITY_EDITOR
         // 로컬 확인
         string path = Application.persistentDataPath + "/userdata.json";
 
@@ -142,7 +145,7 @@ public class UserDataManager
             string json = System.IO.File.ReadAllText(path);
             userData = JsonConvert.DeserializeObject<UserData>(json);
 
-            if(userData == null)
+            if (userData == null)
             {
                 return null;
             }
@@ -152,17 +155,22 @@ public class UserDataManager
 
             return userData;
         }
-
+#endif
         return userData;
     }
 
     public void SaveUserData()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         // 서버 저장
 
+
+#elif UNITY_EDITOR
         // 로컬 저장
         string path = Application.persistentDataPath + "/userdata.json";
         string json = JsonConvert.SerializeObject(_userData, Formatting.Indented);
         System.IO.File.WriteAllText(path, json);
+#endif
+
     }
 }

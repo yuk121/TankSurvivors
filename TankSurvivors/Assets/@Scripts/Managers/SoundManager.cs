@@ -208,7 +208,7 @@ public class SoundManager : MonoBehaviour
     public void SetVolume_MasterSound(float value)
     {
         int volume = (int)value;
-        Managers.Instance.UserDataManager.UserData._userOption.soundMaster = volume;
+        Managers.Instance.OptionManager.LocalData._userOption.soundMaster = volume;
 
         ApplyAllVolumes();
     }
@@ -216,7 +216,7 @@ public class SoundManager : MonoBehaviour
     public void SetVolume_BGM(float value)
     {
         int volume = (int)value;
-        Managers.Instance.UserDataManager.UserData._userOption.soundBackground = volume;
+        Managers.Instance.OptionManager.LocalData._userOption.soundBackground = volume;
 
         ApplyAllVolumes();
     }
@@ -224,16 +224,16 @@ public class SoundManager : MonoBehaviour
     public void SetVolume_SFX(float value)
     {
         int volume = (int)value;
-        Managers.Instance.UserDataManager.UserData._userOption.soundEffect = volume;
+        Managers.Instance.OptionManager.LocalData._userOption.soundEffect = volume;
 
         ApplyAllVolumes();
     }
 
     public void ApplyAllVolumes()
     {
-        float masterVolume = Managers.Instance.UserDataManager.UserData._userOption.soundMaster / 100f;
-        float bgmVolume = Managers.Instance.UserDataManager.UserData._userOption.soundBackground / 100f;
-        float sfxVolume = Managers.Instance.UserDataManager.UserData._userOption.soundEffect / 100f;
+        float masterVolume = Managers.Instance.OptionManager.LocalData._userOption.soundMaster / 100f;
+        float bgmVolume = Managers.Instance.OptionManager.LocalData._userOption.soundBackground / 100f;
+        float sfxVolume = Managers.Instance.OptionManager.LocalData._userOption.soundEffect / 100f;
 
         ChageVolume(masterVolume * bgmVolume, Define.eSoundType.BGM);
         ChageVolume(masterVolume * bgmVolume, Define.eSoundType.SUB_BGM);
@@ -267,6 +267,6 @@ public class SoundManager : MonoBehaviour
 
     public void SaveSoundSetting()
     {
-        Managers.Instance.UserDataManager.SaveUserData();
+        Managers.Instance.OptionManager.SaveLocalData();
     }
 }
