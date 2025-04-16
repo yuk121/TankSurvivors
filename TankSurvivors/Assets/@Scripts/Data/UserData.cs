@@ -37,20 +37,6 @@ public class UserData
         }
     }
 
-    [System.Serializable]
-    public class UserOption
-    {
-        public int soundMaster;
-        public int soundBackground;
-        public int soundEffect;
-
-        public void Clear()
-        {
-            soundMaster = 100;
-            soundBackground = 100;
-            soundEffect = 100;
-        }
-    }
     #endregion
 
     public string _uid;
@@ -62,7 +48,6 @@ public class UserData
     public Define.eLoginPlatform _lastPlatform;
     public long _lastAccessTimestamp;
     public long _lastStaminaChageTimestamp;
-    public UserOption _userOption = new UserOption();
     public List<bool> _stageClearList = new List<bool>();       // 클리어 할 때마다 true값이 추가됨 (가변형)
     public int _lastSelectStageLevel;
 
@@ -77,7 +62,6 @@ public class UserData
         _lastPlatform = Define.eLoginPlatform.None;
         _lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         _lastStaminaChageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        _userOption.Clear();
         _stageClearList.Clear();
         _lastSelectStageLevel = 1;
     }

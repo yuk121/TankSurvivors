@@ -131,7 +131,10 @@ public class Managers : MonoBehaviour
     private void OnApplicationQuit()
     {
         if (_userDataManager != null)
+        {
             _userDataManager.SaveUserData();
+            _optionManager.SaveLocalData();
+        }
     }
 
     private void OnApplicationPause(bool pause)
@@ -139,7 +142,10 @@ public class Managers : MonoBehaviour
         if(pause == true)
         {
             if (_userDataManager != null)
+            {
                 _userDataManager.SaveUserData();
+                _optionManager.SaveLocalData();
+            }
         }
     }
 

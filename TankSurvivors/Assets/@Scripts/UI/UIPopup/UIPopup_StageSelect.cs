@@ -136,7 +136,6 @@ public class UIPopup_StageSelect : UI_Popup
         }
         else
         {
-
             Managers.Instance.UserDataManager.UserData._lastSelectStageLevel = currentStageIndex + 1;
             Managers.Instance.UserDataManager.SaveUserData();
            

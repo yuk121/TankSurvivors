@@ -97,9 +97,62 @@ public class GameManager : FSM<eGameManagerState>
     private IEnumerator CorStartProcess()
     {
         _bWait = true;
-        _processState = "리소스 불러오는 중";
+        _processState = "로그인 인증 진행 중";
+        // 로컬 데이터 불러오기
+        LocalData localdata = Managers.Instance.OptionManager.LoadLocalData();
+
+        // 로컬데이터가 없다면 새로 생성
+        if(localdata == null)
+        {
+            Managers.Instance.OptionManager.NewLocalData();
+            Managers.Instance.OptionManager.SaveLocalData();
+        }
+
+#if !UNITY_EDITOR
+        // 플랫폼 인증
+        switch (localdata._lastPlatform)
+        {
+            case Define.eLoginPlatform.Google:
+                {
+                    bool userLogined = APIManager.Instance.CheckFirebaseAuth();
+
+                    // 유저 로그인 확인 후 안된 상태라면 재로그인 실행
+                    if (userLogined == false)
+                    {
+                        UIPopup_Login popup = Resources.Load<UIPopup_Login>("Login/UIPopup_Login");
+                        popup.Set(() =>
+                        {
+                            _bWait = false;
+                        });
+                    }
+                    else
+                    {            
+                        _bWait = false;
+                    }
+                }
+                break;
+             
+            case Define.eLoginPlatform.None:
+                {
+                    // 플랫폼이 없다면 기기에 맞게 인증시작하기 (현재는 안드로이드만)
+                    UIPopup_Login popup = Resources.Load<UIPopup_Login>("Login/UIPopup_Login");
+                    popup.Set(() =>
+                    {
+                        _bWait = false;
+                    });
+                }
+                break;
+        }
+
+        // 로그인 인증 대기
+        while (_bWait)
+            yield return null;
+#endif
 
         // 어드레서블 리소스 불러오기
+        _bWait = true;
+        _processState = "리소스 불러오는 중";
+
         Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<UnityEngine.Object>("preload", (key, count, totlaCount) =>
         {
             if (count == totlaCount)
@@ -173,7 +226,7 @@ public class GameManager : FSM<eGameManagerState>
         return curState;
     }
 
-    #region Title
+#region Title
     private void InTitle()
     {
         _bTouchToStart = false;
@@ -201,9 +254,9 @@ public class GameManager : FSM<eGameManagerState>
     {
         _bTouchToStart = true;
     }
-    #endregion
+#endregion
 
-    #region Lobby
+#region Lobby
     private void InLobby()
     {
         Managers.Instance.Clear();
@@ -241,9 +294,9 @@ public class GameManager : FSM<eGameManagerState>
         if (Update_LobbyUI != null)
             Update_LobbyUI.Invoke();
     }
-    #endregion
+#endregion
 
-    #region Game
+#region Game
     private void InGame()
     {
         Managers.Instance.Clear();
@@ -399,9 +452,9 @@ public class GameManager : FSM<eGameManagerState>
         }
         return null;
     }
-    #endregion
+#endregion
 
-    #region Pause
+#region Pause
     private void InPause()
     {
         if (Managers.Instance.ObjectManager.Monsters.Count > 0)
@@ -439,9 +492,9 @@ public class GameManager : FSM<eGameManagerState>
     {
         _bPause = bPause;
     }
-    #endregion
+#endregion
 
-    #region Result
+#region Result
     private void InResult()
     {
         SoundManager.Instance.StopAllSound();
@@ -528,5 +581,5 @@ public class GameManager : FSM<eGameManagerState>
     {
         _bRetryStage = true;
     }
-    #endregion
+#endregion
 }

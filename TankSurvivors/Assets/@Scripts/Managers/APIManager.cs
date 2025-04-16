@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-//using Firebase.Extensions;
-//using Firebase.Storage;
+using Firebase.Extensions;
+using Firebase.Auth;
+using Firebase.Firestore;
 using Newtonsoft.Json;
 using UnityEngine.SocialPlatforms;
 using System.Security.Cryptography;
-using UnityEngine.AddressableAssets;
-using UnityEngine.AddressableAssets.Initialization;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using Google;
 
 public class APIManager : MonoBehaviour
 {
@@ -29,6 +28,11 @@ public class APIManager : MonoBehaviour
     #region Firebase Stroage
     //FirebaseStorage _storage = null;
     #endregion
+
+    public string webClientId = "<your client id here>";
+
+    private GoogleSignInConfiguration configuration;
+    private Action _callback = null;
 
     private void Awake()
     {
@@ -48,6 +52,116 @@ public class APIManager : MonoBehaviour
         //Init_Addressable();#endif
 #endif
     }
+
+    public void Init()
+    {
+        Init_Google();
+    }
+
+    #region Google Sign in
+
+    private void Init_Google()
+    {
+        configuration = new GoogleSignInConfiguration
+        {
+            WebClientId = webClientId,
+            RequestIdToken = true
+        };
+   }
+
+    public void OnGamesSignIn(Action pCallback)
+    {
+        _callback = pCallback;
+
+        GoogleSignIn.Configuration = configuration;
+        GoogleSignIn.Configuration.UseGameSignIn = true;
+        GoogleSignIn.Configuration.RequestIdToken = false;
+
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(
+          OnAuthenticationFinished);
+    }
+
+    internal void OnAuthenticationFinished(Task<GoogleSignInUser> task)
+    {
+        if (task.IsFaulted)
+        {
+            using (IEnumerator<System.Exception> enumerator =
+                    task.Exception.InnerExceptions.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
+                {
+                    GoogleSignIn.SignInException error =
+                            (GoogleSignIn.SignInException)enumerator.Current;
+                }
+                else
+                {
+                    Debug.Log("Got Unexpected Exception?!?" + task.Exception);
+                }
+            }
+        }
+        else if (task.IsCanceled)
+        {
+            Debug.Log("Canceled");
+        }
+        else
+        {
+            Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+
+            // Firebase Auth ½ÃÀÛ
+            FirebaseAuth(task.Result.IdToken);
+        }
+    }
+    #endregion
+
+    #region Firebase Auth
+
+    public bool CheckFirebaseAuth()
+    {
+        FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+
+        if(auth.CurrentUser != null)
+        {
+            Debug.Log($"[APIManager] Firebase Auth Current User UID : {auth.CurrentUser.UserId}");
+            return true;
+        }
+
+        return false;
+    }
+
+    public void FirebaseAuth(string googleIdToken)
+    {
+        FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        Credential credential = GoogleAuthProvider.GetCredential(googleIdToken, null);
+
+        auth.SignInAndRetrieveDataWithCredentialAsync(credential).ContinueWith(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInAndRetrieveDataWithCredentialAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInAndRetrieveDataWithCredentialAsync encountered an error: " + task.Exception);
+                return;
+            }
+
+            Firebase.Auth.AuthResult result = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                result.User.DisplayName, result.User.UserId);
+
+            // LocalData
+            Managers.Instance.OptionManager.LocalData._lastPlatform = Define.eLoginPlatform.Google;
+            Managers.Instance.OptionManager.SaveLocalData();
+
+            if (_callback != null)
+                _callback.Invoke();
+        });
+    }
+    #endregion
+
+    #region Firebase Firestore
+    #endregion
 
     #region Firebase Storage
 
