@@ -8,6 +8,10 @@ using DG.Tweening;
 public class UI_SceneTitle : UI_Scene
 {
     #region Enum UI
+    private enum eGameObject
+    {
+        Image_DownloadProgressBarBg
+    }
 
     private enum eButton
     {
@@ -16,7 +20,8 @@ public class UI_SceneTitle : UI_Scene
     private enum eImage
     {
         Image_TitleLogo,
-        Image_TotuchToStart
+        Image_TotuchToStart,
+        Image_DownloadProgressBar
     }
 
     private enum eText
@@ -25,9 +30,10 @@ public class UI_SceneTitle : UI_Scene
         Text_TouchToStart
     }
     #endregion
-
+    private GameObject _downloadProgressBg = null;
     private Button _btnStart = null;
     private Image _imgTouchToStart = null;
+    private Image _imgDownloadProgressBar = null;
     private TMP_Text _txtTouchToStart = null;
     private TMP_Text _txtProcessState = null;
     private GameObject _touchToStart = null;
@@ -43,23 +49,30 @@ public class UI_SceneTitle : UI_Scene
         _sceneState = GameManager.Instance.GetSceneState();
 
         // Bind
+        BindObject(typeof(eGameObject));
         BindButton(typeof(eButton));
         BindImage(typeof(eImage));
-        BindText(typeof(eText));    
+        BindText(typeof(eText));
 
         // Get
+        _downloadProgressBg = GetObject((int)eGameObject.Image_DownloadProgressBarBg);
         _btnStart = GetButton((int)eButton.Button_Start);
         _imgTouchToStart = GetImage((int)eImage.Image_TotuchToStart);
+        _imgDownloadProgressBar = GetImage((int)eImage.Image_DownloadProgressBar);
+
         _txtTouchToStart = GetText((int)eText.Text_TouchToStart);
         _txtProcessState = GetText((int)eText.Text_ProcessState);
 
         //
+        _downloadProgressBg.SetActive(false);
+
         _btnStart.interactable = false;
         _btnStart.onClick.AddListener(OnClick_Start);
 
         _touchToStart = _imgTouchToStart.gameObject;
         _touchToStart.SetActive(false);
         _imgTouchToStart.gameObject.SetActive(false);
+        _imgDownloadProgressBar.fillAmount = 0f;
        
         return true;
     }
@@ -90,6 +103,19 @@ public class UI_SceneTitle : UI_Scene
     {
         if (GameManager.Instance == null)
             return;
+
+        if (Managers.Instance.ResourceManager.IsDownloadStart == true)
+        {
+            if (_downloadProgressBg.activeSelf == false)
+                _downloadProgressBg.SetActive(true);
+
+            _imgDownloadProgressBar.fillAmount = GameManager.Instance.DownloadProgressValue;
+        }
+        else
+        {
+            if (_downloadProgressBg.activeSelf == true)
+                _downloadProgressBg.SetActive(false);
+        }
 
         if(GameManager.Instance.IsStartProcessEnd == true && _bWait == true)
         {

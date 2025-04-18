@@ -359,8 +359,6 @@ public class PlayerController : CreatureController
         _curHp = Math.Min(CurMaxHp, _curHp + recoveryValue);
     }
 
-
-
     void SetDamagedColor()
     {
         // ÇÇ°Ý½Ã Àá±ñ »¡°²°Ô µÇ´Â È¿°ú

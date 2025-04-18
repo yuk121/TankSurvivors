@@ -9,7 +9,6 @@ using Firebase.Auth;
 using Firebase.Firestore;
 using Newtonsoft.Json;
 using Google;
-using Firebase;
 
 public class APIManager : MonoBehaviour
 {
@@ -34,7 +33,9 @@ public class APIManager : MonoBehaviour
     private Action _callbackSuccess = null;
     private Action _callbackFail = null;
 
-    private Firebase.DependencyStatus _dependencyStatus = Firebase.DependencyStatus.UnavailableOther;
+    private FirebaseAuth _auth = null;
+    private FirebaseFirestore _db = null;
+
     private void Awake()
     {
         if (Instance == null)
@@ -45,23 +46,14 @@ public class APIManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        //Init_FirebaseStorage();
-        //Init_Addressable();#endif
-#endif
-    }
-
     public void Init()
     {
-        Init_Google();
+
     }
 
-    #region Google Sign in
+#region Google Sign in
 
-    private void Init_Google()
+    public void Init_Google()
     {
         configuration = new GoogleSignInConfiguration
         {
@@ -154,30 +146,35 @@ public class APIManager : MonoBehaviour
     }
 
 
-    #endregion
+#endregion
 
-    #region Firebase Auth
+#region Firebase Auth
     public bool CheckFirebaseAuth()
     {
-        FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        _auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
 
-        if(auth.CurrentUser != null)
+        if(_auth.CurrentUser != null)
         {
-            Debug.Log($"[APIManager] Firebase Auth Current User UID : {auth.CurrentUser.UserId}");
+            Debug.Log($"[APIManager] Firebase Auth Current User UID : {_auth.CurrentUser.UserId}");
             return true;
         }
 
         return false;
     }
 
+    public string GetUserUid()
+    {
+        return _auth.CurrentUser.UserId;
+    }
+
     private void FirebaseAuth(string googleIdToken)
     {
         Debug.Log("[APIManager] Firebase Auth 시작");
 
-        FirebaseAuth auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        _auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
         Credential credential = GoogleAuthProvider.GetCredential(googleIdToken, null);
 
-        auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task =>
+        _auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled)
             {
@@ -212,12 +209,90 @@ public class APIManager : MonoBehaviour
                 _callbackSuccess.Invoke();
         });
     }
-    #endregion
+#endregion
 
-    #region Firebase Firestore
-    #endregion
+#region Firebase Firestore
+    public void SetUserData(UserData userData, Action pCallback)
+    {
+        Debug.Log("[APIManager] Firebase Firestore Set UserData");
 
-    #region Firebase Storage
+        _db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = _db.Collection("users").Document(userData.uid);
+    
+        docRef.SetAsync(userData).ContinueWithOnMainThread(task => 
+        {
+            if (task.IsCompleted)
+                Debug.Log("User data saved successfully!");
+            else
+                Debug.LogError($"Failed to save: {task.Exception}");
+
+            if (pCallback != null)
+                pCallback.Invoke();
+        });
+    }
+
+    public void GetUserData(string uid, Action<UserData> pCallback)
+    {
+        UserData userData = null;
+
+        _db = FirebaseFirestore.DefaultInstance;
+        _db.Collection("users").Document(uid).GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DocumentSnapshot snapshot = task.Result;
+                if (snapshot.Exists)
+                {
+                    userData = snapshot.ConvertTo<UserData>();
+                    pCallback?.Invoke(userData);  // 성공 시 콜백 실행
+                }
+                else
+                {
+                    Debug.Log("No such user exists.");
+                    pCallback?.Invoke(null);  // 성공 시 콜백 실행
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to load user data: " + task.Exception);
+                pCallback?.Invoke(null);  // 성공 시 콜백 실행
+            }
+        });
+    }
+
+    public void SetTransaction_StageClear(UserData userData)
+    {
+        _db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = _db.Collection("users").Document(userData.uid);
+
+        _db.RunTransactionAsync(async transaction =>
+        {
+            DocumentSnapshot snapshot = await transaction.GetSnapshotAsync(docRef);
+
+            // update
+            Dictionary<string, object> updates = new Dictionary<string, object>
+            {
+                { "userStaminaCurrent", userData.userStaminaCurrent },
+                { "lastStaminaChangeTimestamp", userData.lastStaminaChangeTimestamp },
+                { "userCurrency.gold", userData.userCurrency.gold },
+                { "userExp", userData.userExp },
+                { "stageClearList", userData.stageClearList }
+            };
+
+            transaction.Update(docRef, updates);
+
+        }).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+                Debug.Log("Gold updated successfully!");
+            else
+                Debug.LogError("Transaction failed: " + task.Exception);
+        });
+    }
+
+#endregion
+
+#region Firebase Storage
 
     /*
     private void Init_FirebaseStorage()
@@ -422,5 +497,5 @@ public class APIManager : MonoBehaviour
     }
 
     */
-    #endregion
+#endregion
 }

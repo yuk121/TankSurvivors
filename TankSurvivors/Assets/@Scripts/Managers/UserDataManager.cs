@@ -7,20 +7,25 @@ using Newtonsoft.Json;
 public class UserDataManager
 {
     private UserData _userData;
-    public UserData UserData { get => _userData; }
+    public UserData UserData { get => _userData; set => _userData = value; }
 
     public void NewStartUser()
     {
         _userData = new UserData();
         _userData.ClearUserData();
 
+#if UNITY_ANDROID && ! UNITY_EDITOR
+        _userData.uid = APIManager.Instance.GetUserUid();
+        Debug.Log($"New User ID : { _userData.uid}");
+#elif UNITY_EDITOR
         // UID 생성
-        _userData._uid = Managers.Instance.OptionManager.CreateUID();
+        _userData.uid = Managers.Instance.OptionManager.CreateUID();
+#endif
     }
 
     public int GetUserLevel()
     {
-        int level = Managers.Instance.DataTableManager.UserTable.GetLevelByExp(_userData._userExp);
+        int level = Managers.Instance.DataTableManager.UserTable.GetLevelByExp(_userData.userExp);
 
         return level;
     }
@@ -29,22 +34,22 @@ public class UserDataManager
     {
         int stageLevel = 0;
 
-        if(_userData._lastSelectStageLevel > 0)
+        if(_userData.lastSelectStageLevel > 0)
         {
-            stageLevel = _userData._lastSelectStageLevel;
+            stageLevel = _userData.lastSelectStageLevel;
             return stageLevel;
         }
         else // 선택한 스테이지가 없거나 새로운 스테이지를 깬 경우 깨야할 스테이지를 보여준다.
         {
             int last = 0;
             // 스테이지 1도 안 깬 경우
-            if (_userData._stageClearList.Count == 0)
+            if (_userData.stageClearList.Count == 0)
             {
                 last = 1;
             }
 
             // _stageClearList는 깬 스테이지 수 만큼 리스트에 값이 들어가 있음
-            last = _userData._stageClearList.Count + 1;
+            last = _userData.stageClearList.Count + 1;
             stageLevel = last;
         }
 
@@ -53,7 +58,7 @@ public class UserDataManager
 
     public bool CheckStamina(int requiredStamina)
     {
-        if(_userData._userStaminaCurrent - requiredStamina < 0)
+        if(_userData.userStaminaCurrent - requiredStamina < 0)
         {
             return false;
         }
@@ -71,14 +76,14 @@ public class UserDataManager
 
         int requiredStamina = Define.STAGE_ENTER_STAMINA; // * ( 스테이지 난이도?) 
 
-        _userData._userStaminaCurrent -= requiredStamina;
-        _userData._lastStaminaChageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        _userData.userStaminaCurrent -= requiredStamina;
+        _userData.lastStaminaChangeTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
 
     public void RecoveryStamina(int value)
     {
-        _userData._userStaminaCurrent += value;
-        _userData._lastStaminaChageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        _userData.userStaminaCurrent += value;
+        _userData.lastStaminaChangeTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
 
     public void GetReward(StageData stageData)
@@ -88,13 +93,13 @@ public class UserDataManager
         // 첫번째 클리어인지 확인
         if (isFirstClear == true)
         {
-            _userData._userCurrency.AddGold(stageData.firstClearRewardGold);
-            _userData._userExp += stageData.firstClearRewardExp;
+            _userData.userCurrency.AddGold(stageData.firstClearRewardGold);
+            _userData.userExp += stageData.firstClearRewardExp;
         }
         else
         {
-            _userData._userCurrency.AddGold(stageData.clearRewardGold);
-            _userData._userExp += stageData.clearRewardExp;
+            _userData.userCurrency.AddGold(stageData.clearRewardGold);
+            _userData.userExp += stageData.clearRewardExp;
         }
     }
 
@@ -102,21 +107,20 @@ public class UserDataManager
     public void StageClear(StageData stage)
     {
         // 클리어 한 경우
-        if(_userData._stageClearList.Count >= stage.stageIndex && _userData._stageClearList[stage.stageIndex-1] == true)
+        if(_userData.stageClearList.Count >= stage.stageIndex && _userData.stageClearList[stage.stageIndex-1] == true)
         {
             return;
         }
         else
         {
-            _userData._stageClearList.Add(true);
-            SaveUserData();
+            _userData.stageClearList.Add(true);
         }
     }
 
     private bool CheckFirstStageClear(StageData stageData)
     {
         // _stageClearList.Count는 깬 스테이지 수의 값을 가지고 있으며 stageIndex는 1부터 시작함
-        if(_userData._stageClearList.Count >= stageData.stageIndex)
+        if(_userData.stageClearList.Count >= stageData.stageIndex)
         {
             return false;
         }
@@ -126,17 +130,18 @@ public class UserDataManager
 
     public void LogOutUser()
     {
-        _userData._lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        _userData.lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
 
-    public UserData LoadUserData()
+    public void LoadUserData(Action<UserData> pCallback = null)
     {
-        UserData userData = new UserData();
-
 #if UNITY_ANDROID && !UNITY_EDITOR
         // 서버 확인
-
+        string uid = APIManager.Instance.GetUserUid();
+        APIManager.Instance.GetUserData(uid, pCallback);
+       
 #elif UNITY_EDITOR
+        UserData userData = null;
         // 로컬 확인
         string path = Application.persistentDataPath + "/userdata.json";
 
@@ -144,33 +149,53 @@ public class UserDataManager
         {
             string json = System.IO.File.ReadAllText(path);
             userData = JsonConvert.DeserializeObject<UserData>(json);
-
-            if (userData == null)
-            {
-                return null;
-            }
-
-            // 불러온 유저 정보
-            _userData = userData;
-
-            return userData;
         }
+
+        if (pCallback != null)
+            pCallback.Invoke(userData);
 #endif
-        return userData;
     }
 
-    public void SaveUserData()
+    public void SaveUserData(Action pCallback = null)
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        // 서버 저장
+        if(_userData == null)
+        {
+            Debug.LogWarning($"[Userdata] UserData is Null");
+            return;
+        }
 
+#if !UNITY_EDITOR
+        // 서버 저장
+        APIManager.Instance.SetUserData(_userData, pCallback);
 
 #elif UNITY_EDITOR
         // 로컬 저장
         string path = Application.persistentDataPath + "/userdata.json";
         string json = JsonConvert.SerializeObject(_userData, Formatting.Indented);
         System.IO.File.WriteAllText(path, json);
-#endif
 
+        if (pCallback != null)
+            pCallback.Invoke();
+#endif
+    }
+
+    public void Request_StageClear(StageData stageData)
+    {
+        Debug.Log("[UserData] Request StageClear");
+        // 유저 데이터 처리
+        UseStamina(stageData);
+
+        // 유저 재화 획득
+        GetReward(stageData);
+
+        // 스테이지 클리어 처리
+        StageClear(stageData);
+
+#if !UNITY_EDITOR
+        APIManager.Instance.SetTransaction_StageClear(_userData);
+#else
+        // 에디터에서는 로컬 저장
+        Managers.Instance.UserDataManager.SaveUserData();
+#endif
     }
 }

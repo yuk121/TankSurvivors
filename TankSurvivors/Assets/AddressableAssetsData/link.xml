@@ -11,11 +11,13 @@
     <type fullname="PlayerController" preserve="all" />
     <type fullname="UI_ContentSwipe" preserve="all" />
     <type fullname="UI_PlayerHpBar" preserve="all" />
+    <type fullname="UIElement_CheatButton" preserve="all" />
     <type fullname="UIElement_RandomSkill" preserve="all" />
     <type fullname="UIElement_Stage" preserve="all" />
     <type fullname="UIList_Grade" preserve="all" />
     <type fullname="UIList_OwnedSkills" preserve="all" />
     <type fullname="UIList_RandomSkills" preserve="all" />
+    <type fullname="UIPopup_Cheat" preserve="all" />
     <type fullname="UIPopup_GameResult_Defeat" preserve="all" />
     <type fullname="UIPopup_GameResult_Victory" preserve="all" />
     <type fullname="UIPopup_Notification" preserve="all" />
@@ -45,6 +47,9 @@
     <type fullname="TMPro.TMP_Character" preserve="nothing" serialized="true" />
     <type fullname="TMPro.TMP_FontFeatureTable" preserve="nothing" serialized="true" />
     <type fullname="TMPro.TMP_FontWeightPair" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_GlyphAdjustmentRecord" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_GlyphPairAdjustmentRecord" preserve="nothing" serialized="true" />
+    <type fullname="TMPro.TMP_GlyphValueRecord" preserve="nothing" serialized="true" />
     <type fullname="TMPro.VertexGradient" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">

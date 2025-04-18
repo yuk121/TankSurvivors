@@ -1,13 +1,8 @@
-using System;
 using Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Threading.Tasks;
-using UnityEngine.AddressableAssets.Initialization;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class GameData
 {
@@ -47,6 +42,9 @@ public class GameManager : FSM<eGameManagerState>
     #endregion
 
     // Title
+    private float _downloadProgressValue = 0f;
+    public float DownloadProgressValue { get => _downloadProgressValue; }
+
     private bool _bTouchToStart = false;
     private bool _bWait = false;
     private bool _isStartProcessEnd = false;
@@ -102,11 +100,16 @@ public class GameManager : FSM<eGameManagerState>
         LocalData localdata = Managers.Instance.OptionManager.LoadLocalData();
 
         // 로컬데이터가 없다면 새로 생성
-        if(localdata == null)
+        if (localdata == null)
         {
             Managers.Instance.OptionManager.NewLocalData();
             Managers.Instance.OptionManager.SaveLocalData();
+
+            localdata = Managers.Instance.OptionManager.LocalData;
         }
+
+        // API Init()     
+        APIManager.Instance.Init();
 
 #if !UNITY_EDITOR
         // 플랫폼 인증
@@ -160,31 +163,85 @@ public class GameManager : FSM<eGameManagerState>
 
         // 어드레서블 리소스 불러오기
         _bWait = true;
-        _processState = "리소스 불러오는 중";
+        _processState = "리소스 확인 중";
+
+#if !UNITY_EDITOR
+        Managers.Instance.ResourceManager.LoadWithCatalogCheckAndDownload<UnityEngine.Object>("preload", (key, count, totlaCount) =>
+        {
+            _downloadProgressValue = (float)count / totlaCount;
+
+            if (count == totlaCount)
+            {
+                Debug.Log("리소스 불러오기 완료!");
+                Managers.Instance.ResourceManager.IsDownloadStart = false;
+                _bWait = false;
+            }
+        });
+#else
 
         Managers.Instance.ResourceManager.LoadAllAsyncWithLabel<UnityEngine.Object>("preload", (key, count, totlaCount) =>
         {
+            _downloadProgressValue = (float)count / totlaCount;
+
             if (count == totlaCount)
             {
+                Debug.Log("리소스 불러오기 완료!");
                 _bWait = false;
             }
+        });
+#endif
+        while (_bWait)
+            yield return null;
+
+        // 유저 데이터 정보 불러오고 확인하기
+        _bWait = true;
+
+        _processState = "유저 정보 확인 중";
+
+        Managers.Instance.UserDataManager.LoadUserData((userdata) =>
+        {
+            Managers.Instance.UserDataManager.UserData = userdata;
+            _bWait = false;
         });
 
         while (_bWait)
             yield return null;
 
-        _processState = "유저 정보 확인 중";
-        // 유저 데이터 정보 불러오고 확인하기
-        UserData user = Managers.Instance.UserDataManager.LoadUserData();
-
+        UserData userData = Managers.Instance.UserDataManager.UserData;
         // uid가 없는경우 신규 유저
-        if (user == null || user._uid == null)
+        if (userData == null || userData.uid == null)
         {
+            _bWait = true;
+
+            Debug.Log("Server UserData is null so Create New User ServerData");
+
             Managers.Instance.UserDataManager.NewStartUser();
-            Managers.Instance.UserDataManager.SaveUserData();
+            
+            // 유저 데이터 db에 저장
+            Managers.Instance.UserDataManager.SaveUserData(() =>
+            {
+                Debug.Log("Firestore에 저장 완료");
+                _bWait = false;
+            });
+
+            while (_bWait)
+                yield return null;
+
+            _bWait = true;
+
+            Debug.Log("새로 생성된 유저데이터 다시 불러오기");
+           
+            Managers.Instance.UserDataManager.LoadUserData((userdata) =>
+            {
+                Managers.Instance.UserDataManager.UserData = userdata;
+                _bWait = false;
+            });
+
+            while (_bWait)
+                yield return null;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log($"[GameManger] 유저 정보 불러오기 성공");
 
         // 사운드 설정값 불러오기
         SoundManager.Instance.ApplyAllVolumes();
@@ -312,7 +369,7 @@ public class GameManager : FSM<eGameManagerState>
 
         _gameData.Clear();
 
-        int userCharId = Managers.Instance.UserDataManager.UserData._userChaterId;
+        int userCharId = Managers.Instance.UserDataManager.UserData.userChaterId;
         // 플레이어 소환
         _player = Managers.Instance.ObjectManager.Spawn<PlayerController>(new Vector3(0f, 0.8f, 0f), userCharId);
 
@@ -541,17 +598,9 @@ public class GameManager : FSM<eGameManagerState>
     private void StageClearProcess(Action pCallback)
     {
         StageData stageData = _gameData.stageInfo;
-        // 유저 데이터 처리
-        Managers.Instance.UserDataManager.UseStamina(stageData);
 
-        // 유저 재화 획득
-        Managers.Instance.UserDataManager.GetReward(stageData);
-
-        // 스테이지 클리어 처리
-        Managers.Instance.UserDataManager.StageClear(stageData);
-
-        // 저장
-        Managers.Instance.UserDataManager.SaveUserData();
+        // 스테이지 클리어 요청 과정
+        Managers.Instance.UserDataManager.Request_StageClear(stageData);
         
         if (pCallback != null)
             pCallback.Invoke();

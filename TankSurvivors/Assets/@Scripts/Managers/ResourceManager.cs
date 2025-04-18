@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Object = UnityEngine.Object;
 
 public class ResourceManager 
 {
     Dictionary<string ,Object> _resources = new Dictionary<string, Object>();
-
+    private bool _isDownloadStart = false;
+    public bool IsDownloadStart { get => _isDownloadStart; set => _isDownloadStart = value; }
     public T Load<T>(string key) where T : Object
     {
         if(_resources.TryGetValue(key, out Object resource))
@@ -97,16 +99,88 @@ public class ResourceManager
         };
     }
 
+    public void LoadWithCatalogCheckAndDownload<T>(string label, Action<string, int, int> callback) where T : Object
+    {
+        Debug.Log("[ResourceManager] 카탈로그 업데이트 확인 중");
+
+        var opCheckHandle = Addressables.CheckForCatalogUpdates();
+        opCheckHandle.Completed += (opCheck) =>
+        {
+            if (opCheck.Result.Count > 0)
+            {
+                var opUpdateHandle = Addressables.UpdateCatalogs(opCheck.Result);
+                opUpdateHandle.Completed += (opUpdate) =>
+                {
+                    Debug.Log("[ResourceManager] 카탈로그 업데이트 완료");
+                    ProceedToLoad<T>(label, callback);
+                };
+            }
+            else
+            {
+                Debug.Log("[ResourceManager] 카탈로그 업데이트 불필요");
+                ProceedToLoad<T>(label, callback);
+            }
+        };
+    }
+
+    private void ProceedToLoad<T>(string label, Action<string, int, int> callback) where T : Object
+    {
+        _isDownloadStart = false;
+
+        var opLocationsHandle = Addressables.LoadResourceLocationsAsync(label, typeof(T));
+        opLocationsHandle.Completed += (opLoc) =>
+        {
+            var opDownloadHandle = Addressables.GetDownloadSizeAsync(label);
+            opDownloadHandle.Completed += (opSize) =>
+            {
+                long byteSize = opSize.Result;
+                float mbSize = byteSize / (1024f * 1024f);
+
+                Debug.Log($"[ResourceManager] 다운로드 확인 완료 - 용량: {mbSize:F2} MB");
+
+                if (byteSize > 0)
+                {
+                    // 다운로드 팝업 표시
+                    UIPopup_FileDownload popup = Managers.Instance.UIMananger.OpenPopupWithResources<UIPopup_FileDownload>();
+                    popup.Set(mbSize, () =>
+                    {
+                        var downloadDependenciesHandle = Addressables.DownloadDependenciesAsync(label);
+                        downloadDependenciesHandle.Completed += (downloadOp) =>
+                        {
+                            if (downloadOp.Status == AsyncOperationStatus.Succeeded)
+                            {
+                                _isDownloadStart = true;
+                                Debug.Log("[ResourceManager] 다운로드 완료");
+                                
+                                LoadAllAsyncWithLabel<T>(label, callback);
+                            }
+                            else
+                            {
+                                Debug.LogError("[ResourceManager] 다운로드 실패");
+                            }
+                        };
+                    });
+                }
+                else
+                {
+                    LoadAllAsyncWithLabel<T>(label, callback);
+                }
+            };
+        };
+    }
+
     public void LoadAllAsyncWithLabel<T>(string lable, Action<string, int, int> callback) where T : Object
     {
         var opHandle = Addressables.LoadResourceLocationsAsync(lable, typeof(T));
+
+        Debug.Log($"[ResourceManager] 리로스 로드 중");
 
         opHandle.Completed += (op) =>
         {
             int loadCount = 0;
             int totalCount = op.Result.Count;
 
-            foreach(var result in op.Result) 
+            foreach (var result in op.Result)
             {
                 LoadAsync<T>(result.PrimaryKey, (obj) =>
                 {
@@ -115,8 +189,6 @@ public class ResourceManager
                 });
             }
         };
-
     }
-
 
 }

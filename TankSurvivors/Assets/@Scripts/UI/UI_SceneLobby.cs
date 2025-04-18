@@ -95,11 +95,15 @@ public class UI_SceneLobby : UI_Scene
 
     private void SetUserInfo()
     {
+        if(Managers.Instance.UserDataManager.UserData == null)
+        {
+            Debug.LogWarning("[SceneLobby] UserData is Null");
+        }
         _userData = Managers.Instance.UserDataManager.UserData;
 
         SetStaminaInfo();
-        _txtGold.text = $"{_userData._userCurrency.gold}";
-        _txtCash.text = $"{_userData._userCurrency.GetCash()}";
+        _txtGold.text = $"{_userData.userCurrency.gold}";
+        _txtCash.text = $"{_userData.userCurrency.GetCash()}";
         _txtUserLevel.text = $"{Managers.Instance.UserDataManager.GetUserLevel()}";
     }
 
@@ -108,8 +112,8 @@ public class UI_SceneLobby : UI_Scene
         if (_userData == null)
             return;
 
-        _txtStaminaCurrent.text = $"{_userData._userStaminaCurrent}";
-        _txtStaminaMax.text = $"/ {_userData._userStaminaMax}";
+        _txtStaminaCurrent.text = $"{_userData.userStaminaCurrent}";
+        _txtStaminaMax.text = $"/ {_userData.userStaminaMax}";
     }
 
     private void SetStage()
@@ -176,7 +180,7 @@ public class UI_SceneLobby : UI_Scene
             }
 
             // 마지막으로 스테미너가 변한 시간으로부터 얼마나 지났는지 확인하기
-            _currentTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - _userData._lastStaminaChageTimestamp;
+            _currentTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - _userData.lastStaminaChangeTimestamp;
             // 회복까지 남은 시간
             _remainTime = (long)Define.STAMINA_RECOVERY_TIME - (_currentTimestamp % (long)Define.STAMINA_RECOVERY_TIME);
            
@@ -187,8 +191,8 @@ public class UI_SceneLobby : UI_Scene
             if (_recoveryStaminaValue > 0)
             {
                 // 최대값이 넘지 않도록 회복 (회복 한 값이 최대값 보다 크다면 스태미나 최대값에서 현재 스태미나값을 뺀 만큼을 더해주고 아닌 경우 그대로 회복) 
-                _recoveryStaminaValue = _userData._userStaminaCurrent + _recoveryStaminaValue > _userData._userStaminaMax ? 
-                    _userData._userStaminaMax - _userData._userStaminaCurrent : _recoveryStaminaValue;
+                _recoveryStaminaValue = _userData.userStaminaCurrent + _recoveryStaminaValue > _userData.userStaminaMax ? 
+                    _userData.userStaminaMax - _userData.userStaminaCurrent : _recoveryStaminaValue;
 
                 Managers.Instance.UserDataManager.RecoveryStamina(_recoveryStaminaValue);
                 SetStaminaInfo();
@@ -213,7 +217,7 @@ public class UI_SceneLobby : UI_Scene
 
         bool isFull = true;
         
-        if (_userData._userStaminaMax > _userData._userStaminaCurrent )
+        if (_userData.userStaminaMax > _userData.userStaminaCurrent )
         {
             isFull = false;
         }

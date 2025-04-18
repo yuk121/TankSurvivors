@@ -54,8 +54,8 @@ public class UIPopup_Login : UI_Popup
         if (_init == false)
             Init();
 
-        // API Init
-        APIManager.Instance.Init();
+        // API Google Init
+        APIManager.Instance.Init_Google();
 
         _callback = pCallback;
     }
@@ -78,8 +78,6 @@ public class UIPopup_Login : UI_Popup
 
         if (_callback != null)
             _callback.Invoke();
-
-        ClosePopup();
     }
 
     private void Response_Fail()

@@ -56,7 +56,7 @@ public class UIElement_Stage : UI_Base
     private void CheckAccessStage()
     {
         int stageIndex = _stageData.stageIndex;
-        List<bool> stageClearList = Managers.Instance.UserDataManager.UserData._stageClearList;
+        List<bool> stageClearList = Managers.Instance.UserDataManager.UserData.stageClearList;
         
         // 깨야할 스테이지까지 포함
         if(stageClearList.Count +1 >= stageIndex)

@@ -114,6 +114,8 @@ public class UIManager
 
         T popup = Utils.GetOrAddComponent<T>(prefab);
 
+        _uiPopupStack.Push(popup);
+
         return popup;
     }
 

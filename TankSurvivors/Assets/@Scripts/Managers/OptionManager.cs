@@ -64,6 +64,12 @@ public class OptionManager
 
     public void SaveLocalData()
     {
+        if(_localData == null)
+        {
+            Debug.LogWarning("localData is null");
+            return;
+        }    
+
         string path = Application.persistentDataPath + "/localData.json";
         string json = JsonConvert.SerializeObject(_localData, Formatting.Indented);
         System.IO.File.WriteAllText(path, json);

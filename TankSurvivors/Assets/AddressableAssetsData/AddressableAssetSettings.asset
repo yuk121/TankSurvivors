@@ -34,11 +34,11 @@ MonoBehaviour:
   m_MonoScriptBundleNaming: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: f018e7be1897065408b55495cde898ef
+    m_Id: 779742416f6a00448a6d4ced2e27c542
   m_RemoteCatalogLoadPath:
     m_Id: 6d2ee09dc0c2d1b4e9ec7b450268f489
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 0
+  m_BuildAddressablesWithPlayerBuild: 2
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: 931e4ecfaa7be3c439a4ad335f4c0658, type: 2}
@@ -76,7 +76,9 @@ MonoBehaviour:
       - m_Id: 779742416f6a00448a6d4ced2e27c542
         m_Value: '[UnityEngine.Application.dataPath]/../ServerData/[BuildTarget] '
       - m_Id: 6d2ee09dc0c2d1b4e9ec7b450268f489
-        m_Value: ' https://tanksurvivors.s3.ap-southeast-2.amazonaws.com/[BuildTarget]'
+        m_Value: '[AWS_S3_Path]'
+      - m_Id: d6aa0e49254c17942a87caede0c3a300
+        m_Value: https://tanksurvivors.s3.ap-southeast-2.amazonaws.com/[BuildTarget]
     m_ProfileEntryNames:
     - m_Id: d965c2604b63b9a4f9475d225385e8f8
       m_Name: BuildTarget
@@ -92,6 +94,9 @@ MonoBehaviour:
       m_InlineUsage: 0
     - m_Id: 6d2ee09dc0c2d1b4e9ec7b450268f489
       m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    - m_Id: d6aa0e49254c17942a87caede0c3a300
+      m_Name: AWS_S3_Path
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:

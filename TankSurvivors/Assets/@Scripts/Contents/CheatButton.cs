@@ -15,6 +15,7 @@ public class CheatButton : MonoBehaviour
 
     private void OnClick_Cheat()
     {
-        Debug.Log("치트 발동!");
+        UIPopup_Cheat popup =  Managers.Instance.UIMananger.OpenPopup<UIPopup_Cheat>();
+        popup.Set();
     }
 }

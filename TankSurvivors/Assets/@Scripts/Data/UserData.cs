@@ -2,17 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Firebase.Firestore;
 
-[System.Serializable]
+[FirestoreData]
 public class UserData
 {
     #region UserData Class List
-    [System.Serializable]
+    [FirestoreData]
     public class UserCurrency
     {
-        public int gold;
-        public int cashFree;
-        public int cashPaid;
+        [FirestoreProperty] public int gold { get; set; }
+        [FirestoreProperty] public int cashFree { get; set; }
+        [FirestoreProperty] public int cashPaid { get; set; }
 
         public int GetGold()
         {
@@ -39,30 +40,32 @@ public class UserData
 
     #endregion
 
-    public string _uid;
-    public int _userChaterId = 0;
-    public int _userExp;
-    public int _userStaminaMax;
-    public int _userStaminaCurrent;
-    public UserCurrency _userCurrency = new UserCurrency();
-    public Define.eLoginPlatform _lastPlatform;
-    public long _lastAccessTimestamp;
-    public long _lastStaminaChageTimestamp;
-    public List<bool> _stageClearList = new List<bool>();       // 클리어 할 때마다 true값이 추가됨 (가변형)
-    public int _lastSelectStageLevel;
+    [FirestoreProperty] public string uid { get; set; }
+    [FirestoreProperty] public int userChaterId { get; set; }
+    [FirestoreProperty] public int userExp { get; set; }
+    [FirestoreProperty] public int userStaminaMax { get; set; }
+    [FirestoreProperty] public int userStaminaCurrent { get; set; }
+    [FirestoreProperty] public UserCurrency userCurrency { get; set; }
+    [FirestoreProperty] public Define.eLoginPlatform lastPlatform { get; set; }
+    [FirestoreProperty] public long lastAccessTimestamp { get; set; }
+    [FirestoreProperty] public long lastStaminaChangeTimestamp { get; set; }
+    [FirestoreProperty] public List<bool> stageClearList { get; set; }       // 클리어 할 때마다 true값이 추가됨 (가변형)
+    [FirestoreProperty] public int lastSelectStageLevel { get; set; }
 
     public void ClearUserData()
     {
-        _uid = "-1";
-        _userChaterId = 10001;
-        _userExp = 0;
-        _userStaminaMax = 100;
-        _userStaminaCurrent = 100;
-        _userCurrency.Clear();
-        _lastPlatform = Define.eLoginPlatform.None;
-        _lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        _lastStaminaChageTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        _stageClearList.Clear();
-        _lastSelectStageLevel = 1;
+        uid = "-1";
+        userChaterId = 10001;
+        userExp = 0;
+        userStaminaMax = 100;
+        userStaminaCurrent = 100;
+        userCurrency = new UserCurrency();
+        userCurrency.Clear();
+        lastPlatform = Define.eLoginPlatform.None;
+        lastAccessTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        lastStaminaChangeTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        stageClearList = new List<bool>();
+        stageClearList.Clear();
+        lastSelectStageLevel = 1;
     }
 }

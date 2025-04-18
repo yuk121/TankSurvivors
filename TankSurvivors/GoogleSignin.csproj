@@ -53,22 +53,22 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\GoogleSignInStatusCode.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Impl\BaseObject.cs" />
+    <Compile Include="Assets\google-signin-unity-newmigration\Editor\iOS\PListProcessor.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Impl\NativeFuture.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\GoogleSignInConfiguration.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Impl\SignInHelperObject.cs" />
+    <Compile Include="Assets\google-signin-unity-newmigration\Samples\SignInSample\SigninSampleScript.cs" />
+    <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Impl\GoogleSignInImplEditor.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\GoogleSignInUser.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Impl\GoogleSignInImpl.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\GoogleSignIn.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Future.cs" />
     <Compile Include="Assets\google-signin-unity-newmigration\Editor\iOS\PListImporter.cs" />
-    <Compile Include="Assets\google-signin-unity-newmigration\Editor\iOS\PListProcessor.cs" />
-    <Compile Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Impl\GoogleSignInImplEditor.cs" />
-    <Compile Include="Assets\google-signin-unity-newmigration\Samples\SignInSample\SigninSampleScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\google-signin-unity-newmigration\GoogleSignIn\Editor\GoogleSignInDependencies.xml" />
@@ -335,20 +335,17 @@
     <Reference Include="DemiEditor">
       <HintPath>Assets\Plugins\Demigiant\DemiLib\Core\Editor\DemiEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.IonicZip">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
-    </Reference>
     <Reference Include="Google.VersionHandlerImpl">
       <HintPath>Assets\ExternalDependencyManager\Editor\1.2.185\Google.VersionHandlerImpl.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.IonicZip">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.17.7\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Storage">
-      <HintPath>Assets\Firebase\Plugins\Firebase.Storage.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.App">
       <HintPath>Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
@@ -370,9 +367,6 @@
     </Reference>
     <Reference Include="Firebase.Firestore">
       <HintPath>Assets\Firebase\Plugins\Firebase.Firestore.dll</HintPath>
-    </Reference>
-    <Reference Include="Firebase.Database">
-      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.17.7\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
