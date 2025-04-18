@@ -8,6 +8,8 @@ TankSurvivors/Tank.apk
 TankSurvivors/Assets/Firebase
 TankSurvivors/Assets/google-services.json
 TankSurvivors/Assets/google-services.json.meta
-TankSurvivors/Assets/user.keystore
-TankSurvivors/Assets/user.keystore.meta
+TankSurvivors/user.keystore
+TankSurvivors/user.keystore.meta
 TankSurvivors/Recordings
+TankSurvivors/Assets/StreamingAssets
+TankSurvivors/Assets/StreamingAssets.meta
