@@ -33,8 +33,11 @@ public class UserDataManager
     public int GetLastSelectStage()
     {
         int stageLevel = 0;
+        int userSelectStage = _userData.lastSelectStageLevel;
+        int userLastClearStage = _userData.stageClearList.Count;
 
-        if(_userData.lastSelectStageLevel > 0)
+        // 스테이지를 하나라도 깼고 마지막으로 선택한 스테이지가 마지막으로 클리어한 스테이지 레벨보다 작을때는 선택을 우선
+        if (userSelectStage > 0 && userSelectStage <= userLastClearStage)
         {
             stageLevel = _userData.lastSelectStageLevel;
             return stageLevel;
@@ -43,13 +46,13 @@ public class UserDataManager
         {
             int last = 0;
             // 스테이지 1도 안 깬 경우
-            if (_userData.stageClearList.Count == 0)
+            if (userLastClearStage == 0)
             {
                 last = 1;
             }
 
             // _stageClearList는 깬 스테이지 수 만큼 리스트에 값이 들어가 있음
-            last = _userData.stageClearList.Count + 1;
+            last = userLastClearStage + 1;
             stageLevel = last;
         }
 
@@ -193,6 +196,16 @@ public class UserDataManager
 
 #if !UNITY_EDITOR
         APIManager.Instance.SetTransaction_StageClear(_userData);
+#else
+        // 에디터에서는 로컬 저장
+        Managers.Instance.UserDataManager.SaveUserData();
+#endif
+    }
+
+    public void Request_StageSelect()
+    {
+#if !UNITY_EDITOR
+        APIManager.Instance.SetTransaction_StageSelect(_userData);
 #else
         // 에디터에서는 로컬 저장
         Managers.Instance.UserDataManager.SaveUserData();

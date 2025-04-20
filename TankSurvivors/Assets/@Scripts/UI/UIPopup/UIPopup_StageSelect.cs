@@ -137,7 +137,7 @@ public class UIPopup_StageSelect : UI_Popup
         else
         {
             Managers.Instance.UserDataManager.UserData.lastSelectStageLevel = currentStageIndex + 1;
-            Managers.Instance.UserDataManager.SaveUserData();
+            Managers.Instance.UserDataManager.Request_StageSelect();
            
             // 로비에 반영
             if (GameManager.Instance != null)

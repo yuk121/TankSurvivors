@@ -113,7 +113,7 @@ public class SoundManager : MonoBehaviour
         {
             if (_soundData[i].type == type)
             {
-                if (_soundData[i].mixerGroup != null)
+                if (_soundData[i].mixerGroup != null && type != Define.eSoundType.PLAYER)
                 {
                     _soundData[i].mixerGroup.audioMixer.SetFloat($"{type}{i}", volume_db);
                 }

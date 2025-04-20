@@ -290,6 +290,31 @@ public class APIManager : MonoBehaviour
         });
     }
 
+    public void SetTransaction_StageSelect(UserData userData)
+    {
+        _db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = _db.Collection("users").Document(userData.uid);
+
+        _db.RunTransactionAsync(async transaction =>
+        {
+            DocumentSnapshot snapshot = await transaction.GetSnapshotAsync(docRef);
+            // update
+            Dictionary<string, object> updates = new Dictionary<string, object>
+            {
+                { "lastSelectStageLevel", userData.lastSelectStageLevel},
+            };
+
+            transaction.Update(docRef, updates);
+
+        }).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+                Debug.Log("Gold updated successfully!");
+            else
+                Debug.LogError("Transaction failed: " + task.Exception);
+        });
+    }
+
 #endregion
 
 #region Firebase Storage
