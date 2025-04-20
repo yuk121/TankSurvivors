@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +31,10 @@ public class UIElement_CheatButton : MonoBehaviour
                 break;
             case eCheat.Timeslip:
                 GameManager.Instance.GameData.curTime += 60;
+                break;
+            case eCheat.RefreshSkill:
+                UIPopup_SkillSelect popup = Managers.Instance.UIMananger.GetLastOpenPopup<UIPopup_SkillSelect>();
+                popup.Refresh();
                 break;
         }
     }

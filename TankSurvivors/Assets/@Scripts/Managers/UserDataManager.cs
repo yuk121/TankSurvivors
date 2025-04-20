@@ -116,7 +116,11 @@ public class UserDataManager
         }
         else
         {
+            // 새로 클리어한 경우
             _userData.stageClearList.Add(true);
+            Debug.Log($"[Before] lastSelectStageLevel: {_userData.lastSelectStageLevel}");
+            _userData.lastSelectStageLevel++;
+            Debug.Log($"[After] lastSelectStageLevel: {_userData.lastSelectStageLevel}");
         }
     }
 

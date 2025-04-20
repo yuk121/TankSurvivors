@@ -48,7 +48,6 @@ public class UIPopup_SkillSelect : UI_Popup
         _uiListRandomSkills.SetRandomSkills(GetRandomSkills());
     }
 
-#if UNITY_EDITOR
     public void Refresh()
     {
         _uiListRandomSkills.SetRandomSkills(GetRandomSkills());
@@ -61,9 +60,6 @@ public class UIPopup_SkillSelect : UI_Popup
             Refresh();
         }
     }
-#endif
-
-
     private List<SkillBase> GetRandomSkills()
     {
         List<SkillBase> skillList = new List<SkillBase>();

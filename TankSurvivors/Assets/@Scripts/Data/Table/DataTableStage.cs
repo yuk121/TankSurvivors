@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class StageData
 {
@@ -65,10 +66,11 @@ public class DataTableStage
     public StageData GetStageInfo(int stageIndex)
     {
         StageData stageData = null;
-
+        int findStageIndex = Mathf.Min(stageIndex, _dataList.Count);
+        
         foreach(var data in _dataList)
         {
-            if(data.stageIndex == stageIndex)
+            if(data.stageIndex == findStageIndex)
             {
                 stageData = data;
                 break;

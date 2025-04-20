@@ -276,7 +276,8 @@ public class APIManager : MonoBehaviour
                 { "lastStaminaChangeTimestamp", userData.lastStaminaChangeTimestamp },
                 { "userCurrency.gold", userData.userCurrency.gold },
                 { "userExp", userData.userExp },
-                { "stageClearList", userData.stageClearList }
+                { "stageClearList", userData.stageClearList },
+                { "lastSelectStageLevel",userData.lastSelectStageLevel }
             };
 
             transaction.Update(docRef, updates);

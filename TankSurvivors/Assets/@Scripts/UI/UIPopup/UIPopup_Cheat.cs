@@ -7,6 +7,7 @@ public enum eCheat
     PlayerLevelUp,
     MonsterAllKill,
     Timeslip,
+    RefreshSkill,
     Max
 }
 

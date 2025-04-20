@@ -177,6 +177,13 @@ public class UIManager
         return ui;
     }
 
+    public T GetLastOpenPopup<T>() where T : UI_Popup
+    {
+        T popup = _uiPopupStack.Peek() as T;
+
+        return popup;
+    }
+
     public int GetPopupCount()
     {
         return _uiPopupStack.Count;
