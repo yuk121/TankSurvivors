@@ -34,7 +34,9 @@ public class UIElement_CheatButton : MonoBehaviour
                 break;
             case eCheat.RefreshSkill:
                 UIPopup_SkillSelect popup = Managers.Instance.UIMananger.GetLastOpenPopup<UIPopup_SkillSelect>();
-                popup.Refresh();
+                
+                if(popup != null)
+                     popup.Refresh();
                 break;
         }
     }

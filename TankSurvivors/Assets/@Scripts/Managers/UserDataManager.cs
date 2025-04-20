@@ -54,6 +54,13 @@ public class UserDataManager
             // _stageClearList는 깬 스테이지 수 만큼 리스트에 값이 들어가 있음
             last = userLastClearStage + 1;
             stageLevel = last;
+
+           // 스테이지 갯수 확인
+            int stageListCount = Managers.Instance.DataTableManager.DataTableStage.GetStageCount();
+
+            // 넘어가면 스테이지 갯수대로 고정
+            if(stageLevel > stageListCount)
+                stageLevel = stageListCount;
         }
 
         return stageLevel;

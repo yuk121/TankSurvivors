@@ -79,4 +79,9 @@ public class DataTableStage
 
         return stageData;
     }
+
+    public int GetStageCount()
+    {
+        return _dataList.Count;
+    }
 }
